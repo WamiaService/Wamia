@@ -1,9 +1,9 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const Admin = require('./admin');
-const Services = require('./services')
+const Services= require('./services')
 
-const Provider = sequelize.define('provider', {
+const Provider= sequelize.define('provider', {
   username: DataTypes.STRING,
   password: DataTypes.STRING,
   adresse : DataTypes.STRING,
@@ -24,6 +24,7 @@ const Provider = sequelize.define('provider', {
 });
 
 Provider.belongsTo(Admin);
-Provider.belongsTo(Services)
+Provider.hasMany(Services)
+
 
 module.exports = Provider;
