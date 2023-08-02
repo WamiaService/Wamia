@@ -8,7 +8,8 @@ const Services = sequelize.define('services', {
   desc: DataTypes.STRING,
 });
 
-Services.belongsTo(Custumor)
 
 
+
+Services.belongsTo(Custumor);
 module.exports = Services;
