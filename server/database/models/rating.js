@@ -5,8 +5,19 @@ const Custumor = require('./custumor')
 
 
 const Rating = sequelize.define('rating', {
-    rate: DataTypes.INTEGER,
-    review: DataTypes.STRING,
+  rate: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 1,
+      max: 5,
+    },
+  },
+
+  review: {
+    type: DataTypes.STRING, 
+    allowNull: true,
+  },
   });
 
 Rating.belongsTo(Provider)
