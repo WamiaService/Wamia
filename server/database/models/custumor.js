@@ -3,14 +3,24 @@ const sequelize = require('../db');
 const Admin = require('./admin');
 
 const Custumor = sequelize.define('custumor', {
-  username: DataTypes.STRING,
-  password: DataTypes.STRING,
-  adresse : DataTypes.STRING,
-  email : DataTypes.STRING,
-  imgprof: DataTypes.STRING,
-  identity : DataTypes.STRING,
-
- 
+  username: { type: DataTypes.STRING, allowNull: false, unique: true },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  adresse: DataTypes.STRING,
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  imgprof: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  identity: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
 });
 
 Custumor.belongsTo(Admin);

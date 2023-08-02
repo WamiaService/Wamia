@@ -14,6 +14,11 @@ app.use(cors());
 app.use(cookieParser());
 
 
+const providerRoute = require('./routes/provider.routes')
+app.use('/provider',providerRoute)
+const custumorRoute = require('./routes/custumor.routes')
+app.use('/custumor',custumorRoute)
+
 sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
