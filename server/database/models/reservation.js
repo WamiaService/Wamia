@@ -5,14 +5,17 @@ const Custumor = require('./custumor')
 
 
 const Reservation = sequelize.define('reservation', {
-    date: DataTypes.DATE
-  });
+    date: {
+    type :DataTypes.DATEONLY,
+    allowNull:false,
+    unique:true
+  },
+
+}
+  );
 
   Reservation.belongsTo(Provider)
   Reservation.belongsTo(Custumor)
-
-
-
 
 
   module.exports = Reservation;
