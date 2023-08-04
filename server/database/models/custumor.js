@@ -20,7 +20,14 @@ const Custumor = sequelize.define('custumor', {
   identity: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
+  mobile: DataTypes.INTEGER,
+  is_approved: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  activationCode : DataTypes.STRING
+
 });
 
 Custumor.belongsTo(Admin);
