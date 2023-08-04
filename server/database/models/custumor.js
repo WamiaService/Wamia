@@ -20,7 +20,13 @@ const Custumor = sequelize.define('custumor', {
   identity: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+   mobile: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   }
+
+
 });
 
 Custumor.belongsTo(Admin);
