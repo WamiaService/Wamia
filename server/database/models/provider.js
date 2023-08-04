@@ -2,7 +2,9 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const Admin = require('./admin');
 
+
 const Services = require('./services');
+
 
 const Provider = sequelize.define('provider', {
   username: {
@@ -17,6 +19,7 @@ const Provider = sequelize.define('provider', {
   adresse: DataTypes.STRING,
   email: {
     type: DataTypes.STRING,
+    unique: true,
     allowNull: false,
   },
   imgprof: {
@@ -47,9 +50,11 @@ const Provider = sequelize.define('provider', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  activationCode : DataTypes.STRING
 });
 
 Provider.belongsTo(Admin);
+
 
 Provider.belongsTo(Services);
 

@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
-const Custumor = require('./custumor')
+const Provider = require('./provider')
 
 const Services = sequelize.define('services', {
   name: DataTypes.STRING,
@@ -9,7 +9,5 @@ const Services = sequelize.define('services', {
 });
 
 
-
-
-Services.belongsTo(Custumor);
+Services.belongsTo(Provider);
 module.exports = Services;

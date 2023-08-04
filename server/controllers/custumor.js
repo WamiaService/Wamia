@@ -1,6 +1,7 @@
 const Custumor = require('../database/models/custumor')
 const jwt = require('jsonwebtoken')
 const bcrypt = require ('bcrypt')
+const { sendConfirmationEmail } = require('../sendgrid');
 
 
 //Get All custumor
@@ -33,8 +34,28 @@ const getAllcustumor = async (req, res) => {
   // register custumor
 
 const signupcustumor = async (req, res) => {
+
+  const characters =
+  "0123456789abcdefghijklmnopqrstuvwxyz";
+let activationCode = "";
+for (let i = 0; i < 25; i++) {
+  activationCode += characters[Math.floor(Math.random() * characters.length)];
+}
   try {
     const { username, email, password,imgprof,identity,adresse } = req.body;
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
+
+    // Validate password complexity (at least one letter and one number)
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({ error: 'Password must contain at least one letter and one number, and be at least 6 characters long' });
+    }
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const custumor = await Custumor.create({
       username,
@@ -42,8 +63,10 @@ const signupcustumor = async (req, res) => {
       password: hashedPassword,
       imgprof,
       identity,
+      activationCode:activationCode,
       adresse
     });
+    await sendConfirmationEmail(email,activationCode)
     res.status(200).json({ message: 'Register successful', custumor });
   } catch (error) {
     console.error('Register Error:', error);
@@ -62,6 +85,11 @@ const logincustumor = async (req, res) => {
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid password' });
       }
+      if (custumor && isPasswordValid && !custumor.is_approved) {
+        return res.send({
+          message: "verifier votre boite email"
+        })
+              }
       const token = jwt.sign({ custumorId: custumor.id }, 'your_secret_key');
       res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Set token as a cookie
       res.status(200).json({ token });
