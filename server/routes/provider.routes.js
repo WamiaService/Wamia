@@ -1,6 +1,3 @@
-
-
-
 const express = require('express');
 const router = express.Router();
 const {getAllProvider,getOneProvider,signupProvider,loginProvider,updateProvider} = require('../controllers/provider')

@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser")
 const sequelize = require("./database/db")
 const providerRoutes= require('./routes/provider.routes')
 const servicesRoutes= require('./routes/services.routes')
-// const reservationRoutes = require('./routes/reservation.routes.js')
+const reservationRoutes = require('./routes/reservation.routes.js')
 const ratingRoutes = require('./routes/rating.routes')
 const commentRoutes = require('./routes/comment.routes')
 require("dotenv").config()
@@ -22,7 +22,7 @@ app.use('/provider', providerRoutes)
 //!services
 app.use('/service', servicesRoutes)
 //!reservation
-// app.use('/reservation', reservationRoutes)
+app.use('/reservation', reservationRoutes)
 //!rating
 app.use('/rating', ratingRoutes)
 //!comment

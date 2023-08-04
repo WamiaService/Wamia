@@ -6,14 +6,11 @@ const Custumor = require('./custumor')
 
 const Reservation = sequelize.define('reservation', {
     date: {
-      type :DataTypes.DATEONLY,
+    type :DataTypes.DATEONLY,
     allowNull:false,
     unique:true
   },
-  isBooked: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  }
+
 }
   );
 
