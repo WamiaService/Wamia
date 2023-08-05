@@ -14,7 +14,11 @@ import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+
 const Signup = () => {
+  const navigation = useNavigation()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -30,19 +34,83 @@ const Signup = () => {
     'menuisier',
     'camera',
   ]);
-
-  const singUppp =  (username,password,email,imgprof,patente,category) => {
-    const selectedCategory = category[0] || category[1]
-       axios.post('http://192.168.11.127:3000/provider/signup', { username :username, email:email, password:password , imgprof:imgprof,patente:patente,category: selectedCategory })
-      .then((res)=>{
-console.log(res.data);
-        alert('check youre boite email')
-
-      }).catch((err)=>{
-        console.log(err);
+  const _uploadImage = (photo) => {
+    const data = new FormData();
+    data.append('file', {
+      uri: photo.assets[0].uri, // Access the selected asset through the assets array
+      type: 'image/jpg',
+      name: 'image.jpg',
+    });
+    data.append('upload_preset', 'phoneProduct');
+    data.append('cloud_name', 'dgcdmrj7x');
+    fetch('https://api.cloudinary.com/v1_1/dgcdmrj7x/image/upload', {
+      method: 'POST',
+      body: data,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setImgprof(data.url);
+        console.log(data);
       })
-    
+      .catch((err) => {
+        Alert.alert('Error While Uploading');
+      });
   };
+
+  const handleGalleryAccess = async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Gallery permission denied');
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1.0,
+      });
+
+      if (!result.canceled) { // Use "canceled" instead of "cancelled"
+        _uploadImage(result);
+      }
+    } catch (error) {
+      console.log('Error selecting image from gallery:', error);
+    }
+  };
+
+  /////////////
+  const singUppp =  (username,password,email,imgprof,patente,category) => {
+    const selectedCategory = category[0] || category[1];
+
+    axios
+      .post('http://192.168.1.6:3000/provider/signup', {
+        username: username,
+        email: email,
+        password: password,
+        imgprof: imgprof,
+        patente: patente,
+        category: selectedCategory,
+      })
+      .then((res) => {
+        console.log(res.data);
+        alert('Check your email for verification.');
+        navigation.navigate('login'); // Navigate to the login screen after successful signup
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response && err.response.data) {
+          const errorMessage = err.response.data.error || 'Signup Failed';
+          alert(errorMessage);
+        } else {
+          alert('Signup Failed');
+        }
+      });
+  };;
+  
   const handleSignup = () => {
     singUppp(
      username,
@@ -100,14 +168,14 @@ console.log(res.data);
             onChangeText={(val)=> setPassword(val)} 
           />
         </View>
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <TextInput
             style={styles.inp}
             placeholder="imgprof ..."
             defaultValue={imgprof}
             onChangeText={(val)=> setImgprof(val)} 
           />
-        </View>
+        </View> */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inp}
@@ -117,18 +185,18 @@ console.log(res.data);
           />
         </View>
 
-        {/* <View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
           <AntDesign
             name="picture"
             size={24}
             color="black"
             style={styles.icon}
           />
-          <TouchableOpacity style={styles.photoInput}>
+          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccess}>
             <Text>Image</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <AntDesign
             name="picture"
             size={24}

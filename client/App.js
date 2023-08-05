@@ -1,14 +1,15 @@
-
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Signup from './components/SignupLogin/Signup.jsx';
 import Start from './components/Start.jsx';
 import Choose from './components/Choose.jsx';
 import Login from './components/SignupLogin/Login.jsx';
 import SignupCust from './components/SignupLogin/SignupCust.jsx';
+import Test from './components/SignupLogin/Test.jsx';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import Edit from './components/Custumor/Edit.js';
-
+const Stack = createStackNavigator();
 
 const App = () => {
   const [showSignup, setShowSignup] = useState(false);
@@ -21,17 +22,25 @@ const App = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {showSignup ? (
+          <Stack.Screen name="choose" component={Choose} options={{ headerShown: false }} />
+        ) : (
+          <Stack.Screen name="start" component={Start} options={{ headerShown: false }} />
+        )}
+                  <Stack.Screen name="signup" component={Signup} options={{
+                     headerShown: false
+                  }}/>
+                  <Stack.Screen name="signupcust" component={SignupCust} options={{
+                     headerShown: false
+                  }} />
 
-      {/* {showSignup ? <Choose/> : <Start />} */}
-      {/* <Signup/> */}
-      <SignupCust/>
-      {/* <Login/> */}
-
-
-   <Edit/>
-
-    </View>
+<Stack.Screen name="login" component={Login} options={{
+                     headerShown: false
+                  }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -40,11 +49,5 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-
-    backgroundColor: 'rgba(255, 255,500, 0.28)',
-    alignItems: 'center',
-    justifyContent: 'center',
-
   },
 });

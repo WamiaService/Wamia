@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Animated } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 const Choose = () => {
+  const navigation = useNavigation()
   useEffect(() => {
     // Your animation logic here
     // You can use Animated.timing or any other Animated API to animate the component
@@ -14,7 +15,12 @@ const Choose = () => {
   }, []);
 
   const containerOpacity = new Animated.Value(0);
-
+  const handleProviderPress = () => {
+    navigation.navigate('signup');
+  };
+  const handleCustumor = () => {
+    navigation.navigate('signupcust');
+  };
   return (
     <Animated.View style={[styles.container, { opacity: containerOpacity }]}>
       <View style={styles.logoContainer}>
@@ -26,11 +32,11 @@ const Choose = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => console.log('Provider Button Pressed')}>
+        <TouchableOpacity style={styles.button} onPress={handleProviderPress}>
           <Text style={styles.buttonText}>Provider</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => console.log('Client Button Pressed')}>
+        <TouchableOpacity style={styles.button} onPress={handleCustumor}>
           <Text style={styles.buttonText}>Client</Text>
         </TouchableOpacity>
       </View>
@@ -44,22 +50,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 40,
+    
   },
   logoContainer: {
+    position: 'absolute',
     alignItems: 'center',
     marginBottom: 20,
+    top:0,
+    paddingTop:160,
   },
   logo: {
     width: 476,
     height: 200,
   },
   buttonContainer: {
+    position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
+    bottom: 0,
+    paddingBottom: 200,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: '#FFA500',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,

@@ -17,5 +17,6 @@ const sequelize = new Sequelize('wamia', 'root', 'root', {
     sequelize.close();
   });
 
+  
 
 module.exports = sequelize;
