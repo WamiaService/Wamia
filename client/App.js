@@ -8,6 +8,7 @@ import SignupCust from './components/SignupLogin/SignupCust.jsx';
 import Test from './components/SignupLogin/Test.jsx';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Welcome from './components/SignupLogin/Welcome.jsx';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,9 @@ const App = () => {
                   }} />
 
 <Stack.Screen name="login" component={Login} options={{
+                     headerShown: false
+                  }} />
+                  <Stack.Screen name="welcome" component={Welcome} options={{
                      headerShown: false
                   }} />
       </Stack.Navigator>
