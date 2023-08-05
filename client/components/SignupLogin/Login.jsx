@@ -16,22 +16,46 @@ import axios from 'axios';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
-
-  const loginn =  (username,password) => {
-       axios.post('http://192.168.11.127:3000/provider/login', { username :username, password:password })
-      .then((res)=>{
-console.log(res.data);
-        alert('login success')
-      }).catch((err)=>{
-        console.log(err);
+  const [code, setCode] = useState('')
+  const verifyAccount = (activationCode) => {
+    axios
+      .get(`http://192.168.1.6:3000/provider/verify/${activationCode}`)
+      .then((res) => {
+        console.log(res.data);
+        alert(res.data.message); // Show the response message (e.g., 'Your account has been successfully verified!')
       })
+      .catch((err) => {
+        console.log(err);
+        alert('Verification failed');
+      });
+  }
+  const loginn = async (username,password,code) => {
+    try {
+      await verifyAccount(code); 
+      const response = await axios.post('http://192.168.1.6:3000/provider/login', {
+        username: username,
+        password: password,
+        code: code,
+      });
+  
+      console.log(response.data);
+  
+      if (response.data.message === 'verifier votre boite email') {
+        alert('Please verify your email before login.');
+      } else {
+        alert('Login successful');
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Login failed');
+    }
     
   };
   const handleLogin = () => {
     loginn(
      username,
-     password
+     password,
+     code
     );
   };
 
@@ -61,6 +85,7 @@ console.log(res.data);
           <TextInput
             style={styles.inp}
             placeholder="Entre the code ..."
+            onChangeText={(val) => setCode(val)}
           />
         </View>
         <Button onPress={()=>handleLogin()} title="Login" color="#FFA500" borderRadius={30} />

@@ -2,10 +2,6 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const Admin = require('./admin');
 
-
-const Services = require('./services');
-
-
 const Provider = sequelize.define('provider', {
   username: {
     type: DataTypes.STRING,
@@ -30,7 +26,6 @@ const Provider = sequelize.define('provider', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-
   mobile: DataTypes.INTEGER,
 
   category: {
@@ -54,9 +49,4 @@ const Provider = sequelize.define('provider', {
 });
 
 Provider.belongsTo(Admin);
-
-
-Provider.belongsTo(Services);
-
-
 module.exports = Provider;

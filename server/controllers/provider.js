@@ -4,48 +4,6 @@ const bcrypt = require ('bcrypt');
 const { sendConfirmationEmail } = require('../sendgrid');
 
 
-
-
-    //! update Provider
-   const updateProvider = async(req,res)=>{
-        const { id } = req.params;
-        let {
-          username,
-          email,
-          password,
-          mobile,  
-          imgprof
-        } = req.body;
-          
-        try{
-          const providerProfile= await Provider.findByPk(id)
-          if (!providerProfile) {
-            return res.status(404).json({ error: "User profile not found" });
-          } 
-       
-          providerProfile.username=username;
-          providerProfile.email=email;
-          providerProfile.password=password;
-          providerProfile.mobile=mobile;
-          providerProfile.imgprof=imgprof
-      
-      
-        await providerProfile.save();
-        res.json(providerProfile);
-          
-        }
-        catch(error){
-          console.log(error);
-          res.status(500).json({ error: "Internal server error" });
-        }
-      };
-
-    
-
-
-
-
-
 //Get All Provider
 const getAllProvider = async (req, res) => {
     try {
@@ -149,28 +107,28 @@ return res.send({
     }
   };
 
-  const verifyProvider = (req,res)=>{
-    Provider.findOne({ where: { activationCode: req.params.activationcode } })
-    .then(provider=>{
-      if(!provider){
-        res.send({
-          message:"ce code d'activation est faut"
-        })
+  const verifyProvider = async (req, res) => {
+    try {
+      const provider = await Provider.findOne({ where: { activationCode: req.params.activationcode } });
+      if (!provider) {
+        return res.status(404).json({ message: "Invalid activation code" });
       }
-      provider.is_approved = true
-      provider.save()
-      res.send({
-        message: "le compte est active avec succes !"
-      })
-    })
-  }
+  
+      provider.is_approved = true;
+      await provider.save();
+  
+      res.status(200).json({ message: "Your account has been successfully verified!" });
+    } catch (error) {
+      console.error('Verification Error:', error);
+      res.status(500).json({ error: 'Verification failed' });
+    }
+  };
+  
 
   module.exports = {
     getAllProvider,
     getOneProvider,
     signupProvider,
     loginProvider,
-    verifyProvider,
-    updateProvider
+    verifyProvider
   }
-
