@@ -13,13 +13,17 @@ import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('')
+  const navigation = useNavigation()
+
   const verifyAccount = (activationCode) => {
     axios
-      .get(`http://192.168.1.6:3000/provider/verify/${activationCode}`)
+      .get(`http://192.168.1.7:3000/provider/verify/${activationCode}`)
       .then((res) => {
         console.log(res.data);
         alert(res.data.message); // Show the response message (e.g., 'Your account has been successfully verified!')
@@ -32,14 +36,15 @@ const Login = () => {
   const loginn = async (username,password,code) => {
     try {
       await verifyAccount(code); 
-      const response = await axios.post('http://192.168.1.6:3000/provider/login', {
+      const response = await axios.post('http://192.168.1.7:3000/provider/login', {
         username: username,
         password: password,
         code: code,
       });
   
       console.log(response.data);
-  
+      navigation.navigate('welcome');
+
       if (response.data.message === 'verifier votre boite email') {
         alert('Please verify your email before login.');
       } else {
