@@ -5,6 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
 import Home from './Home/HomePage.jsx';
+import Choose from './Choose.jsx';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +22,7 @@ const BottomTabNavigation = () => {
           } else if (route.name === 'Settings') {
             iconName = focused ? 'cog' : 'cog';
           } else if (route.name === 'NewScreen') {
-            iconName = focused ? 'star' : 'star';
+            iconName = focused ? 'user' : 'user';
           }
 
           return <Entypo name={iconName} size={size} color={color} />;
@@ -36,7 +37,7 @@ const BottomTabNavigation = () => {
       }}
     >
       <Tab.Screen name="home" component={Home} />
-      {/* <Tab.Screen name="NewScreen" component={NewScreen} /> */}
+     <Tab.Screen name="NewScreen" component={Choose} /> 
       {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
     </Tab.Navigator>
   );
