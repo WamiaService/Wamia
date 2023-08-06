@@ -8,8 +8,10 @@ import SignupCust from './components/SignupLogin/SignupCust.jsx';
 import Test from './components/SignupLogin/Test.jsx';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import Home from './components/Home/HomePage.jsx';
 import BottomTabNavigation from './components/BottomTavNav.jsx';
+
 
 const Stack = createStackNavigator();
 
@@ -38,6 +40,7 @@ const App = () => {
           headerShown: false
         }} />
 
+
         <Stack.Screen name="login" component={Login} options={{
           headerShown: false
         }} />
@@ -46,6 +49,7 @@ const App = () => {
         }} />
         <Stack.Screen name="bottomTabNav" component={BottomTabNavigation} options={{ headerShown: false }} />
     
+
       </Stack.Navigator>
       
       
