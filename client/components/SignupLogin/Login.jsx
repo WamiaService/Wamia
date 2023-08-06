@@ -13,10 +13,12 @@ import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('')
+  const navigation = useNavigation()
   const verifyAccount = (activationCode) => {
     axios
       .get(`http://192.168.1.6:3000/provider/verify/${activationCode}`)
@@ -44,6 +46,7 @@ const Login = () => {
         alert('Please verify your email before login.');
       } else {
         alert('Login successful');
+        navigation.navigate('hone');
       }
     } catch (error) {
       console.log(error);
@@ -59,6 +62,7 @@ const Login = () => {
     );
   };
 
+  
   return (
     <View style={styles.container}>
  <Image
