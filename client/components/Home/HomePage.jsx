@@ -17,14 +17,16 @@ import Carousel from 'react-native-snap-carousel';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigation from '../BottomTavNav.jsx';
 import axios from 'axios';
+import ShimmerEffect from './ShimmerEffect.jsx';
 
 
 const Home = () => {
     const drawer = useRef(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showLoader, setShowLoader] = useState(true);
 
     useEffect(() => {
         if (searchTerm.trim() !== '') {
@@ -53,9 +55,16 @@ const Home = () => {
         } else {
             setSearchResults([]);
         }
+        
     }, [searchTerm]);
 
-
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowLoader(false);
+        }, 3000);
+    
+        return () => clearTimeout(timer);
+      }, []);
 
     const itemList = [
         { name: 'Home', icon: 'home' },
@@ -158,17 +167,20 @@ const Home = () => {
 
                 </View>
 
-                {/* Category Section */}
-                <Text style={styles.sectionTitle}>Categories</Text>
-                <View style={styles.categoryContainer}>
-
-                    {categories.map((category) => (
-                        <View key={category.name} style={styles.categoryItem}>
-                            <Image source={category.image} style={styles.categoryImage} />
-                            <Text style={styles.categoryName}>{category.name}</Text>
-                        </View>
-                    ))}
-                </View>
+          {/* Category Section */}
+        <Text style={styles.sectionTitle}>Categories</Text>
+        <View style={styles.categoryContainer}>
+          {/* Display loader for 3 seconds */}
+          {showLoader && <ShimmerEffect />}
+          {/* Show categories after 3 seconds */}
+          {!showLoader &&
+            categories.map((category) => (
+              <View key={category.name} style={styles.categoryItem}>
+                <Image source={category.image} style={styles.categoryImage} />
+                <Text style={styles.categoryName}>{category.name}</Text>
+              </View>
+            ))}
+        </View>
 
                 {/* Advertising Section (Carousel) */}
                 <View style={styles.carouselContainer}>
