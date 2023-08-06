@@ -49,6 +49,7 @@ const Login = () => {
         alert('Please verify your email before login.');
       } else {
         alert('Login successful');
+        navigation.navigate('hone');
       }
     } catch (error) {
       console.log(error);
@@ -64,6 +65,7 @@ const Login = () => {
     );
   };
 
+  
   return (
     <View style={styles.container}>
  <Image
