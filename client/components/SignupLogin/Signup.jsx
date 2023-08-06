@@ -34,10 +34,11 @@ const Signup = () => {
     'menuisier',
     'camera',
   ]);
-  const _uploadImage = (photo) => {
+
+  const _uploadImage = (photo, setImageUrl) => {
     const data = new FormData();
     data.append('file', {
-      uri: photo.assets[0].uri, // Access the selected asset through the assets array
+      uri: photo.assets[0].uri,
       type: 'image/jpg',
       name: 'image.jpg',
     });
@@ -53,12 +54,33 @@ const Signup = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setImgprof(data.url);
+        setImageUrl(data.url);
         console.log(data);
       })
       .catch((err) => {
         Alert.alert('Error While Uploading');
       });
+  };
+
+  const handleGalleryAccessProfile = async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Gallery permission denied');
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1.0,
+      });
+
+      if (!result.cancelled) {
+        _uploadImage(result, setImgprof);
+      }
+    } catch (error) {
+      console.log('Error selecting image from gallery:', error);
+    }
   };
 
   const handleGalleryAccess = async () => {
@@ -74,15 +96,14 @@ const Signup = () => {
         quality: 1.0,
       });
 
-      if (!result.canceled) { // Use "canceled" instead of "cancelled"
-        _uploadImage(result);
+      if (!result.cancelled) {
+        _uploadImage(result, setPatente);
       }
     } catch (error) {
       console.log('Error selecting image from gallery:', error);
     }
   };
 
-  /////////////
   const singUppp =  (username,password,email,imgprof,patente,category) => {
     const selectedCategory = category[0] || category[1];
 
@@ -98,7 +119,7 @@ const Signup = () => {
       .then((res) => {
         console.log(res.data);
         alert('Check your email for verification.');
-        navigation.navigate('login'); // Navigate to the login screen after successful signup
+        navigation.navigate('login');
       })
       .catch((err) => {
         console.log(err);
@@ -109,25 +130,19 @@ const Signup = () => {
           alert('Signup Failed');
         }
       });
-  };;
-  
+  };
+
   const handleSignup = () => {
     singUppp(
-     username,
-     password,
-     email,
-     patente,
-     imgprof,
-     category
+      username,
+      password,
+      email,
+      imgprof,
+      patente,
+      category
     );
   };
 
-
-
-  // console.log('username',username);
-  // console.log(email);
-  // console.log(password);
-  
   return (
     <View style={styles.container}>
       <Image
@@ -168,22 +183,6 @@ const Signup = () => {
             onChangeText={(val)=> setPassword(val)} 
           />
         </View>
-        {/* <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inp}
-            placeholder="imgprof ..."
-            defaultValue={imgprof}
-            onChangeText={(val)=> setImgprof(val)} 
-          />
-        </View> */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inp}
-            defaultValue={patente}
-            placeholder="patente ..."
-            onChangeText={(val)=> setPatente(val)} 
-          />
-        </View>
 
         <View style={styles.inputContainer}>
           <AntDesign
@@ -193,20 +192,20 @@ const Signup = () => {
             style={styles.icon}
           />
           <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccess}>
-            <Text>Image</Text>
+            <Text>Patente</Text>
           </TouchableOpacity>
         </View>
-        {/* <View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
           <AntDesign
             name="picture"
             size={24}
             color="black"
             style={styles.icon}
           />
-          <TouchableOpacity style={styles.photoInput}>
-            <Text>Patente</Text>
+          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccessProfile}>
+            <Text>imageprofile</Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
         <SelectDropdown
           style={styles.drop}
           data={category}

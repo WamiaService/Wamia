@@ -13,8 +13,11 @@ import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
 
 const SignupCust = () => {
+  const navigation = useNavigation()
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -22,11 +25,84 @@ const SignupCust = () => {
     const [imgprof,setImgprof] = useState('')
     const [identity,setIdentity]=useState('')
     const [adresse,setAdresse]=useState('')
+
+
+
+
+    const _uploadImage = (photo, setImageUrl) => {
+      const data = new FormData();
+      data.append('file', {
+        uri: photo.assets[0].uri,
+        type: 'image/jpg',
+        name: 'image.jpg',
+      });
+      data.append('upload_preset', 'phoneProduct');
+      data.append('cloud_name', 'dgcdmrj7x');
+      fetch('https://api.cloudinary.com/v1_1/dgcdmrj7x/image/upload', {
+        method: 'POST',
+        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setImageUrl(data.url);
+          console.log(data);
+        })
+        .catch((err) => {
+          Alert.alert('Error While Uploading');
+        });
+    };
+
+    const handleGalleryAccessProfile = async () => {
+      try {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Gallery permission denied');
+          return;
+        }
+  
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 1.0,
+        });
+  
+        if (!result.cancelled) {
+          _uploadImage(result, setImgprof);
+        }
+      } catch (error) {
+        console.log('Error selecting image from gallery:', error);
+      }
+    };
+    const handleGalleryAccess = async () => {
+      try {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Gallery permission denied');
+          return;
+        }
+  
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 1.0,
+        });
+  
+        if (!result.cancelled) {
+          _uploadImage(result, setIdentity);
+        }
+      } catch (error) {
+        console.log('Error selecting image from gallery:', error);
+      }
+    };
+
     const singUppp =  (username,password,email,imgprof,identity,adresse) => {
-           axios.post('http://192.168.11.127:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
+           axios.post('http://192.168.1.7:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
           .then((res)=>{
     console.log(res.data);
             alert('check yore mail')
+            navigation.navigate('login');
           }).catch((err)=>{
             console.log(err);
           })
@@ -83,22 +159,7 @@ const SignupCust = () => {
           onChangeText={(val)=> setPassword(val)} 
         />
       </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inp}
-          placeholder="imgprof ..."
-          defaultValue={imgprof}
-          onChangeText={(val)=> setImgprof(val)} 
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inp}
-          defaultValue={identity}
-          placeholder="identity ..."
-          onChangeText={(val)=> setIdentity(val)} 
-        />
-      </View>
+      
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inp}
@@ -108,28 +169,28 @@ const SignupCust = () => {
         />
       </View>
 
-      {/* <View style={styles.inputContainer}>
-        <AntDesign
-          name="picture"
-          size={24}
-          color="black"
-          style={styles.icon}
-        />
-        <TouchableOpacity style={styles.photoInput}>
-          <Text>Image</Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.inputContainer}>
-        <AntDesign
-          name="picture"
-          size={24}
-          color="black"
-          style={styles.icon}
-        />
-        <TouchableOpacity style={styles.photoInput}>
-          <Text>Patente</Text>
-        </TouchableOpacity>
-      </View> */}
+          <AntDesign
+            name="picture"
+            size={24}
+            color="black"
+            style={styles.icon}
+          />
+          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccess}>
+            <Text>Identety</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.inputContainer}>
+          <AntDesign
+            name="picture"
+            size={24}
+            color="black"
+            style={styles.icon}
+          />
+          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccessProfile}>
+            <Text>imageprofile</Text>
+          </TouchableOpacity>
+        </View>
      
 
       <Button onPress={()=>handleSignup()} title="Sign Up" color="#FFA500" borderRadius={30} />
