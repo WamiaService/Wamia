@@ -8,6 +8,8 @@ import SignupCust from './components/SignupLogin/SignupCust.jsx';
 import Test from './components/SignupLogin/Test.jsx';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Edit from "./components/Custumor/Edit.jsx"
+import One from './components/Custumor/One.jsx';
 
 import Home from './components/Home/HomePage.jsx';
 import BottomTabNavigation from './components/BottomTavNav.jsx';
@@ -44,15 +46,17 @@ const App = () => {
         <Stack.Screen name="login" component={Login} options={{
           headerShown: false
         }} />
-        <Stack.Screen name="home" component={Home} options={{
+        {/* <Stack.Screen name="home" component={Home} options={{
           headerShown: false
-        }} />
+        }} /> */}
         <Stack.Screen name="bottomTabNav" component={BottomTabNavigation} options={{ headerShown: false }} />
-    
-
+  
+                  <Stack.Screen name ="one" component={One}/>
+                  <Stack.Screen name ="edit" component={Edit} />
       </Stack.Navigator>
       
       
+
     </NavigationContainer>
   );
 };
