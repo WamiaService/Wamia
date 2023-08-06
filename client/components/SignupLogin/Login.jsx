@@ -43,7 +43,7 @@ const Login = () => {
       });
   
       console.log(response.data);
-      navigation.navigate('edit');
+      navigation.navigate('bottomTabNav');
 
       if (response.data.message === 'verifier votre boite email') {
         alert('Please verify your email before login.');
