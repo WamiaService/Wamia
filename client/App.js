@@ -9,7 +9,8 @@ import Test from './components/SignupLogin/Test.jsx';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Welcome from './components/SignupLogin/Welcome.jsx';
-
+import Edit from "./components/Custumor/Edit.jsx"
+import One from './components/Custumor/One.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -43,7 +44,10 @@ const App = () => {
                   <Stack.Screen name="welcome" component={Welcome} options={{
                      headerShown: false
                   }} />
+                  <Stack.Screen name ="one" component={One}/>
+                  <Stack.Screen name ="edit" component={Edit} />
       </Stack.Navigator>
+
     </NavigationContainer>
   );
 };

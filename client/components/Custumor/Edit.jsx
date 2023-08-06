@@ -13,14 +13,14 @@ import {
   import { COLORS, FONTS } from "./constant";
   import { MaterialIcons } from "@expo/vector-icons";
 
-  import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
+  // import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
   
   const EditProfile = () => {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
+    // const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
   
 
   
