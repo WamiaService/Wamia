@@ -8,7 +8,10 @@ import SignupCust from './components/SignupLogin/SignupCust.jsx';
 import Test from './components/SignupLogin/Test.jsx';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Welcome from './components/SignupLogin/Welcome.jsx';
+
+import Home from './components/Home/HomePage.jsx';
+import BottomTabNavigation from './components/BottomTavNav.jsx';
+
 
 const Stack = createStackNavigator();
 
@@ -30,20 +33,26 @@ const App = () => {
         ) : (
           <Stack.Screen name="start" component={Start} options={{ headerShown: false }} />
         )}
-                  <Stack.Screen name="signup" component={Signup} options={{
-                     headerShown: false
-                  }}/>
-                  <Stack.Screen name="signupcust" component={SignupCust} options={{
-                     headerShown: false
-                  }} />
+        <Stack.Screen name="signup" component={Signup} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="signupcust" component={SignupCust} options={{
+          headerShown: false
+        }} />
 
-<Stack.Screen name="login" component={Login} options={{
-                     headerShown: false
-                  }} />
-                  <Stack.Screen name="welcome" component={Welcome} options={{
-                     headerShown: false
-                  }} />
+
+        <Stack.Screen name="login" component={Login} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="home" component={Home} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="bottomTabNav" component={BottomTabNavigation} options={{ headerShown: false }} />
+    
+
       </Stack.Navigator>
+      
+      
     </NavigationContainer>
   );
 };

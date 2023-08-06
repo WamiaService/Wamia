@@ -2,6 +2,8 @@ const Provider = require('../database/models/provider')
 const jwt = require('jsonwebtoken')
 const bcrypt = require ('bcrypt');
 const { sendConfirmationEmail } = require('../sendgrid');
+const { Op } = require('sequelize');
+
 
 
 //Get All Provider
@@ -124,11 +126,44 @@ return res.send({
     }
   };
   
-
+  const searchProviders = async (req, res) => {
+    try {
+      let whereClause = {};
+  
+      if (req.query.username) {
+        whereClause.username = {
+          [Op.like]: '%' + req.query.username + '%'
+        };
+      }
+  
+      if (req.query.email) {
+        whereClause.email = {
+          [Op.like]: '%' + req.query.email + '%'
+        };
+      }
+  
+      if (req.query.category) {
+        whereClause.category = {
+          [Op.substring]: '%' + req.query.category + '%'
+        };
+      }
+  
+      const providers = await Provider.findAll({
+        where: whereClause
+      });
+  
+      res.status(200).json(providers);
+    } catch (error) {
+      console.error('Search Providers Error:', error);
+      res.status(500).json({ error: 'Failed to retrieve providers based on the search criteria' });
+    }
+  };
+  
   module.exports = {
     getAllProvider,
     getOneProvider,
     signupProvider,
     loginProvider,
-    verifyProvider
+    verifyProvider,
+    searchProviders
   }
