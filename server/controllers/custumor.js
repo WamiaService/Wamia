@@ -85,11 +85,7 @@ const logincustumor = async (req, res) => {
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid password' });
       }
-      if (custumor && isPasswordValid && !custumor.is_approved) {
-        return res.send({
-          message: "verifier votre boite email"
-        })
-              }
+     
       const token = jwt.sign({ custumorId: custumor.id }, 'your_secret_key');
       res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Set token as a cookie
       res.status(200).json({ token });
