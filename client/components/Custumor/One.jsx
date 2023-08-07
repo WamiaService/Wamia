@@ -10,49 +10,6 @@ const navigateToEditProfile = () => {
   navigation.navigate("Edit");
 };
 
-const navigateToSecurity = () => {
-  console.log("Security function");
-};
-
-const navigateToNotifications = () => {
-  console.log("Notifications function");
-};
-
-const navigateToPrivacy = () => {
-  console.log("Privacy function");
-};
-
-const navigateToSubscription = () => {
-  console.log("Subscription function");
-};
-
-const navigateToSupport = () => {
-  console.log("Support function");
-};
-
-const navigateToTermsAndPolicies = () => {
-  console.log("Terms and Policies function");
-};
-
-const navigateToFreeSpace = () => {
-  console.log("Free Space function");
-};
-
-const navigateToDateSaver = () => {
-  console.log("Date saver");
-};
-
-const navigateToReportProblem = () => {
-  console.log("Report a problem");
-};
-
-const addAccount = () => {
-  console.log("Aadd account ");
-};
-
-const logout = () => {
-  console.log("Logout");
-};
 
 const accountItems = [
   {
@@ -113,7 +70,7 @@ const renderSettingsItem = ({ icon, text, action }) => (
       backgroundColor: COLORS.gray,
     }}
   >
-    <MaterialIcons name={icon} size={24} color="black" />
+    <MaterialIcons name={icon} size={24} color="#FFA500" />
     <Text
       style={{
         marginLeft: 36,
