@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 const sequelize = require("./database/db")
+const servicesRoutes= require('./routes/services.routes')
+
+
 const Adminrouter = require("./routes/admin.routes")
 const payementRouter= require('./routes/payment.routes')
 require("dotenv").config()
@@ -14,7 +17,8 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-
+//!services
+app.use('/service', servicesRoutes)
 const providerRoute = require('./routes/provider.routes')
 app.use('/provider',providerRoute)
 const custumorRoute = require('./routes/custumor.routes')
