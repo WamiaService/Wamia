@@ -1,0 +1,26 @@
+.card-list{
+    padding: 5px;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 40px;
+  }
+  .card-img{
+    width: 333px;
+    height: 333px;
+    justify-self: center;
+  }
+  .card{
+    width: 334px;
+    background-color: rgb(255, 255, 255);
+  box-shadow: 5px 10px 10px 5px rgba(128, 128, 128, 0.342);
+  .buttons{
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    .butt{margin: 5px;}
+  }
+  }
+  .verif{
+    margin-left: 245px;
+    width: 90%;
+  }
