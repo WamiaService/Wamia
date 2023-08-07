@@ -16,14 +16,14 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store'; 
 
-const Login = ({ handleLogin }) => {
+const LoginC = ({ handleLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
   const loginn = async (username, password) => {
     try {
-      const response = await axios.post('http://192.168.11.187:3000/provider/login', {
+      const response = await axios.post('http://192.168.11.187:3000/custumor/login', {
         username: username,
         password: password,
       });
@@ -35,7 +35,7 @@ const Login = ({ handleLogin }) => {
         // Save the token in SecureStore
         await SecureStore.setItemAsync('jwt-token', token); 
   
-        handleLogin(token, response.data.providerId);
+        handleLogin(token, response.data.custumorId);
         console.log(response.data);
         navigation.navigate('bottomTabNav');
         alert('Login successful');
@@ -84,7 +84,7 @@ const Login = ({ handleLogin }) => {
   );
 };
 
-export default Login;
+export default LoginC;
 
 const styles = StyleSheet.create({
   container: {

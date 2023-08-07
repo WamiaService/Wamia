@@ -6,11 +6,15 @@ import { useNavigation } from '@react-navigation/native'; // Import useNavigatio
 
 import Home from './Home/HomePage.jsx';
 import Choose from './Choose.jsx';
+import One from './Custumor/One.jsx';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigation = () => {
+const BottomTabNavigation = ({providerId}) => {
   const navigation = useNavigation();
+
+
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -21,7 +25,7 @@ const BottomTabNavigation = () => {
             iconName = focused ? 'home' : 'home';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'cog' : 'cog';
-          } else if (route.name === 'NewScreen') {
+          } else if (route.name === 'profile') {
             iconName = focused ? 'user' : 'user';
           }
 
@@ -36,8 +40,10 @@ const BottomTabNavigation = () => {
         inactiveTintColor: 'gray',
       }}
     >
-      <Tab.Screen name="home" component={Home} />
-     <Tab.Screen name="NewScreen" component={Choose} /> 
+<Tab.Screen name="home">
+  {() => <Home providerId={providerId} />}
+</Tab.Screen>
+     <Tab.Screen name="profile" component={One}  /> 
       {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
     </Tab.Navigator>
   );
