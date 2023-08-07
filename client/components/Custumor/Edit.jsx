@@ -21,15 +21,19 @@ import {
     const [name, setName] = useState("");
   
     const [password, setPassword] = useState("");
+
     const[image,setImage]=useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
     const [adresse,setAdresse]=useState("")
     const [mobile,setMobile]=useState()
+
+
   
 
   
 // Function to handle changes to the input
-const handleName= (text) => {
-  setName(text);
+
+        const handleName =(text) => {
+ setName(text);
 };
 // const handleImage= (text) => {
 //   setImage(text);

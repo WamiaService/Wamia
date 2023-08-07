@@ -3,11 +3,11 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, FONTS } from "./constant.jsx";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
 const One=()=>{
-
+  const navigation = useNavigation()
 const navigateToEditProfile = () => {
-  navigation.navigate("Edit");
+  navigation.navigate("edit");
 };
 
 

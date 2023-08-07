@@ -2,6 +2,8 @@ const Provider = require('../database/models/provider')
 const jwt = require('jsonwebtoken')
 const bcrypt = require ('bcrypt');
 const { sendConfirmationEmail } = require('../sendgrid');
+const { Op } = require('sequelize');
+
 
 
 //Get All Provider
@@ -92,13 +94,9 @@ const loginProvider = async (req, res) => {
         return res.status(401).json({ error: 'Invalid password' });
       }
 
-      if (provider && isPasswordValid && !provider.is_approved) {
-return res.send({
-  message: "verifier votre boite email"
-})
-      }
+     
 
-      const token = jwt.sign({ providerId: provider.id, role: provider.role }, 'your_secret_key');
+      const token = jwt.sign({ providerId: provider.id }, 'your_secret_key');
       res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); 
       res.status(200).json({ token });
     } catch (error) {
@@ -124,11 +122,80 @@ return res.send({
     }
   };
   
+  const searchProviders = async (req, res) => {
+    try {
+      let whereClause = {};
+  
+      if (req.query.username) {
+        whereClause.username = {
+          [Op.like]: '%' + req.query.username + '%'
+        };
+      }
+  
+      if (req.query.email) {
+        whereClause.email = {
+          [Op.like]: '%' + req.query.email + '%'
+        };
+      }
+  
+      if (req.query.category) {
+        whereClause.category = {
+          [Op.substring]: '%' + req.query.category + '%'
+        };
+      }
+  
+      const providers = await Provider.findAll({
+        where: whereClause
+      });
+  
+      res.status(200).json(providers);
+    } catch (error) {
+      console.error('Search Providers Error:', error);
+      res.status(500).json({ error: 'Failed to retrieve providers based on the search criteria' });
+    }
+  };
 
+
+  //! update Provider
+  const updateProvider = async(req,res)=>{
+    const { id } = req.params;
+    let {
+      username,
+      email,
+      password,
+      mobile,  
+      imgprof
+    } = req.body;
+      
+    try{
+      const providerProfile= await Provider.findByPk(id)
+      if (!providerProfile) {
+        return res.status(404).json({ error: "User profile not found" });
+      } 
+   
+      providerProfile.username=username;
+      providerProfile.email=email;
+      providerProfile.password=password;
+      providerProfile.mobile=mobile;
+      providerProfile.imgprof=imgprof
+  
+  
+    await providerProfile.save();
+    res.json(providerProfile);
+      
+    }
+    catch(error){
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+  
   module.exports = {
     getAllProvider,
     getOneProvider,
     signupProvider,
     loginProvider,
-    verifyProvider
+    verifyProvider,
+    searchProviders,
+    updateProvider
   }
