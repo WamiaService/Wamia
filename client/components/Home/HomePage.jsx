@@ -19,18 +19,19 @@ import BottomTabNavigation from '../BottomTavNav.jsx';
 import axios from 'axios';
 
 
-const Home = () => {
+const Home = ({providerId}) => {
     const drawer = useRef(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [avatarUrl, setAvatarUrl] = useState("");
 
     useEffect(() => {
         if (searchTerm.trim() !== '') {
             setIsLoading(true);
             setError(null);
-            axios.get(`http://localhost:3000/provider/search?category=${searchTerm}`)
+            axios.get(`http://192.168.1.7:3000/provider/search?category=${searchTerm}`)
                 .then(response => {
                     setSearchResults(response.data);
                 })
@@ -54,6 +55,25 @@ const Home = () => {
             setSearchResults([]);
         }
     }, [searchTerm]);
+
+   useEffect(() => {
+    const fetchAvatarUrl = async () => {
+        if (providerId) {
+          try {
+            const response = await axios.get(`http://192.168.11.187:3000/provider/getOne/${providerId}`);
+            const imgprof = response.data.imgprof;
+            console.log("imgprof taswirraaaa:", imgprof); // Check the value of imgprof
+            setAvatarUrl(imgprof);
+          } catch (error) {
+            console.error("Error fetching avatar URL:", error);
+            setAvatarUrl(""); // Set empty avatarUrl to avoid the 404 error
+          }
+        }
+      };
+      
+
+  fetchAvatarUrl();
+}, [providerId]);
 
 
 
@@ -117,10 +137,10 @@ const Home = () => {
                     </TouchableOpacity>
                     {/* Avatar */}
                     <TouchableOpacity>
-                        <Image
-                            source={require('../../assets/logo.png')}
-                            style={styles.avatar}
-                        />
+                    <Image
+  source={avatarUrl ? { uri: avatarUrl } : require('../../assets/w.png')}
+  style={styles.avatar}
+/>
                     </TouchableOpacity>
                     </View>
                 </View>

@@ -13,12 +13,17 @@ import One from './components/Custumor/One.jsx';
 
 import Home from './components/Home/HomePage.jsx';
 import BottomTabNavigation from './components/BottomTavNav.jsx';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginC from './components/SignupLogin/LoginC.jsx';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   const [showSignup, setShowSignup] = useState(false);
+  const [providerId, setproviderId] = useState('');
+  
+  const [token, setToken] = useState('');
+
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -27,6 +32,39 @@ const App = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  useEffect(() => {
+    const fetchStoredProviderId = async () => {
+      try {
+        const storedProviderId = await AsyncStorage.getItem('providerId');
+        if (storedProviderId) {
+          setproviderId(storedProviderId);
+        }
+      } catch (error) {
+        console.error('Error fetching data from AsyncStorage:', error);
+      }
+    };
+  
+    fetchStoredProviderId();
+  }, []);
+  
+
+  const handleLogin = async (newToken, newProviderId) => {
+    setToken(newToken);
+  
+    // Check if the newProviderId is not empty before updating it
+    if (newProviderId) {
+      setproviderId(newProviderId);
+  
+      try {
+        await AsyncStorage.setItem('providerId', newProviderId);
+      } catch (error) {
+        console.error('Error storing data in AsyncStorage:', error);
+      }
+    }
+  };
+  
+  
+  
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -43,13 +81,18 @@ const App = () => {
         }} />
 
 
-        <Stack.Screen name="login" component={Login} options={{
-          headerShown: false
-        }} />
+        <Stack.Screen name="login">
+  {(props) => <Login {...props} handleLogin={handleLogin} />}
+</Stack.Screen>
+<Stack.Screen name="loginc">
+  {(props) => <LoginC {...props} handleLogin={handleLogin} />}
+</Stack.Screen>
         {/* <Stack.Screen name="home" component={Home} options={{
           headerShown: false
         }} /> */}
-        <Stack.Screen name="bottomTabNav" component={BottomTabNavigation} options={{ headerShown: false }} />
+           <Stack.Screen name="bottomTabNav">
+          {(props) => <BottomTabNavigation {...props} providerId={providerId} />}
+        </Stack.Screen>
   
                   <Stack.Screen name ="one" component={One}/>
                   <Stack.Screen name ="edit" component={Edit} />
