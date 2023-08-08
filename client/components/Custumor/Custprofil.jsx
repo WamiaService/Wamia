@@ -6,8 +6,8 @@ import Cookies from "universal-cookie";
 import Edit from './Edit.jsx'
 
  const Custumor=()=> {
-
   const [data, setData] = useState([]);
+  const[refetch,setRefetech]=useState(false)
   const [id,setId] = useState(null)
 
 
@@ -55,12 +55,27 @@ import Edit from './Edit.jsx'
     }
   };
 
-
+  const updateCus=(id,username,adresse,mobile)=>{
+   
+    axios.put(`http://192.168.100.18:3000/custumor/update/${id}`,{
+      username: username,
+      adressse:adresse,
+      // imgprof:imgprof,
+      mobile:mobile
+      })
+    .then((res)=>{setRefetech(!refetch)})
+    .catch((err)=>{console.log(err)})
+  
+  
+  
+  
+  }
+  
 
     return (
   
       <View>
-          <Edit  data={data}/> 
+        <Text> <Edit  data={data}  update={updateCus}/></Text>  
       </View>
       );
     };

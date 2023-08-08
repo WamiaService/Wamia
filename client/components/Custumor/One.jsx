@@ -10,6 +10,7 @@ const navigateToEditProfile = () => {
   navigation.navigate("edit");
 };
 
+
 const navigateToSecurity = () => {
   console.log("Security function");
 };
@@ -55,6 +56,7 @@ const logout = () => {
   navigation.navigate("login");
 
 };
+
 
 const accountItems = [
   {
@@ -115,7 +117,7 @@ const renderSettingsItem = ({ icon, text, action }) => (
       backgroundColor: COLORS.gray,
     }}
   >
-    <MaterialIcons name={icon} size={24} color="black" />
+    <MaterialIcons name={icon} size={24} color="#FFA500" />
     <Text
       style={{
         marginLeft: 36,
