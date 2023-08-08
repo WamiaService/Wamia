@@ -142,6 +142,9 @@ const Signup = () => {
       category
     );
   };
+  const handleLoginPress = () => {
+    navigation.navigate('login'); 
+  }
 
   return (
     <View style={styles.container}>
@@ -222,7 +225,12 @@ const Signup = () => {
 
         <Button onPress={()=>handleSignup()} title="Sign Up" color="#FFA500" borderRadius={30} />
 
-        <Text>If you have an account please Login</Text>
+        <View>
+      <Text>If you have an account, please</Text>
+      <TouchableOpacity onPress={handleLoginPress}>
+        <Text style={{ color: '#FFA500' }}>Login</Text>
+      </TouchableOpacity>
+    </View>
 
         <StatusBar style="auto" />
       </RNScrollView>

@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, FONTS } from "./constant.jsx";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-const One=()=>{
+const One=({handleLogoutCustumor,handleLogoutProvider})=>{
   const navigation = useNavigation()
 const navigateToEditProfile = () => {
   navigation.navigate("edit");
@@ -51,7 +51,9 @@ const addAccount = () => {
 };
 
 const logout = () => {
-  console.log("Logout");
+  handleLogoutProvider()
+  navigation.navigate("login");
+
 };
 
 const accountItems = [
