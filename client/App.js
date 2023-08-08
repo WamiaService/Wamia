@@ -15,12 +15,12 @@ import Home from './components/Home/HomePage.jsx';
 import BottomTabNavigation from './components/BottomTavNav.jsx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginC from './components/SignupLogin/LoginC.jsx';
-
+import SessionStorage from 'react-native-session-storage';
 const Stack = createStackNavigator();
 
 const App = () => {
   const [showSignup, setShowSignup] = useState(false);
-  const [providerId, setproviderId] = useState('');
+  const [providerId, setProviderId] = useState('');
   
   const [token, setToken] = useState('');
 
@@ -33,36 +33,23 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const fetchStoredProviderId = async () => {
-      try {
-        const storedProviderId = await AsyncStorage.getItem('providerId');
-        if (storedProviderId) {
-          setproviderId(storedProviderId);
-        }
-      } catch (error) {
-        console.error('Error fetching data from AsyncStorage:', error);
-      }
-    };
-  
-    fetchStoredProviderId();
-  }, []);
-  
+    const storedProviderId = SessionStorage.getItem('providerId');
 
-  const handleLogin = async (newToken, newProviderId) => {
-    setToken(newToken);
-  
-    // Check if the newProviderId is not empty before updating it
-    if (newProviderId) {
-      setproviderId(newProviderId);
-  
-      try {
-        await AsyncStorage.setItem('providerId', newProviderId);
-      } catch (error) {
-        console.error('Error storing data in AsyncStorage:', error);
-      }
+    if (storedProviderId) {
+      setProviderId(storedProviderId);
     }
+    console.log("storedid:",storedProviderId);
+  }, []);
+
+  const handleLogin = (newToken, newUserId) => {
+    setToken(newToken);
+    setProviderId(newUserId);
+
+    // Store user ID and role in sessionStorage
+    SessionStorage.setItem('providerId', newUserId);
   };
-  
+
+  console.log("ProviderId in App:", providerId)
   
   
   return (
@@ -84,9 +71,9 @@ const App = () => {
         <Stack.Screen name="login">
   {(props) => <Login {...props} handleLogin={handleLogin} />}
 </Stack.Screen>
-<Stack.Screen name="loginc">
+{/* <Stack.Screen name="loginc">
   {(props) => <LoginC {...props} handleLogin={handleLogin} />}
-</Stack.Screen>
+</Stack.Screen> */}
         {/* <Stack.Screen name="home" component={Home} options={{
           headerShown: false
         }} /> */}

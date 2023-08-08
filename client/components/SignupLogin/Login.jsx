@@ -23,7 +23,7 @@ const Login = ({ handleLogin }) => {
 
   const loginn = async (username, password) => {
     try {
-      const response = await axios.post('http://192.168.11.187:3000/provider/login', {
+      const response = await axios.post('http://192.168.11.224:3000/provider/login', {
         username: username,
         password: password,
       });
@@ -35,10 +35,10 @@ const Login = ({ handleLogin }) => {
         // Save the token in SecureStore
         await SecureStore.setItemAsync('jwt-token', token); 
   
-        handleLogin(token, response.data.providerId);
-        console.log(response.data);
+        console.log("rspone data =" ,response.data);
         navigation.navigate('bottomTabNav');
         alert('Login successful');
+        handleLogin(token, response.data.providerId);
       } else {
         alert('Login failed: Invalid response data');
       }
