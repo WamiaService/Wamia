@@ -17,15 +17,14 @@ import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store'; 
 import { decode as base64Decode } from 'base-64';
 
-
-const Login = ({ handleLogin }) => {
+const LoginC = ({ handleLoginCustumor }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
   const loginn = async (username, password) => {
     try {
-      const response = await axios.post('http://192.168.104.13:3000/provider/login', {
+      const response = await axios.post('http://192.168.104.13:3000/custumor/login', {
         username: username,
         password: password,
       });
@@ -39,12 +38,12 @@ const Login = ({ handleLogin }) => {
         console.log('Parsed Payload:', payload);
   
         // Adjust this part based on your payload structure
-        if (payload && payload.providerId) {
+        if (payload && payload.custumorId) {
           // Save the token in SecureStore
           await SecureStore.setItemAsync('jwt-token', token);
   
-          handleLogin(token, payload.providerId);
-          console.log('Provider ID:', payload.providerId);
+          handleLoginCustumor(token, payload.custumorId);
+          console.log('custumor ID:', payload.custumorId);
           console.log('Response Data:', response.data);
           navigation.navigate('bottomTabNav');
           alert('Login successful');
@@ -59,8 +58,6 @@ const Login = ({ handleLogin }) => {
       alert('Login failed');
     }
   };
-  
-  
   
   
 
@@ -98,7 +95,7 @@ const Login = ({ handleLogin }) => {
   );
 };
 
-export default Login;
+export default LoginC;
 
 const styles = StyleSheet.create({
   container: {

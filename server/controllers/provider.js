@@ -94,13 +94,9 @@ const loginProvider = async (req, res) => {
         return res.status(401).json({ error: 'Invalid password' });
       }
 
-      if (provider && isPasswordValid && !provider.is_approved) {
-return res.send({
-  message: "verifier votre boite email"
-})
-      }
+     
 
-      const token = jwt.sign({ providerId: provider.id, role: provider.role }, 'your_secret_key');
+      const token = jwt.sign({ providerId: provider.id }, 'your_secret_key');
       res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); 
       res.status(200).json({ token });
     } catch (error) {
@@ -158,6 +154,41 @@ return res.send({
       res.status(500).json({ error: 'Failed to retrieve providers based on the search criteria' });
     }
   };
+
+
+  //! update Provider
+  const updateProvider = async(req,res)=>{
+    const { id } = req.params;
+    let {
+      username,
+      email,
+      password,
+      mobile,  
+      imgprof
+    } = req.body;
+      
+    try{
+      const providerProfile= await Provider.findByPk(id)
+      if (!providerProfile) {
+        return res.status(404).json({ error: "User profile not found" });
+      } 
+   
+      providerProfile.username=username;
+      providerProfile.email=email;
+      providerProfile.password=password;
+      providerProfile.mobile=mobile;
+      providerProfile.imgprof=imgprof
+  
+  
+    await providerProfile.save();
+    res.json(providerProfile);
+      
+    }
+    catch(error){
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
   
   module.exports = {
     getAllProvider,
@@ -165,5 +196,6 @@ return res.send({
     signupProvider,
     loginProvider,
     verifyProvider,
-    searchProviders
+    searchProviders,
+    updateProvider
   }
