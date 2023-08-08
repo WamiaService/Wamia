@@ -15,15 +15,16 @@ import { TextInput } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store'; 
+import { decode as base64Decode } from 'base-64';
 
-const LoginC = ({ handleLogin }) => {
+const LoginC = ({ handleLoginCustumor }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
   const loginn = async (username, password) => {
     try {
-      const response = await axios.post('http://192.168.11.224:3000/custumor/login', {
+      const response = await axios.post('http://192.168.104.13:3000/custumor/login', {
         username: username,
         password: password,
       });
@@ -31,19 +32,29 @@ const LoginC = ({ handleLogin }) => {
       console.log('Response Data:', response.data);
       const token = response.data.token;
   
-      if (token) {
-        // Save the token in SecureStore
-        await SecureStore.setItemAsync('jwt-token', token); 
+      if (response.data && token) {
+        const payload = JSON.parse(base64Decode(token.split('.')[1]));
   
-        handleLogin(token, response.data.custumorId);
-        console.log(response.data);
-        navigation.navigate('bottomTabNav');
-        alert('Login successful');
+        console.log('Parsed Payload:', payload);
+  
+        // Adjust this part based on your payload structure
+        if (payload && payload.custumorId) {
+          // Save the token in SecureStore
+          await SecureStore.setItemAsync('jwt-token', token);
+  
+          handleLoginCustumor(token, payload.custumorId);
+          console.log('custumor ID:', payload.custumorId);
+          console.log('Response Data:', response.data);
+          navigation.navigate('bottomTabNav');
+          alert('Login successful');
+        } else {
+          alert('Login failed: Invalid payload data');
+        }
       } else {
         alert('Login failed: Invalid response data');
       }
     } catch (error) {
-      console.log('Error aymen:', error);
+      console.log('Login Error:', error);
       alert('Login failed');
     }
   };
