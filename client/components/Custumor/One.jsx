@@ -4,10 +4,57 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, FONTS } from "./constant.jsx";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-const One=()=>{
+const One=({handleLogoutCustumor,handleLogoutProvider})=>{
   const navigation = useNavigation()
 const navigateToEditProfile = () => {
   navigation.navigate("edit");
+};
+
+
+const navigateToSecurity = () => {
+  console.log("Security function");
+};
+
+const navigateToNotifications = () => {
+  console.log("Notifications function");
+};
+
+const navigateToPrivacy = () => {
+  console.log("Privacy function");
+};
+
+const navigateToSubscription = () => {
+  console.log("Subscription function");
+};
+
+const navigateToSupport = () => {
+  console.log("Support function");
+};
+
+const navigateToTermsAndPolicies = () => {
+  console.log("Terms and Policies function");
+};
+
+const navigateToFreeSpace = () => {
+  console.log("Free Space function");
+};
+
+const navigateToDateSaver = () => {
+  console.log("Date saver");
+};
+
+const navigateToReportProblem = () => {
+  console.log("Report a problem");
+};
+
+const addAccount = () => {
+  console.log("Aadd account ");
+};
+
+const logout = () => {
+  handleLogoutProvider()
+  navigation.navigate("login");
+
 };
 
 

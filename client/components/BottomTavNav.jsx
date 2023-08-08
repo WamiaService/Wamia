@@ -10,7 +10,7 @@ import One from './Custumor/One.jsx';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigation = ({providerId}) => {
+const BottomTabNavigation = ({providerId, custumorId}) => {
   const navigation = useNavigation();
 
 console.log("provider id =",providerId);
@@ -41,7 +41,7 @@ console.log("provider id =",providerId);
       }}
     >
 <Tab.Screen name="home">
-  {() => <Home providerId={providerId} />}
+  {() => <Home custumorId={custumorId} providerId={providerId} />}
 </Tab.Screen>
      <Tab.Screen name="profile" component={One}  /> 
       {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
