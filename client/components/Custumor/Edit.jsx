@@ -15,7 +15,7 @@ import {
 
 
   
-  const EditProfile = () => {
+  const EditProfile = ({custumorId}) => {
 
 
     const [name, setName] = useState("");
@@ -27,12 +27,36 @@ import {
     const [mobile,setMobile]=useState()
 
 
+    const updateCus=(custumorId,username,adresse,mobile)=>{
+   
+      axios.put(`http://192.168.100.18:3000/custumor/update/${custumorId}`,{
+        username: username,
+        adressse:adresse,
+        // imgprof:imgprof,
+        mobile:mobile
+        })
+      .then((res)=>{setRefetech(!refetch)})
+      .catch((err)=>{console.log(err)})
+    
+    
+    
+    
+    }
+
+    console.log(custumorId)
+
+
+  
+
+
+
+
+
   
 
   
 // Function to handle changes to the input
-
-        const handleName =(text) => {
+ const handleName =(text) => {
  setName(text);
 };
 // const handleImage= (text) => {
@@ -277,7 +301,7 @@ const handleAdresse= (text) => {
               color: COLORS.white,
             }}
 
-            onPress={()=>{props.update(props.data.id,name,adresse,mobile,adresse)}}
+            onPress={()=>{update(props.idCustumor,name,adresse,mobile,adresse)}}
           >
             Save Change
           </Text>
