@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 const App = () => {
   const [showSignup, setShowSignup] = useState(false);
   const [providerId, setProviderId] = useState('');
-  
+  const [custumorId,setCustumorId] = useState('')
   const [token, setToken] = useState('');
 
 
@@ -40,16 +40,34 @@ const App = () => {
     }
     console.log("storedid:",storedProviderId);
   }, []);
+  /////////////
+  useEffect(() => {
+    const storedCustumorId = SessionStorage.getItem('custumorId');
 
-  const handleLogin = (newToken, newUserId) => {
+    if (storedCustumorId) {
+      setCustumorId(storedCustumorId);
+    }
+    console.log("storedid:",storedCustumorId);
+  }, []);
+
+  const handleLogin = (newToken, newProviderId) => {
     setToken(newToken);
-    setProviderId(newUserId);
+    setProviderId(newProviderId);
 
     // Store user ID and role in sessionStorage
-    SessionStorage.setItem('providerId', newUserId);
+    SessionStorage.setItem('providerId', newProviderId);
+  };
+
+  const handleLoginCustumor = (newToken, newCustumorId) => {
+    setToken(newToken);
+    setCustumorId(newCustumorId);
+
+    SessionStorage.setItem('custumorId', newCustumorId);
   };
 
   console.log("ProviderId in App:", providerId)
+  console.log("Custumor in App:", custumorId)
+
   
   
   return (
@@ -72,7 +90,7 @@ const App = () => {
   {(props) => <Login {...props} handleLogin={handleLogin} />}
 </Stack.Screen>
 {/* <Stack.Screen name="loginc">
-  {(props) => <LoginC {...props} handleLogin={handleLogin} />}
+  {(props) => <LoginC {...props} handleLoginCustumor={handleLoginCustumor} />}
 </Stack.Screen> */}
         {/* <Stack.Screen name="home" component={Home} options={{
           headerShown: false

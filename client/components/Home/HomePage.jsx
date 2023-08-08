@@ -33,7 +33,7 @@ const Home = ({providerId}) => {
         if (searchTerm.trim() !== '') {
             setIsLoading(true);
             setError(null);
-            axios.get(`http://192.168.1.7:3000/provider/search?category=${searchTerm}`)
+            axios.get(`http://192.168.104.13:3000/provider/search?category=${searchTerm}`)
                 .then(response => {
                     setSearchResults(response.data);
                 })
@@ -70,7 +70,7 @@ const Home = ({providerId}) => {
     const fetchAvatarUrl = async () => {
         if (providerId) {
           try {
-            const response = await axios.get(`http://192.168.11.187:3000/provider/getOne/${providerId}`);
+            const response = await axios.get(`http://192.168.104.13:3000/provider/getOne/${providerId}`);
             const imgprof = response.data.imgprof;
             console.log("imgprof taswirraaaa:", imgprof); // Check the value of imgprof
             setAvatarUrl(imgprof);
@@ -147,6 +147,7 @@ const Home = ({providerId}) => {
                     </TouchableOpacity>
                     {/* Avatar */}
                     <TouchableOpacity>
+                        
                     <Image
   source={avatarUrl ? { uri: avatarUrl } : require('../../assets/w.png')}
   style={styles.avatar}
