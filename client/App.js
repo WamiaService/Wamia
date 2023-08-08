@@ -58,6 +58,19 @@ const App = () => {
 
     SessionStorage.setItem('custumorId', newCustumorId);
   };
+  const handleLogoutProvider = () => {
+    setToken('');
+    setProviderId('');
+
+    SessionStorage.removeItem('providerId');
+  };
+  const handleLogoutCustumor = () => {
+    setToken('');
+    setCustumorId('');
+
+    SessionStorage.removeItem('custumorId');
+  };
+
 
   console.log('ProviderId in App:', providerId);
   console.log('CustumorId in App:', custumorId);
@@ -104,7 +117,7 @@ const App = () => {
 
         <Stack.Screen name="bottomTabNav">
           {(props) => (
-            <BottomTabNavigation {...props} providerId={providerId} />
+            <BottomTabNavigation {...props} custumorId={custumorId} providerId={providerId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="edit">
@@ -112,8 +125,12 @@ const App = () => {
             <Edit {...props} custumorId={custumorId} />
           )}
         </Stack.Screen>
-        <Stack.Screen name="one" component={One} />
-      </Stack.Navigator>
+        <Stack.Screen name="one">
+          {(props) => (
+            <One {...props} handleLogoutCustumor={handleLogoutCustumor} handleLogoutProvider={handleLogoutProvider} />
+          )}
+        </Stack.Screen>  
+            </Stack.Navigator>
     </NavigationContainer>
   );
 };

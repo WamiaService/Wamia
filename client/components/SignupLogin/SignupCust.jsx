@@ -98,7 +98,7 @@ const SignupCust = () => {
     };
 
     const singUppp =  (username,password,email,imgprof,identity,adresse) => {
-           axios.post('http://192.168.11.224:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
+           axios.post('http://192.168.104.13:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
           .then((res)=>{
     console.log(res.data);
             alert('check yore mail')
@@ -118,7 +118,9 @@ const SignupCust = () => {
          adresse
         );
       };
-
+      const handleLoginPress = () => {
+        navigation.navigate('loginc'); 
+      }
   return (
     <View style={styles.container}>
     <Image
@@ -195,7 +197,12 @@ const SignupCust = () => {
 
       <Button onPress={()=>handleSignup()} title="Sign Up" color="#FFA500" borderRadius={30} />
 
-      <Text>If you have an account please Login</Text>
+      <View>
+      <Text>If you have an account, please</Text>
+      <TouchableOpacity onPress={handleLoginPress}>
+        <Text style={{ color: '#FFA500' }}>Login</Text>
+      </TouchableOpacity>
+    </View>
 
       <StatusBar style="auto" />
     </RNScrollView>
