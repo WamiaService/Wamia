@@ -15,6 +15,8 @@ import { TextInput } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store'; 
+import { decode as base64Decode } from 'base-64';
+
 
 const Login = ({ handleLogin }) => {
   const [username, setUsername] = useState('');
@@ -23,7 +25,7 @@ const Login = ({ handleLogin }) => {
 
   const loginn = async (username, password) => {
     try {
-      const response = await axios.post('http://192.168.11.187:3000/provider/login', {
+      const response = await axios.post('http://192.168.104.13:3000/provider/login', {
         username: username,
         password: password,
       });
@@ -31,22 +33,34 @@ const Login = ({ handleLogin }) => {
       console.log('Response Data:', response.data);
       const token = response.data.token;
   
-      if (token) {
-        // Save the token in SecureStore
-        await SecureStore.setItemAsync('jwt-token', token); 
+      if (response.data && token) {
+        const payload = JSON.parse(base64Decode(token.split('.')[1]));
   
-        handleLogin(token, response.data.providerId);
-        console.log(response.data);
-        navigation.navigate('bottomTabNav');
-        alert('Login successful');
+        console.log('Parsed Payload:', payload);
+  
+        // Adjust this part based on your payload structure
+        if (payload && payload.providerId) {
+          // Save the token in SecureStore
+          await SecureStore.setItemAsync('jwt-token', token);
+  
+          handleLogin(token, payload.providerId);
+          console.log('Provider ID:', payload.providerId);
+          console.log('Response Data:', response.data);
+          navigation.navigate('bottomTabNav');
+          alert('Login successful');
+        } else {
+          alert('Login failed: Invalid payload data');
+        }
       } else {
         alert('Login failed: Invalid response data');
       }
     } catch (error) {
-      console.log('Error aymen:', error);
+      console.log('Login Error:', error);
       alert('Login failed');
     }
   };
+  
+  
   
   
 

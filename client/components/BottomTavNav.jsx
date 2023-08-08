@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigation = ({providerId}) => {
   const navigation = useNavigation();
 
-
+console.log("provider id =",providerId);
 
   return (
     <Tab.Navigator

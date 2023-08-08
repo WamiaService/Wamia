@@ -62,45 +62,45 @@ const Signup = () => {
       });
   };
 
-  const handleGalleryAccessProfile = async () => {
+  const photoProfile = async () => {
     try {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Gallery permission denied');
+        console.log('Camera permission denied');
         return;
       }
 
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 1.0,
       });
 
-      if (!result.cancelled) {
-        _uploadImage(result, setImgprof);
+      if (!result.canceled) { 
+        _uploadImage(result,setImgprof);
       }
     } catch (error) {
-      console.log('Error selecting image from gallery:', error);
+      console.log('Error taking photo:', error);
     }
   };
 
-  const handleGalleryAccess = async () => {
+  const photoPatente = async () => {
     try {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Gallery permission denied');
+        console.log('Camera permission denied');
         return;
       }
 
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 1.0,
       });
 
-      if (!result.cancelled) {
-        _uploadImage(result, setPatente);
+      if (!result.canceled) { 
+        _uploadImage(result,setPatente);
       }
     } catch (error) {
-      console.log('Error selecting image from gallery:', error);
+      console.log('Error taking photo:', error);
     }
   };
 
@@ -108,7 +108,7 @@ const Signup = () => {
     const selectedCategory = category[0] || category[1];
 
     axios
-      .post('http://192.168.11.187:3000/provider/signup', {
+      .post('http://192.168.104.13:3000/provider/signup', {
         username: username,
         email: email,
         password: password,
@@ -191,7 +191,7 @@ const Signup = () => {
             color="black"
             style={styles.icon}
           />
-          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccess}>
+          <TouchableOpacity style={styles.photoInput} onPress={photoPatente}>
             <Text>Patente</Text>
           </TouchableOpacity>
         </View>
@@ -202,7 +202,7 @@ const Signup = () => {
             color="black"
             style={styles.icon}
           />
-          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccessProfile}>
+          <TouchableOpacity style={styles.photoInput} onPress={photoProfile}>
             <Text>imageprofile</Text>
           </TouchableOpacity>
         </View>
