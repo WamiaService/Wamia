@@ -35,7 +35,7 @@ const [imageprofile,setImageprofile] = useState('')
       setError(null);
       axios
         .get(
-          `http://192.168.104.13:3000/provider/search?category=${searchTerm}`
+          `http://192.168.1.17:3000/provider/search?category=${searchTerm}`
         )
         .then((response) => {
           setSearchResults(response.data);
@@ -69,7 +69,7 @@ const [imageprofile,setImageprofile] = useState('')
       if (providerId) {
         try {
           const response = await axios.get(
-            `http://192.168.104.13:3000/provider/getOne/${providerId}`
+            `http://192.168.1.17:3000/provider/getOne/${providerId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
@@ -89,7 +89,7 @@ const [imageprofile,setImageprofile] = useState('')
       if (custumorId) {
         try {
           const response = await axios.get(
-            `http://192.168.104.13:3000/custumor/getOne/${custumorId}`
+            `http://192.168.1.17:3000/custumor/getOne/${custumorId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
@@ -190,15 +190,18 @@ const [imageprofile,setImageprofile] = useState('')
             />
           </View>
           {searchResults.map((result) => (
-            <View key={result.id}>
-              <Text>{result.username}</Text>
-              {isLoading && <Text>Loading...</Text>}
+    <View style={styles.resultContainer} key={result.id}>
+        <Image source={{ uri: result.imgprof }} style={styles.resultImage} />
+        <View style={styles.resultTextContainer}>
+            <Text style={styles.resultName}>{result.username}</Text>
+            <Text style={styles.resultCategory}>{result.category}</Text>
+        </View>
 
-              {error && <Text>{error}</Text>}
+        {isLoading && <Text>Loading...</Text>}
+        {error && <Text>{error}</Text>}
+    </View>
+))}
 
-              {/* Add more fields from the result as needed */}
-            </View>
-          ))}
         </View>
 
         {/* Category Section */}
@@ -221,6 +224,8 @@ const [imageprofile,setImageprofile] = useState('')
         {/* Advertising Section (Carousel) */}
         <View style={styles.carouselContainer}>
           <Text style={styles.sectionTitle}>Advertisements</Text>
+          {showLoader && <ShimmerEffect />}
+          {!showLoader &&
           <Carousel
             data={advertisingImages}
             renderItem={({ item }) => (
@@ -231,7 +236,7 @@ const [imageprofile,setImageprofile] = useState('')
             loop={true}
             autoplay={true}
             autoplayInterval={3000}
-          />
+          />}
         </View>
       </ScrollView>
     </DrawerLayoutAndroid>
@@ -304,6 +309,32 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
   },
+  resultContainer: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    alignItems: 'center',
+    borderWidth: 1,      
+    borderColor: '#ccc', 
+    padding: 10,         
+    borderRadius: 10,    
+},
+resultImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+},
+resultTextContainer: {
+    flex: 1,
+},
+resultName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+},
+resultCategory: {
+    fontSize: 14,
+    color: '#888',
+},
   categoryContainer: {
     padding: 20,
     flexDirection: 'row',
