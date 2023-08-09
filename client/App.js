@@ -13,6 +13,7 @@ import One from './components/Custumor/One.jsx';
 import BottomTabNavigation from './components/BottomTavNav.jsx';
 import LoginC from './components/SignupLogin/LoginC.jsx';
 import SessionStorage from 'react-native-session-storage';
+import UpdateProvider from './components/Provider/UpdateProvider.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -123,6 +124,11 @@ const App = () => {
         <Stack.Screen name="edit">
           {(props) => (
             <Edit {...props} custumorId={custumorId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="updateprovider">
+          {(props) => (
+            <UpdateProvider {...props} providerId={providerId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="one">

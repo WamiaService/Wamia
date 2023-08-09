@@ -16,13 +16,16 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store'; 
 import { decode as base64Decode } from 'base-64';
+import { useRoute } from '@react-navigation/native';
 
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin}) => {
+    const route = useRoute();
+  const role = route.params?.role; 
+  console.log("role in login:",role);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
-
   const loginn = async (username, password) => {
     try {
       const response = await axios.post('http://192.168.104.13:3000/provider/login', {
@@ -46,7 +49,7 @@ const Login = ({ handleLogin }) => {
           handleLogin(token, payload.providerId);
           console.log('Provider ID:', payload.providerId);
           console.log('Response Data:', response.data);
-          navigation.navigate('bottomTabNav');
+          navigation.navigate('bottomTabNav',{role});
           alert('Login successful');
         } else {
           alert('Login failed: Invalid payload data');

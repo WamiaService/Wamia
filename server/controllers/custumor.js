@@ -42,7 +42,7 @@ for (let i = 0; i < 25; i++) {
   activationCode += characters[Math.floor(Math.random() * characters.length)];
 }
   try {
-    const { username, email, password,imgprof,identity,adresse } = req.body;
+    const { username, email, password,imgprof,identity,role,adresse } = req.body;
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,6 +62,7 @@ for (let i = 0; i < 25; i++) {
       email,
       password: hashedPassword,
       imgprof,
+      role,
       identity,
       activationCode:activationCode,
       adresse

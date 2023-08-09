@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 const Choose = () => {
+  
   const navigation = useNavigation()
   useEffect(() => {
-    // Your animation logic here
-    // You can use Animated.timing or any other Animated API to animate the component
-    // For example, you can use Animated.timing on the container view to fade it in
+    
     Animated.timing(containerOpacity, {
       toValue: 1,
       duration: 1000, // You can adjust the duration to control the speed of the animation
@@ -16,10 +15,10 @@ const Choose = () => {
 
   const containerOpacity = new Animated.Value(0);
   const handleProviderPress = () => {
-    navigation.navigate('signup');
+    navigation.navigate('signup',{ role: 'provider' });
   };
   const handleCustumor = () => {
-    navigation.navigate('signupcust');
+    navigation.navigate('signupcust',{ role: 'custumor' });
   };
   return (
     <Animated.View style={[styles.container, { opacity: containerOpacity }]}>

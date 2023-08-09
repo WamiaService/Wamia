@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
@@ -18,6 +20,9 @@ import * as SecureStore from 'expo-secure-store';
 import { decode as base64Decode } from 'base-64';
 
 const LoginC = ({ handleLoginCustumor }) => {
+  const route = useRoute();
+  const role = route.params?.role; 
+  console.log("role in loginCust:",role);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
@@ -45,7 +50,7 @@ const LoginC = ({ handleLoginCustumor }) => {
           handleLoginCustumor(token, payload.custumorId);
           console.log('custumor ID:', payload.custumorId);
           console.log('Response Data:', response.data);
-          navigation.navigate('bottomTabNav');
+          navigation.navigate('bottomTabNav',{role});
           alert('Login successful');
         } else {
           alert('Login failed: Invalid payload data');

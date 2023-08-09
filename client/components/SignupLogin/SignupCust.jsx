@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
@@ -18,7 +20,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 const SignupCust = () => {
   const navigation = useNavigation()
+  const route = useRoute();
 
+  const role = route.params?.role; 
+  console.log("role signupCus:",role);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -119,7 +124,7 @@ const SignupCust = () => {
         );
       };
       const handleLoginPress = () => {
-        navigation.navigate('loginc'); 
+        navigation.navigate('loginc',{role}); 
       }
   return (
     <View style={styles.container}>
