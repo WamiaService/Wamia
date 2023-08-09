@@ -3,19 +3,18 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import { launchImageLibrary } from 'react-native-image-picker';
 import jwtDecoder from "jwt-decode";
-import Cookies from "universal-cookie";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker'
 
 
-const UpdateProvider = () => {
+const UpdateProvider = ({providerId}) => {
     const [username, setUsername]=useState("")
     const [email, setEmail]=useState("")
     const [password, setPassword]=useState("")
     const [mobile, setMobile]=useState(null)
     const [imgprof, setImgprof]=useState("")
     const [data,setData]=useState([])
-
+console.log("prov id in update",providerId);
     useEffect(()=>{
         fetchData()
     },[imgprof])
@@ -25,7 +24,7 @@ const UpdateProvider = () => {
       // const cookie = new Cookies();
       // const token = jwtDecoder(cookie.get("jwt-token"));
       // console.log("token",token);
-        axios.get(`http://192.168.1.14:3000//provider/getOne/1`)
+        axios.get(`http://192.168.104.13:3000/provider/getOne/${providerId}`)
           .then((res) => {
             setData(res.data);
             setImgprof(res.data.imgprof)
@@ -45,7 +44,7 @@ const UpdateProvider = () => {
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.1.14:3000/provider/update/1`, info)
+        axios.put(`http://192.168.104.13:3000/provider/update/${providerId}`, info)
           .then(res => {
             console.log('Profile updated successfully:', res.data);
             

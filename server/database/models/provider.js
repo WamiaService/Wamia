@@ -26,6 +26,11 @@ const Provider = sequelize.define('provider', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  role:{
+    type:DataTypes.STRING,
+    defaultValue:"provider",
+    allowNull:false,
+},
   mobile: DataTypes.INTEGER,
 
   category: {

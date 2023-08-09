@@ -7,11 +7,17 @@ import { useNavigation } from '@react-navigation/native'; // Import useNavigatio
 import Home from './Home/HomePage.jsx';
 import Choose from './Choose.jsx';
 import One from './Custumor/One.jsx';
+import { useRoute } from '@react-navigation/native';
+import OneProv from './Provider/OneProv.jsx';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation = ({providerId, custumorId}) => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const role = route.params?.role; 
+  console.log("role in the homepage:",role);
 
 console.log("provider id =",providerId);
 
@@ -49,7 +55,7 @@ console.log("provider id =",providerId);
      
      <Tab.Screen name="Providers" component={One} />
      <Tab.Screen name="message" component={One}/>
-     <Tab.Screen name="profile" component={One}  /> 
+     <Tab.Screen name="profile" component={role === 'provider' ? OneProv : One}  /> 
     </Tab.Navigator>
   );
 };

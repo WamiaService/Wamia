@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
+import { useRoute } from '@react-navigation/native';
 import {
   StyleSheet,
   Image,
@@ -18,6 +19,9 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 
 const Signup = () => {
+  const route = useRoute();
+  const role = route.params?.role; 
+  console.log("role front:",role);
   const navigation = useNavigation()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -119,7 +123,7 @@ const Signup = () => {
       .then((res) => {
         console.log(res.data);
         alert('Check your email for verification.');
-        navigation.navigate('login');
+        navigation.navigate('login',{role});
       })
       .catch((err) => {
         console.log(err);
@@ -143,9 +147,9 @@ const Signup = () => {
     );
   };
   const handleLoginPress = () => {
-    navigation.navigate('login'); 
+    navigation.navigate('login',{role}); 
   }
-
+console.log("signup role:",role);
   return (
     <View style={styles.container}>
       <Image

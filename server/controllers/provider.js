@@ -44,7 +44,7 @@ const getAllProvider = async (req, res) => {
   }
 
     try {
-      const { username, email, password, imgprof, patente, mobile, category, adresse } = req.body;
+      const { username, email, password, imgprof, patente, mobile,role, category, adresse } = req.body;
   
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,6 +66,7 @@ const getAllProvider = async (req, res) => {
         imgprof,
         patente,
         mobile,
+        role,
         category,
         activationCode:activationCode,
         adresse
