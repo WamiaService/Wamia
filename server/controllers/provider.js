@@ -169,6 +169,7 @@ const loginProvider = async (req, res) => {
     } = req.body;
       
     try{
+      const hashedPassword = await bcrypt.hash(password, 10);
       const providerProfile= await Provider.findByPk(id)
       if (!providerProfile) {
         return res.status(404).json({ error: "User profile not found" });
@@ -176,7 +177,7 @@ const loginProvider = async (req, res) => {
    
       providerProfile.username=username;
       providerProfile.email=email;
-      providerProfile.password=password;
+      providerProfile.password=hashedPassword;
       providerProfile.mobile=mobile;
       providerProfile.imgprof=imgprof
   
