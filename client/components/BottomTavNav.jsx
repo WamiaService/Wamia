@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Entypo } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
 import Home from './Home/HomePage.jsx';
@@ -23,13 +23,16 @@ console.log("provider id =",providerId);
 
           if (route.name === 'home') {
             iconName = focused ? 'home' : 'home';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'cog' : 'cog';
-          } else if (route.name === 'profile') {
+          } else if (route.name === 'Providers') {
+            iconName = focused ? 'store' : 'store';
+          } else if (route.name === 'message') {
+            iconName = focused ? 'facebook-messenger' : 'facebook-messenger';
+          }
+          else if (route.name === 'profile') {
             iconName = focused ? 'user' : 'user';
           }
-
-          return <Entypo name={iconName} size={size} color={color} />;
+          
+          return <FontAwesome5 name={iconName} size={size} color={color} />;
         },
         tabBarOnPress: ({ navigation, route }) => {
           navigation.navigate(route.name);
@@ -43,8 +46,10 @@ console.log("provider id =",providerId);
 <Tab.Screen name="home">
   {() => <Home custumorId={custumorId} providerId={providerId} />}
 </Tab.Screen>
+     
+     <Tab.Screen name="Providers" component={One} />
+     <Tab.Screen name="message" component={One}/>
      <Tab.Screen name="profile" component={One}  /> 
-      {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
     </Tab.Navigator>
   );
 };

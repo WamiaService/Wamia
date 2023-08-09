@@ -210,7 +210,9 @@ const [imageprofile,setImageprofile] = useState('')
           {!showLoader &&
             categories.map((category) => (
               <View key={category.name} style={styles.categoryItem}>
+                <TouchableOpacity>
                 <Image source={category.image} style={styles.categoryImage} />
+                </TouchableOpacity>
                 <Text style={styles.categoryName}>{category.name}</Text>
               </View>
             ))}
