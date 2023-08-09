@@ -46,7 +46,8 @@ const Provider = sequelize.define('provider', {
     defaultValue: false,
   },
   activationCode : DataTypes.STRING
-});
+},
+{ timestamps: false });
 
-Provider.belongsTo(Admin);
+;
 module.exports = Provider;

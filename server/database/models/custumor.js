@@ -28,8 +28,9 @@ const Custumor = sequelize.define('custumor', {
   },
   activationCode : DataTypes.STRING
 
-});
+},
+{ timestamps: false });
 
-Custumor.belongsTo(Admin);
+;
 
 module.exports = Custumor;

@@ -1,8 +1,9 @@
 import  React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { useState,useEffect } from 'react';
+import { useState,useEffect ,useRef} from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
+import Dialog from './dialog';
 import './custumor.css'
   
 
@@ -26,15 +27,39 @@ const ManageProvider = () => {
       width: 75,
       sortable: false,
       renderCell: (params) => (
-        <Button onClick={() => deleteData  (params.row.id)} variant="outlined" color="error">
+        <Button onClick={() =>  handleDelete (params.row.id)} variant="outlined" color="error">
         Delete
        </Button>
       ),
     },
    
   ];
+  const [dialog,setDialog]=useState({
+    message:"",
+    isLoading:false,
+  })
   const [rows, setproviderRows] = useState([]);
   const [refrech, setrefrech] = useState(false);
+  const idproviderRef = useRef()
+  const areUsureTodelete = (choose)=>{
+            if(choose){
+             deleteData(idproviderRef.current )
+             setDialog({
+             
+               isLoading : false})
+            }
+            setDialog({
+             
+             isLoading : false
+           })
+  }
+  const handleDelete=(id)=>{
+    setDialog({
+      
+      isLoading : true
+    })
+    idproviderRef.current = id
+   }
   
   const deleteData = async (id) => {
     try {
@@ -93,6 +118,7 @@ const ManageProvider = () => {
         // checkboxSelection
       />
     </div>
+    {dialog.isLoading&& <Dialog ondialog={areUsureTodelete} message ={dialog.message}/>}
   </div>
     
 

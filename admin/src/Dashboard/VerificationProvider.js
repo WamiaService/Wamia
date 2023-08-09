@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React from 'react'
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef } from 'react';
 import "./verification.css";
+import Dialog from './dialog';
 import { Button } from '@mui/material';
 
 
@@ -9,6 +10,40 @@ const VerificationProvider = () => {
 
   const [data, setData] = useState([]);
   const [refrech, setrefrech] = useState(false);
+  
+  
+  const [dialog,setDialog]=useState({
+    message:"Are you sure you want to delete?",
+    isLoading:false,
+  })
+  const idproviderRef = useRef()
+  const idproviderupRef= useRef()
+  const areUsureToUpdate = (choose)=>{
+    if(choose){
+      handleUpdate(idproviderupRef.current) 
+      setDialog({
+             
+        isLoading : false})
+    }
+    setDialog({
+             
+      isLoading : false
+    })
+  }
+  
+  const handleDelete=(id)=>{
+    setDialog({
+      
+      isLoading : true
+    })
+    idproviderRef.current = id
+   }
+   const Update =(id)=>{
+    setDialog({
+      isLoading : true
+    })
+    idproviderupRef.current = id
+   }
   
   const handleUpdate = async (id) => {
       
@@ -67,10 +102,10 @@ const VerificationProvider = () => {
 
           <img src={item.patente} className="card-img"  />
           <div className='buttons'>
-          <Button onClick={()=>handleUpdate(item.id)} variant="contained" color="success" className='butt'>
+          <Button onClick={()=>Update(item.id)} variant="contained" color="success" className='butt'>
   accept
 </Button>
-<Button onClick={() => deleteData  (item.id)} variant="outlined" color="error" className='butt'>
+<Button onClick={() => handleDelete  (item.id)} variant="outlined" color="error" className='butt'>
   delete
 </Button>
           </div>
@@ -78,6 +113,7 @@ const VerificationProvider = () => {
       </div>
       ))}
     </div>
+    {dialog.isLoading && <Dialog ondialog={areUsureToUpdate} message ={dialog.message}/>}
     </div>
    
   )

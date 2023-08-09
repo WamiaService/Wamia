@@ -16,7 +16,7 @@
   
   margin-left: 245px;
   margin-top: 5px;
-  background-color: rgba(105, 40, 40, 0.333) ;
+  background-color: rgb(255, 255, 255) ;
   backdrop-filter:blur(7px);
   box-shadow : 0 .4rem .8rem #0005;
   border-radius : .8rem;
