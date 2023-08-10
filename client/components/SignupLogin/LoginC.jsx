@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Image,
@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
@@ -18,15 +20,30 @@ import * as SecureStore from 'expo-secure-store';
 import { decode as base64Decode } from 'base-64';
 
 const LoginC = ({ handleLoginCustumor }) => {
+  const route = useRoute();
+  const role = route.params?.role; 
+  console.log("role in loginCust:",role);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [activationCode,setActivationCode]= useState('')
+
   const navigation = useNavigation();
 
-  const loginn = async (username, password) => {
+  useEffect(() => {
+    const loadActivationStatus = async () => {
+      const activationStatus = await SecureStore.getItemAsync('is_approved');
+      setIs_approved(activationStatus === 'true');
+    };
+
+    loadActivationStatus();
+  }, []);
+
+  const loginn = async (username, password,activationCode) => {
     try {
-      const response = await axios.post('http://192.168.1.7:3000/custumor/login', {
+      const response = await axios.post('http://192.168.11.42:3000/custumor/login', {
         username: username,
         password: password,
+        activationCode:activationCode
       });
   
       console.log('Response Data:', response.data);
@@ -45,7 +62,7 @@ const LoginC = ({ handleLoginCustumor }) => {
           handleLoginCustumor(token, payload.custumorId);
           console.log('custumor ID:', payload.custumorId);
           console.log('Response Data:', response.data);
-          navigation.navigate('bottomTabNav');
+          navigation.navigate('bottomTabNav',{role});
           alert('Login successful');
         } else {
           alert('Login failed: Invalid payload data');
@@ -62,7 +79,7 @@ const LoginC = ({ handleLoginCustumor }) => {
   
 
   const handleLoginn = () => {
-    loginn(username,password); 
+    loginn(username,password,activationCode); 
   };
 
   return (
@@ -90,6 +107,15 @@ const LoginC = ({ handleLoginCustumor }) => {
           onChangeText={(val) => setPassword(val)}
         />
       </View>
+      <View style={styles.inputContainer}>
+  <AntDesign name="key" size={24} color="black" style={styles.icon} />
+  <TextInput
+    onChangeText={(val) => setActivationCode(val)}
+    style={styles.inp}
+    placeholder="Activation Code ..."
+    keyboardType="numeric"
+  />
+</View>
       <Button onPress={handleLoginn} title="Login" color="#FFA500" borderRadius={30} />
     </View>
   );
