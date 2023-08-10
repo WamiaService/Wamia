@@ -4,14 +4,14 @@ Add : (req,res)=>{
     const url = "https://developers.flouci.com/api/generate_payment"
     const payload  = {
     
-        "app_token": "8002d4d5-b457-4d01-ad68-6c7c3fd3d367", 
+        "app_token": "83ce7365-20cb-4391-bd35-c80f70ff977c", 
         "app_secret": process.env.FLOUCI_SECRET,
         "amount": "555",
         "accept_card": "true",
         "session_timeout_secs": 1200,
         "success_link": "http://localhost:3001/success",
         "fail_link": "http://localhost:3001/fail",
-        "developer_tracking_id": "81072531-7fb5-48ef-8d9e-3a684bb0e674"
+        "developer_tracking_id": "4e7f5f00-9621-4dce-83c0-82f23682912c"
     }
     axios
     .post(url,payload)
@@ -26,7 +26,7 @@ Verify : async (req,res)=>{
 await axios.get(`https://developers.flouci.com/api/verify_payment/${id_payment}`,{
     headers :{
         'Content-Type': 'application/json',
-        'apppublic': '7431ff30-ef7e-4f6a-b2f3-b5fc04d8ecbe',
+        'apppublic': '83ce7365-20cb-4391-bd35-c80f70ff977c',
       'appsecret': process.env.FLOUCI_SECRET
     }
 }

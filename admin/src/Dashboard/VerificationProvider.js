@@ -105,7 +105,7 @@ const VerificationProvider = () => {
           <Button onClick={()=>Update(item.id)} variant="contained" color="success" className='butt'>
   accept
 </Button>
-<Button onClick={() => handleDelete  (item.id)} variant="outlined" color="error" className='butt'>
+<Button onClick={() => deleteData  (item.id)} variant="outlined" color="error" className='butt'>
   delete
 </Button>
           </div>
