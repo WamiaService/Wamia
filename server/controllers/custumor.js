@@ -95,9 +95,55 @@ const logincustumor = async (req, res) => {
     }
   };
 
+
+
+
+  const updateCustumor= async(req,res)=>{
+    const { id } = req.params;
+    let {
+      username,
+      adresse,
+      imgprof,  
+      mobile,
+    } = req.body;
+      
+    console.log(req.body)
+    try{
+      const client= await Custumor.findByPk(id)
+      console.log("client",client)
+      if (!client) {
+        return res.status(404).json({ error: "Custumor profile not found" });
+      } 
+  
+  
+      client.username=username;
+      client.adresse=adresse;
+      client.imgprof=imgprof;
+      client.mobile =mobile
+  
+  
+    await client.save();
+    res.json(client);
+      
+    }
+    catch(error){
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+
+
+
+
+
+
+
+
   module.exports = {
     getAllcustumor,
     getOnecustumor,
     signupcustumor,
-    logincustumor
+    logincustumor,
+    updateCustumor
   }

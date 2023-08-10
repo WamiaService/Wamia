@@ -7,50 +7,128 @@ import {
     TextInput,
 
   } from "react-native";
-  import React, { useState } from "react";
+  import React, { useState,useEffect } from "react";
   import { SafeAreaView } from "react-native-safe-area-context";
 
   import { COLORS, FONTS } from "./constant";
   import { MaterialIcons } from "@expo/vector-icons";
-
+  import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios'
 
   
   const EditProfile = ({custumorId}) => {
 
-
+    const [data,setData]=useState([])
     const [name, setName] = useState("");
   
     const [password, setPassword] = useState("");
 
-    const[image,setImage]=useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
+    const[imageprof,setImage]=useState("")
     const [adresse,setAdresse]=useState("")
     const [mobile,setMobile]=useState()
+    const[refetch,setRefetech]=useState(false)
 
+    const infoCus={
+      username: name,
+      adresse:adresse,
+      imgprof:imageprof,
+      mobile:mobile
 
-    const updateCus=(custumorId,username,adresse,mobile)=>{
-   
-      axios.put(`http://192.168.100.18:3000/custumor/update/${custumorId}`,{
-        username: username,
-        adressse:adresse,
-        // imgprof:imgprof,
-        mobile:mobile
-        })
-      .then((res)=>{setRefetech(!refetch)})
-      .catch((err)=>{console.log(err)})
-    
-    
-    
-    
     }
+
+    useEffect(() => {
+      getOneCustumor(custumorId)
+    }, [!refetch]);
+
+  console.log("data",data)
+
+
+    
+
+
+    const getOneCustumor = async (custumorId)=> {
+      console.log('u');
+      try {
+        const response = await axios.get(`http://192.168.1.7:3000/custumor/getOne/${custumorId}`);
+        setData(response.data); 
+      } catch (error) {
+        console.error('Error :', error);
+      }
+    };
+
 
     console.log(custumorId)
 
 
+    const _uploadImage = (photo, setImage) => {
+      const data = new FormData();
+      data.append('file', {
+        uri: photo.assets[0].uri,
+        type: 'image/jpg',
+        name: 'image.jpg',
+      });
+      data.append('upload_preset', 'phoneProduct');
+      data.append('cloud_name', 'dgcdmrj7x');
+      fetch('https://api.cloudinary.com/v1_1/dgcdmrj7x/image/upload', {
+        method: 'POST',
+        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setImage(data.url);
+          console.log(data);
+        })
+        .catch((err) => {
+          Alert.alert('Error While Uploading');
+        });
+    };
   
+    const handleGalleryAccessProfile = async () => {
+      try {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Gallery permission denied');
+          return;
+        }
+  
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 1.0,
+        });
+  
+        if (!result.canceled) {
+          _uploadImage(result, setImage);
+        }
+      } catch (error) {
+        console.log('Error selecting image from gallery:', error);
+      }
+    };
 
 
 
 
+
+
+
+
+
+
+  
+    const update = async (custumorId) => {
+      try {
+        await axios.put(`http://192.168.1.7:3000/custumor/update/${custumorId}`, infoCus);
+        setRefetech(!refetch)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+
+    console.log(custumorId)
 
   
 
@@ -124,7 +202,7 @@ const handleAdresse= (text) => {
                 borderColor: COLORS.color,
               }}
 
-              value={image}
+              value={imageprof}
             />
 
             <View
@@ -134,19 +212,12 @@ const handleAdresse= (text) => {
                 right: 10,
                 zIndex: 9999,
               }}
-
-
-
-            >
-
-
-
-
+      >
 
 
               <MaterialIcons
                 name="photo-camera"
-
+               onPress={handleGalleryAccessProfile}
                 size={32}
                 color={COLORS.color}
               />
@@ -300,8 +371,9 @@ const handleAdresse= (text) => {
               ...FONTS.body3,
               color: COLORS.white,
             }}
-
-            onPress={()=>{update(props.idCustumor,name,adresse,mobile,adresse)}}
+          
+            onPress={()=>{update(custumorId), _uploadImage()}}
+      
           >
             Save Change
           </Text>

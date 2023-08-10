@@ -25,7 +25,7 @@ const Login = ({ handleLogin }) => {
 
   const loginn = async (username, password) => {
     try {
-      const response = await axios.post('http://192.168.104.13:3000/provider/login', {
+      const response = await axios.post('http://192.168.100.17:3000/provider/login', {
         username: username,
         password: password,
       });

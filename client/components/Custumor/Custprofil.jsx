@@ -13,7 +13,7 @@ import Edit from './Edit.jsx'
 
    useEffect(() => {
     // custInfo()
-     getOneCustumor(1)
+ 
   }, []);
   {console.log(data)}
 

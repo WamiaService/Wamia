@@ -69,7 +69,7 @@ const [imageprofile,setImageprofile] = useState('')
       if (providerId) {
         try {
           const response = await axios.get(
-            `http://192.168.104.13:3000/provider/getOne/${providerId}`
+            `http://192.168.1.7:3000/provider/getOne/${providerId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
@@ -89,7 +89,7 @@ const [imageprofile,setImageprofile] = useState('')
       if (custumorId) {
         try {
           const response = await axios.get(
-            `http://192.168.104.13:3000/custumor/getOne/${custumorId}`
+            `http://192.168.1.7:3000/custumor/getOne/${custumorId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof

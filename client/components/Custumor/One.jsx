@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 const One=({handleLogoutCustumor,handleLogoutProvider})=>{
   const navigation = useNavigation()
+  
 const navigateToEditProfile = () => {
   navigation.navigate("edit");
 };
