@@ -103,9 +103,9 @@ const ManageProvider = () => {
   
    
   return (
-    <div>
-    <div class="table-header">List of providers</div>
-    <div class="table-container">
+    <div className='container'>
+    <div className="table-header">List of providers</div>
+    <div className="table-container">
       <DataGrid
         rows={rows}
         columns={columnsProvider}

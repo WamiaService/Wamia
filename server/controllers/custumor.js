@@ -36,13 +36,13 @@ const getAllcustumor = async (req, res) => {
 const signupcustumor = async (req, res) => {
 
   const characters =
-  "0123456789abcdefghijklmnopqrstuvwxyz";
+  "0123";
 let activationCode = "";
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 5; i++) {
   activationCode += characters[Math.floor(Math.random() * characters.length)];
 }
   try {
-    const { username, email, password,imgprof,identity,adresse } = req.body;
+    const { username, email, password,imgprof,identity,role,adresse } = req.body;
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,6 +62,7 @@ for (let i = 0; i < 25; i++) {
       email,
       password: hashedPassword,
       imgprof,
+      role,
       identity,
       activationCode:activationCode,
       adresse
@@ -81,6 +82,7 @@ const logincustumor = async (req, res) => {
       if (!custumor) {
         return res.status(404).json({ error: 'custumor not found' });
       }
+      
       const isPasswordValid = await bcrypt.compare(password, custumor.password);
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid password' });
@@ -95,9 +97,55 @@ const logincustumor = async (req, res) => {
     }
   };
 
+
+
+
+  const updateCustumor= async(req,res)=>{
+    const { id } = req.params;
+    let {
+      username,
+      adresse,
+      imgprof,  
+      mobile,
+    } = req.body;
+      
+    console.log(req.body)
+    try{
+      const client= await Custumor.findByPk(id)
+      console.log("client",client)
+      if (!client) {
+        return res.status(404).json({ error: "Custumor profile not found" });
+      } 
+  
+  
+      client.username=username;
+      client.adresse=adresse;
+      client.imgprof=imgprof;
+      client.mobile =mobile
+  
+  
+    await client.save();
+    res.json(client);
+      
+    }
+    catch(error){
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+
+
+
+
+
+
+
+
   module.exports = {
     getAllcustumor,
     getOnecustumor,
     signupcustumor,
-    logincustumor
+    logincustumor,
+    updateCustumor
   }

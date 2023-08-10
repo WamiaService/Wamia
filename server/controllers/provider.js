@@ -37,14 +37,14 @@ const getAllProvider = async (req, res) => {
   const signupProvider = async (req, res) => {
 
     const characters =
-    "0123456789abcdefghijklmnopqrstuvwxyz";
+    "0123";
   let activationCode = "";
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 5; i++) {
     activationCode += characters[Math.floor(Math.random() * characters.length)];
   }
 
     try {
-      const { username, email, password, imgprof, patente, mobile, category, adresse } = req.body;
+      const { username, email, password, imgprof, patente, mobile,role, category, adresse } = req.body;
   
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,6 +66,7 @@ const getAllProvider = async (req, res) => {
         imgprof,
         patente,
         mobile,
+        role,
         category,
         activationCode:activationCode,
         adresse
@@ -80,30 +81,42 @@ const getAllProvider = async (req, res) => {
 
 
   };
-  
-
-const loginProvider = async (req, res) => {
+  ///y
+  const loginProvider = async (req, res) => {
     try {
       const { username, password } = req.body;
-      const provider = await Provider.findOne({ where: { username } });
+      const provider = await Provider.findOne({
+        where: { username },
+      });
+  
       if (!provider) {
-        return res.status(404).json({ error: 'provider not found' });
+        return res.status(404).json({ error: 'Provider not found' });
       }
+  
+      if (!provider.is_approved) {
+        // If the user is not approved, require activation code
+        if (provider.activationCode !== req.body.activationCode) {
+          return res.status(401).json({ error: 'Invalid activation code' });
+        }
+      }
+  
       const isPasswordValid = await bcrypt.compare(password, provider.password);
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid password' });
       }
-
-     
-
+  
       const token = jwt.sign({ providerId: provider.id }, 'your_secret_key');
-      res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); 
+      res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
       res.status(200).json({ token });
     } catch (error) {
       console.error('Login Error:', error);
       res.status(500).json({ error: 'Login failed' });
     }
   };
+  
+
+ 
+  
 
   const verifyProvider = async (req, res) => {
     try {
@@ -154,6 +167,42 @@ const loginProvider = async (req, res) => {
       res.status(500).json({ error: 'Failed to retrieve providers based on the search criteria' });
     }
   };
+
+
+  //! update Provider
+  const updateProvider = async(req,res)=>{
+    const { id } = req.params;
+    let {
+      username,
+      email,
+      password,
+      mobile,  
+      imgprof
+    } = req.body;
+      
+    try{
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const providerProfile= await Provider.findByPk(id)
+      if (!providerProfile) {
+        return res.status(404).json({ error: "User profile not found" });
+      } 
+   
+      providerProfile.username=username;
+      providerProfile.email=email;
+      providerProfile.password=hashedPassword;
+      providerProfile.mobile=mobile;
+      providerProfile.imgprof=imgprof
+  
+  
+    await providerProfile.save();
+    res.json(providerProfile);
+      
+    }
+    catch(error){
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
   
   module.exports = {
     getAllProvider,
@@ -161,5 +210,6 @@ const loginProvider = async (req, res) => {
     signupProvider,
     loginProvider,
     verifyProvider,
-    searchProviders
+    searchProviders,
+    updateProvider
   }

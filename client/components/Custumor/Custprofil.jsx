@@ -6,14 +6,14 @@ import Cookies from "universal-cookie";
 import Edit from './Edit.jsx'
 
  const Custumor=()=> {
-
   const [data, setData] = useState([]);
+  const[refetch,setRefetech]=useState(false)
   const [id,setId] = useState(null)
 
 
    useEffect(() => {
     // custInfo()
-     getOneCustumor(1)
+ 
   }, []);
   {console.log(data)}
 
@@ -48,19 +48,34 @@ import Edit from './Edit.jsx'
   const getOneCustumor = async (id)=> {
        
     try {
-      const response = await axios.get(`http://192.168.1.7:3000/custumor/getOne/${id}`);
+      const response = await axios.get(`http://192.168.11.42:3000/custumor/getOne/${id}`);
       setData(response.data); 
     } catch (error) {
       console.error('Error :', error);
     }
   };
 
-
+  const updateCus=(id,username,adresse,mobile)=>{
+   
+    axios.put(`http://192.168.11.42:3000/custumor/update/${id}`,{
+      username: username,
+      adressse:adresse,
+      // imgprof:imgprof,
+      mobile:mobile
+      })
+    .then((res)=>{setRefetech(!refetch)})
+    .catch((err)=>{console.log(err)})
+  
+  
+  
+  
+  }
+  
 
     return (
   
       <View>
-          <Edit  data={data}/> 
+        <Text> <Edit  data={data}  update={updateCus}/></Text>  
       </View>
       );
     };

@@ -103,10 +103,11 @@ const Custumor = () => {
   
    
   return (
-    <div>
-    <div class="table-header">List of custumors</div>
-    <div class="table-container">
+    <div className='container' >
+    <div className="table-header">List of custumors</div>
+    <div className="table-container">
       <DataGrid
+     
         rows={rows}
         columns={columnsCustumor}
         initialState={{

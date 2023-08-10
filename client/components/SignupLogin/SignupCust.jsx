@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
@@ -18,7 +20,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 const SignupCust = () => {
   const navigation = useNavigation()
+  const route = useRoute();
 
+  const role = route.params?.role; 
+  console.log("role signupCus:",role);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -56,49 +61,49 @@ const SignupCust = () => {
         });
     };
 
-    const handleGalleryAccessProfile = async () => {
+    const photoProfile = async () => {
       try {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== 'granted') {
-          console.log('Gallery permission denied');
+          console.log('Camera permission denied');
           return;
         }
   
-        const result = await ImagePicker.launchImageLibraryAsync({
+        const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           quality: 1.0,
         });
   
-        if (!result.cancelled) {
-          _uploadImage(result, setImgprof);
+        if (!result.canceled) { 
+          _uploadImage(result,setImgprof);
         }
       } catch (error) {
-        console.log('Error selecting image from gallery:', error);
+        console.log('Error taking photo:', error);
       }
     };
-    const handleGalleryAccess = async () => {
+    const photoIdentity = async () => {
       try {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== 'granted') {
-          console.log('Gallery permission denied');
+          console.log('Camera permission denied');
           return;
         }
   
-        const result = await ImagePicker.launchImageLibraryAsync({
+        const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           quality: 1.0,
         });
   
-        if (!result.cancelled) {
-          _uploadImage(result, setIdentity);
+        if (!result.canceled) { 
+          _uploadImage(result,setIdentity);
         }
       } catch (error) {
-        console.log('Error selecting image from gallery:', error);
+        console.log('Error taking photo:', error);
       }
     };
 
     const singUppp =  (username,password,email,imgprof,identity,adresse) => {
-           axios.post('http://192.168.11.187:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
+           axios.post('http://192.168.104.13:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
           .then((res)=>{
     console.log(res.data);
             alert('check yore mail')
@@ -118,7 +123,9 @@ const SignupCust = () => {
          adresse
         );
       };
-
+      const handleLoginPress = () => {
+        navigation.navigate('loginc',{role}); 
+      }
   return (
     <View style={styles.container}>
     <Image
@@ -176,7 +183,7 @@ const SignupCust = () => {
             color="black"
             style={styles.icon}
           />
-          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccess}>
+          <TouchableOpacity style={styles.photoInput} onPress={photoIdentity}>
             <Text>Identety</Text>
           </TouchableOpacity>
         </View>
@@ -187,7 +194,7 @@ const SignupCust = () => {
             color="black"
             style={styles.icon}
           />
-          <TouchableOpacity style={styles.photoInput} onPress={handleGalleryAccessProfile}>
+          <TouchableOpacity style={styles.photoInput} onPress={photoProfile}>
             <Text>imageprofile</Text>
           </TouchableOpacity>
         </View>
@@ -195,7 +202,12 @@ const SignupCust = () => {
 
       <Button onPress={()=>handleSignup()} title="Sign Up" color="#FFA500" borderRadius={30} />
 
-      <Text>If you have an account please Login</Text>
+      <View>
+      <Text>If you have an account, please</Text>
+      <TouchableOpacity onPress={handleLoginPress}>
+        <Text style={{ color: '#FFA500' }}>Login</Text>
+      </TouchableOpacity>
+    </View>
 
       <StatusBar style="auto" />
     </RNScrollView>

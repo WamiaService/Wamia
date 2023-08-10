@@ -13,6 +13,7 @@ const Custumor = sequelize.define('custumor', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+
   imgprof: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -21,6 +22,11 @@ const Custumor = sequelize.define('custumor', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  role:{
+    type:DataTypes.STRING,
+    defaultValue:"custumor",
+    allowNull:false,
+},
   mobile: DataTypes.INTEGER,
   is_approved: {
     type: DataTypes.BOOLEAN,
