@@ -11,7 +11,7 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import ViewPropTypes from 'deprecated-react-native-prop-types';
+import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import DrawerButton from './Drawer.jsx';
 import Carousel from 'react-native-snap-carousel';
@@ -20,7 +20,8 @@ import BottomTabNavigation from '../BottomTavNav.jsx';
 import axios from 'axios';
 import ShimmerEffect from './ShimmerEffect.jsx';
 
-const Home = ({ providerId ,custumorId }) => {
+const Home = ({ providerId ,custumorId  }) => {
+  const navigation = useNavigation();
   const drawer = useRef(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -35,7 +36,7 @@ const [imageprofile,setImageprofile] = useState('')
       setError(null);
       axios
         .get(
-          `http://192.168.104.13:3000/provider/search?category=${searchTerm}`
+          `http://192.168.1.17:3000/provider/search?category=${searchTerm}`
         )
         .then((response) => {
           setSearchResults(response.data);
@@ -69,7 +70,7 @@ const [imageprofile,setImageprofile] = useState('')
       if (providerId) {
         try {
           const response = await axios.get(
-            `http://192.168.104.13:3000/provider/getOne/${providerId}`
+            `http://192.168.1.17:3000/provider/getOne/${providerId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
@@ -89,7 +90,7 @@ const [imageprofile,setImageprofile] = useState('')
       if (custumorId) {
         try {
           const response = await axios.get(
-            `http://192.168.104.13:3000/custumor/getOne/${custumorId}`
+            `http://192.168.1.17:3000/custumor/getOne/${custumorId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
@@ -111,17 +112,17 @@ const [imageprofile,setImageprofile] = useState('')
   ];
 
   const categories = [
-    { name: 'Electricien', image: require('../../assets/Electricien.png') },
-    { name: 'Climatisation', image: require('../../assets/Climatisation.png') },
-    { name: 'Plombier', image: require('../../assets/clipart1865677.jpeg') },
-    { name: 'Transporteur', image: require('../../assets/Transporteur.png') },
-    { name: 'Peinture', image: require('../../assets/Peinture.png') },
+    { name: 'electricien', image: require('../../assets/Electricien.png') },
+    { name: 'climatisation', image: require('../../assets/Climatisation.png') },
+    { name: 'plombier', image: require('../../assets/clipart1865677.jpeg') },
+    { name: 'transporteur', image: require('../../assets/Transporteur.png') },
+    { name: 'peinture', image: require('../../assets/Peinture.png') },
     {
-      name: 'Machine a laver',
+      name: 'machine a laver',
       image: require('../../assets/Machinealaver.png'),
     },
-    { name: 'Menuisier', image: require('../../assets/Menuisier.png') },
-    { name: 'Camera', image: require('../../assets/Camera.png') },
+    { name: 'menuisier', image: require('../../assets/Menuisier.png') },
+    { name: 'camera', image: require('../../assets/Camera.png') },
   ];
   const advertisingImages = [
     require('../../assets/banner.png'),
@@ -190,37 +191,47 @@ const [imageprofile,setImageprofile] = useState('')
             />
           </View>
           {searchResults.map((result) => (
-            <View key={result.id}>
-              <Text>{result.username}</Text>
-              {isLoading && <Text>Loading...</Text>}
+    <View style={styles.resultContainer} key={result.id}>
+        <Image source={{ uri: result.imgprof }} style={styles.resultImage} />
+        <View style={styles.resultTextContainer}>
+            <Text style={styles.resultName}>{result.username}</Text>
+            <Text style={styles.resultCategory}>{result.category}</Text>
+        </View>
 
-              {error && <Text>{error}</Text>}
+        {isLoading && <Text>Loading...</Text>}
+        {error && <Text>{error}</Text>}
+    </View>
+))}
 
-              {/* Add more fields from the result as needed */}
-            </View>
-          ))}
         </View>
 
         {/* Category Section */}
         <Text style={styles.sectionTitle}>Categories</Text>
         <View style={styles.categoryContainer}>
-          {/* Display loader for 3 seconds */}
-          {showLoader && <ShimmerEffect />}
-          {/* Show categories after 3 seconds */}
-          {!showLoader &&
-            categories.map((category) => (
-              <View key={category.name} style={styles.categoryItem}>
-                <TouchableOpacity>
-                <Image source={category.image} style={styles.categoryImage} />
-                </TouchableOpacity>
-                <Text style={styles.categoryName}>{category.name}</Text>
-              </View>
-            ))}
-        </View>
+      {/* Display loader for 3 seconds */}
+      {showLoader && <ShimmerEffect />}
+      {/* Show categories after 3 seconds */}
+      {!showLoader &&
+        categories.map((category) => (
+          <View key={category.name} style={styles.categoryItem}>
+            <TouchableOpacity 
+              onPress={() => {
+                navigation.navigate('Providers', { category: category.name });
+              }}
+            >
+              <Image source={category.image} style={styles.categoryImage} />
+            </TouchableOpacity>
+            <Text style={styles.categoryName}>{category.name}</Text>
+          </View>
+        ))}
+    </View>
+
 
         {/* Advertising Section (Carousel) */}
         <View style={styles.carouselContainer}>
           <Text style={styles.sectionTitle}>Advertisements</Text>
+          {showLoader && <ShimmerEffect />}
+          {!showLoader &&
           <Carousel
             data={advertisingImages}
             renderItem={({ item }) => (
@@ -231,7 +242,7 @@ const [imageprofile,setImageprofile] = useState('')
             loop={true}
             autoplay={true}
             autoplayInterval={3000}
-          />
+          />}
         </View>
       </ScrollView>
     </DrawerLayoutAndroid>
@@ -304,6 +315,32 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
   },
+  resultContainer: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    alignItems: 'center',
+    borderWidth: 1,      
+    borderColor: '#ccc', 
+    padding: 10,         
+    borderRadius: 10,    
+},
+resultImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+},
+resultTextContainer: {
+    flex: 1,
+},
+resultName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+},
+resultCategory: {
+    fontSize: 14,
+    color: '#888',
+},
   categoryContainer: {
     padding: 20,
     flexDirection: 'row',
