@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ActivityIndicator , View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
+import { useRoute, useFocusEffect } from '@react-navigation/native';
 
 function AllProviders() {
-    const [providers, setProviders] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState(null);
+  const route = useRoute();
+  const [providers, setProviders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const initialCategory = route.params?.category;
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+
     const categories = [
         { name: 'electricien', image: require('../../assets/Electricien.png') },
         { name: 'climatisation', image: require('../../assets/Climatisation.png') },
@@ -20,65 +24,89 @@ function AllProviders() {
         { name: 'menuisier', image: require('../../assets/Menuisier.png') },
         { name: 'camera', image: require('../../assets/Camera.png') },
       ];
-  useEffect(() => {
-    const endpoint = selectedCategory 
-      ? `http://192.168.1.17:3000/provider/search?category=${selectedCategory}` 
-      : `http://192.168.1.17:3000/provider`;
+    
+      const fetchData = useCallback((category) => {
+        setLoading(true);
+    
+        const endpoint = category
+            ? `http://192.168.1.17:3000/provider/search?category=${category}`
+            : `http://192.168.1.17:3000/provider`;
+    
+        axios.get(endpoint)
+            .then(response => {
+                setProviders(response.data);
+            })
+            .catch(err => {
+                setError(err.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+      }, []);
+      useFocusEffect(
+        useCallback(() => {
+          const categoryFromRoute = route.params?.category;
+          setSelectedCategory(categoryFromRoute);
+          fetchData(categoryFromRoute);
+          
+          return () => {
+              
+          };
+        }, [route.params?.category])
+      );
 
-    axios.get(endpoint)
-      .then(response => {
-        setProviders(response.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [selectedCategory]);
+useEffect(() => {
+  if (selectedCategory) {
+    fetchData(selectedCategory);
+  }
+}, [selectedCategory]);    
+
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error: {error}</Text>;
 
   return (
     <View style={styles.container}>
-      {/* Left side for Category Filters */}
-      <View style={styles.filterContainer}>
-  <ScrollView showsVerticalScrollIndicator={false}>
-    {categories.map((category, index) => (
-      <TouchableOpacity 
-        key={index} 
-        onPress={() => setSelectedCategory(category.name)}
-        style={[
-          styles.categoryButton, 
-          selectedCategory === category.name && styles.selectedCategory
-        ]}
-      >
-        <Image source={category.image} style={styles.categoryImage} />
-        <Text style={styles.categoryText}>{category.name}</Text>
-      </TouchableOpacity>
-    ))}
-  </ScrollView>
-</View>
-
-
-  
-      {/* Right side for provider list */}
-      <View style={styles.resultsContainer}>
-      <FlatList
-        data={providers}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image source={{ uri: item.imgprof }} style={styles.profileImage} />
-            <View style={styles.textContainer}>
-              <Text style={styles.username}>{item.username}</Text>
-              <Text style={styles.category}>{item.category}</Text>
-            </View>
-          </View>
-        )}
-      />
-      </View>
+    {/* Left side for Category Filters */}
+    <View style={styles.filterContainer}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {categories.map((category, index) => (
+          <TouchableOpacity 
+            key={index} 
+            onPress={() => setSelectedCategory(category.name)}
+            style={[
+              styles.categoryButton, 
+              selectedCategory === category.name && styles.selectedCategory
+            ]}
+          >
+            <Image source={category.image} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>{category.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
+
+    {/* Right side for provider list */}
+    <View style={styles.resultsContainer}>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <FlatList
+          data={providers}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Image source={{ uri: item.imgprof }} style={styles.profileImage} />
+              <View style={styles.textContainer}>
+                <Text style={styles.username}>{item.username}</Text>
+                <Text style={styles.category}>{item.category}</Text>
+              </View>
+            </View>
+          )}
+        />
+      )}
+    </View>
+  </View>
   );
 }
 
@@ -138,7 +166,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    flexDirection: 'row', // main change to layout structure
+    flexDirection: 'row', 
   },
   filterContainer: {
     flex: 1,
@@ -152,6 +180,6 @@ const styles = StyleSheet.create({
   },
  
   selectedCategory: {
-    backgroundColor: '#ddd',  // darker background color when selected
+    backgroundColor: '#ddd',  
   }
 });export default AllProviders;

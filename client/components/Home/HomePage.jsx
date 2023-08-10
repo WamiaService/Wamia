@@ -11,7 +11,7 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import ViewPropTypes from 'deprecated-react-native-prop-types';
+import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import DrawerButton from './Drawer.jsx';
 import Carousel from 'react-native-snap-carousel';
@@ -20,7 +20,8 @@ import BottomTabNavigation from '../BottomTavNav.jsx';
 import axios from 'axios';
 import ShimmerEffect from './ShimmerEffect.jsx';
 
-const Home = ({ providerId ,custumorId }) => {
+const Home = ({ providerId ,custumorId  }) => {
+  const navigation = useNavigation();
   const drawer = useRef(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -111,17 +112,17 @@ const [imageprofile,setImageprofile] = useState('')
   ];
 
   const categories = [
-    { name: 'Electricien', image: require('../../assets/Electricien.png') },
-    { name: 'Climatisation', image: require('../../assets/Climatisation.png') },
-    { name: 'Plombier', image: require('../../assets/clipart1865677.jpeg') },
-    { name: 'Transporteur', image: require('../../assets/Transporteur.png') },
-    { name: 'Peinture', image: require('../../assets/Peinture.png') },
+    { name: 'electricien', image: require('../../assets/Electricien.png') },
+    { name: 'climatisation', image: require('../../assets/Climatisation.png') },
+    { name: 'plombier', image: require('../../assets/clipart1865677.jpeg') },
+    { name: 'transporteur', image: require('../../assets/Transporteur.png') },
+    { name: 'peinture', image: require('../../assets/Peinture.png') },
     {
-      name: 'Machine a laver',
+      name: 'machine a laver',
       image: require('../../assets/Machinealaver.png'),
     },
-    { name: 'Menuisier', image: require('../../assets/Menuisier.png') },
-    { name: 'Camera', image: require('../../assets/Camera.png') },
+    { name: 'menuisier', image: require('../../assets/Menuisier.png') },
+    { name: 'camera', image: require('../../assets/Camera.png') },
   ];
   const advertisingImages = [
     require('../../assets/banner.png'),
@@ -207,19 +208,24 @@ const [imageprofile,setImageprofile] = useState('')
         {/* Category Section */}
         <Text style={styles.sectionTitle}>Categories</Text>
         <View style={styles.categoryContainer}>
-          {/* Display loader for 3 seconds */}
-          {showLoader && <ShimmerEffect />}
-          {/* Show categories after 3 seconds */}
-          {!showLoader &&
-            categories.map((category) => (
-              <View key={category.name} style={styles.categoryItem}>
-                <TouchableOpacity>
-                <Image source={category.image} style={styles.categoryImage} />
-                </TouchableOpacity>
-                <Text style={styles.categoryName}>{category.name}</Text>
-              </View>
-            ))}
-        </View>
+      {/* Display loader for 3 seconds */}
+      {showLoader && <ShimmerEffect />}
+      {/* Show categories after 3 seconds */}
+      {!showLoader &&
+        categories.map((category) => (
+          <View key={category.name} style={styles.categoryItem}>
+            <TouchableOpacity 
+              onPress={() => {
+                navigation.navigate('Providers', { category: category.name });
+              }}
+            >
+              <Image source={category.image} style={styles.categoryImage} />
+            </TouchableOpacity>
+            <Text style={styles.categoryName}>{category.name}</Text>
+          </View>
+        ))}
+    </View>
+
 
         {/* Advertising Section (Carousel) */}
         <View style={styles.carouselContainer}>
