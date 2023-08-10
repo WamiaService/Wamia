@@ -48,7 +48,7 @@ import Edit from './Edit.jsx'
   const getOneCustumor = async (id)=> {
        
     try {
-      const response = await axios.get(`http://192.168.1.7:3000/custumor/getOne/${id}`);
+      const response = await axios.get(`http://192.168.11.42:3000/custumor/getOne/${id}`);
       setData(response.data); 
     } catch (error) {
       console.error('Error :', error);
@@ -57,7 +57,7 @@ import Edit from './Edit.jsx'
 
   const updateCus=(id,username,adresse,mobile)=>{
    
-    axios.put(`http://192.168.100.18:3000/custumor/update/${id}`,{
+    axios.put(`http://192.168.11.42:3000/custumor/update/${id}`,{
       username: username,
       adressse:adresse,
       // imgprof:imgprof,
