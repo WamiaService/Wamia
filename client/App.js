@@ -14,6 +14,7 @@ import BottomTabNavigation from './components/BottomTavNav.jsx';
 import LoginC from './components/SignupLogin/LoginC.jsx';
 import SessionStorage from 'react-native-session-storage';
 import UpdateProvider from './components/Provider/UpdateProvider.jsx';
+import Payment from './components/payment/Payment.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -118,7 +119,9 @@ const App = () => {
 
         <Stack.Screen name="bottomTabNav">
           {(props) => (
-            <BottomTabNavigation {...props} custumorId={custumorId} providerId={providerId} />
+            <BottomTabNavigation {...props} custumorId={custumorId} providerId={providerId} options={{
+              headerShown: false,
+            }} />
           )}
         </Stack.Screen>
         <Stack.Screen name="edit">
@@ -129,6 +132,11 @@ const App = () => {
         <Stack.Screen name="updateprovider">
           {(props) => (
             <UpdateProvider {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="payment">
+          {(props) => (
+            <Payment {...props} providerId={providerId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="one">
