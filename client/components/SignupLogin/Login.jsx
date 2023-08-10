@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Image,
@@ -25,31 +25,48 @@ const Login = ({ handleLogin}) => {
   console.log("role in login:",role);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [is_approved, setIs_approved] = useState(false)
+  const [activationCode,setActivationCode]= useState('')
   const navigation = useNavigation();
-  const loginn = async (username, password) => {
+
+  useEffect(() => {
+    const loadActivationStatus = async () => {
+      const activationStatus = await SecureStore.getItemAsync('is_approved');
+      setIs_approved(activationStatus === 'true');
+    };
+
+    loadActivationStatus();
+  }, []);
+
+  const loginn = async (username, password, activationCode) => {
     try {
-      const response = await axios.post('http://192.168.104.13:3000/provider/login', {
+      const response = await axios.post('http://192.168.11.42:3000/provider/login', {
         username: username,
         password: password,
+        activationCode: activationCode
       });
-  
+
       console.log('Response Data:', response.data);
       const token = response.data.token;
-  
+
       if (response.data && token) {
         const payload = JSON.parse(base64Decode(token.split('.')[1]));
-  
+
         console.log('Parsed Payload:', payload);
-  
-        // Adjust this part based on your payload structure
+
         if (payload && payload.providerId) {
+          // Save the activation status in SecureStore
+          if (!is_approved) {
+            await SecureStore.setItemAsync('is_approved', 'true');
+          }
+
           // Save the token in SecureStore
           await SecureStore.setItemAsync('jwt-token', token);
-  
+
           handleLogin(token, payload.providerId);
           console.log('Provider ID:', payload.providerId);
           console.log('Response Data:', response.data);
-          navigation.navigate('bottomTabNav',{role});
+          navigation.navigate('bottomTabNav', { role });
           alert('Login successful');
         } else {
           alert('Login failed: Invalid payload data');
@@ -68,7 +85,7 @@ const Login = ({ handleLogin}) => {
   
 
   const handleLoginn = () => {
-    loginn(username,password); 
+    loginn(username,password,activationCode); 
   };
 
   return (
@@ -96,6 +113,16 @@ const Login = ({ handleLogin}) => {
           onChangeText={(val) => setPassword(val)}
         />
       </View>
+
+      <View style={styles.inputContainer}>
+  <AntDesign name="key" size={24} color="black" style={styles.icon} />
+  <TextInput
+    onChangeText={(val) => setActivationCode(val)}
+    style={styles.inp}
+    placeholder="Activation Code ..."
+    keyboardType="numeric"
+  />
+</View>
       <Button onPress={handleLoginn} title="Login" color="#FFA500" borderRadius={30} />
     </View>
   );

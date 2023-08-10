@@ -1,7 +1,7 @@
 const sgMail = require('@sendgrid/mail');
 
 // Set your SendGrid API key here
-const sendgridApiKey = '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';
+const sendgridApiKey = process.env.SECRET_SEND;
 sgMail.setApiKey(sendgridApiKey);
 
 const sendConfirmationEmail = async (email, activationCode) => {

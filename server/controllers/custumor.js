@@ -36,9 +36,9 @@ const getAllcustumor = async (req, res) => {
 const signupcustumor = async (req, res) => {
 
   const characters =
-  "0123456789abcdefghijklmnopqrstuvwxyz";
+  "0123";
 let activationCode = "";
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 5; i++) {
   activationCode += characters[Math.floor(Math.random() * characters.length)];
 }
   try {
@@ -82,6 +82,7 @@ const logincustumor = async (req, res) => {
       if (!custumor) {
         return res.status(404).json({ error: 'custumor not found' });
       }
+      
       const isPasswordValid = await bcrypt.compare(password, custumor.password);
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid password' });

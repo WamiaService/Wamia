@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Image,
@@ -25,13 +25,25 @@ const LoginC = ({ handleLoginCustumor }) => {
   console.log("role in loginCust:",role);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [activationCode,setActivationCode]= useState('')
+
   const navigation = useNavigation();
 
-  const loginn = async (username, password) => {
+  useEffect(() => {
+    const loadActivationStatus = async () => {
+      const activationStatus = await SecureStore.getItemAsync('is_approved');
+      setIs_approved(activationStatus === 'true');
+    };
+
+    loadActivationStatus();
+  }, []);
+
+  const loginn = async (username, password,activationCode) => {
     try {
-      const response = await axios.post('http://192.168.104.13:3000/custumor/login', {
+      const response = await axios.post('http://192.168.11.42:3000/custumor/login', {
         username: username,
         password: password,
+        activationCode:activationCode
       });
   
       console.log('Response Data:', response.data);
@@ -67,7 +79,7 @@ const LoginC = ({ handleLoginCustumor }) => {
   
 
   const handleLoginn = () => {
-    loginn(username,password); 
+    loginn(username,password,activationCode); 
   };
 
   return (
@@ -95,6 +107,15 @@ const LoginC = ({ handleLoginCustumor }) => {
           onChangeText={(val) => setPassword(val)}
         />
       </View>
+      <View style={styles.inputContainer}>
+  <AntDesign name="key" size={24} color="black" style={styles.icon} />
+  <TextInput
+    onChangeText={(val) => setActivationCode(val)}
+    style={styles.inp}
+    placeholder="Activation Code ..."
+    keyboardType="numeric"
+  />
+</View>
       <Button onPress={handleLoginn} title="Login" color="#FFA500" borderRadius={30} />
     </View>
   );
