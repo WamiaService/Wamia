@@ -91,6 +91,7 @@ const [imageprofile,setImageprofile] = useState('')
         try {
           const response = await axios.get(
             `http://192.168.11.42:3000/custumor/getOne/${custumorId}`
+            `http://192.168.1.7:3000/custumor/getOne/${custumorId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
