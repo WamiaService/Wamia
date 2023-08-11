@@ -56,7 +56,7 @@ console.log("provider id =",providerId);
 </Tab.Screen>
      
      <Tab.Screen name="Providers" component={AllProviders} />
-     <Tab.Screen name="message" component={Chat}/>
+     <Tab.Screen name="message" component={Chat} />
      <Tab.Screen name="profile" component={role === 'provider' ? OneProv : One}  /> 
     </Tab.Navigator>
   );
