@@ -2,19 +2,24 @@
 
 import  React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
-import './custumor.css'
+import './custumor.css';
+import Dialog from './dialog'
   
 
  
 
 
 const Custumor = () => {
+  const [dialog,setDialog]=useState({
+    message:"Are you sure you want to delete?",
+    isLoading:false,
+  })
   const columnsCustumor = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'username', headerName: 'username', width: 150},
+    { field: 'username', headerName: 'username',    width: 150},
     { field: 'adresse', headerName: 'adresse', width: 150 },
     {
       field: 'email',
@@ -27,7 +32,7 @@ const Custumor = () => {
       width: 75,
       sortable: false,
       renderCell: (params) => (
-        <Button onClick={() => deleteData  (params.row.id)} variant="outlined" color="error">
+        <Button onClick={() => handleDelete  (params.row.id)} variant="outlined" color="error">
         Delete
        </Button>
       ),
@@ -36,8 +41,28 @@ const Custumor = () => {
   ];
   const [rows, setcustumorRows] = useState([]);
   const [refrech, setrefrech] = useState(false);
-  
+  const idproviderRef = useRef()
+ const areUsureTodelete = (choose)=>{
+           if(choose){
+            deleteData(idproviderRef.current )
+            setDialog({
+            
+              isLoading : false})
+           }
+           setDialog({
+            
+            isLoading : false
+          })
+ }
+ const handleDelete=(id)=>{
+  setDialog({
+    
+    isLoading : true
+  })
+  idproviderRef.current = id
+ }
   const deleteData = async (id) => {
+    
     try {
      const response =  await axios.delete(`http://localhost:3000/api/admin/deletecustumor/${id}`); 
      console.log(id)
@@ -94,6 +119,8 @@ const Custumor = () => {
         // checkboxSelection
       />
     </div>
+    <div>{dialog.isLoading&& <Dialog ondialog={areUsureTodelete} message ={dialog.message}/>}</div>
+    
   </div>
     
 
