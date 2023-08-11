@@ -6,21 +6,32 @@ const Rating=require("../database/models/rating")
 
 
   const createRate=async(req,res)=>{
-    const { providerId, custumorId, rate} = req.body;
-       console.log('r',rate)
-       console.log('c',custumorId)
-       console.log('p',providerId)
+      const {providerId}=req.params
+      if(providerId){
+    const { rate,custumorId} = req.body;
+    if(rate<1 || rate>5){
+      return res.status(400).json({message:"invalid rating value"})
+  }
     try {
-        const newRate = await Rating.create({ providerId, custumorId, rate });
-        console.log(newRate)
+        const newRate = await Rating.create({
+          
+          rate:rate,
+          custumorId:custumorId
+        
+        });
+        console.log("rae",newRate)
         res.status(201).json(newRate);
       } catch (error) {
         console.log("e",error)
         res.status(500).json('Error submitting rating');
+       }
+
       }
-
-
   }
+//
+
+
+
 
 
 

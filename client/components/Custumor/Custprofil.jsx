@@ -49,6 +49,7 @@ import Edit from './Edit.jsx'
        
     try {
       const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${id}`);
+
       setData(response.data); 
     } catch (error) {
       console.error('Error :', error);
