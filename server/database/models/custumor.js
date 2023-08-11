@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const Admin = require('./admin');
+const Message = require('./messages');
 
 const Custumor = sequelize.define('custumor', {
   username: { type: DataTypes.STRING, allowNull: false, unique: true },
@@ -37,6 +38,7 @@ const Custumor = sequelize.define('custumor', {
 },
 { timestamps: false });
 
-;
+Custumor.hasMany(Message, { foreignKey: 'senderId' });
+Custumor.hasMany(Message, { foreignKey: 'receiverId' })
 
 module.exports = Custumor;

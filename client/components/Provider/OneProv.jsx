@@ -11,8 +11,8 @@ const navigateToEditProfile = () => {
 };
 
 
-const navigateToSecurity = () => {
-  console.log("Security function");
+const navigateToReservation = () => {
+navigation.navigate("reservation")
 };
 
 const navigateToNotifications = () => {
@@ -50,6 +50,10 @@ const navigateToReportProblem = () => {
 const addAccount = () => {
   console.log("Aadd account ");
 };
+const navigateToMyProfile = ()=>{
+  navigation.navigate("providerprofile");
+
+}
 
 const logout = () => {
   handleLogoutProvider()
@@ -58,13 +62,19 @@ const logout = () => {
 };
 
 
+
 const accountItems = [
   {
-    icon: "person-outline",
+   icon: "person-outline",
     text: "Edit Profile",
     action: navigateToEditProfile,
-  },
-  { icon: "calendar", text: "Reservtion", action: navigateToSecurity },
+  } ,
+  {
+    icon: "person-outline",
+     text: "My Profile",
+     action: navigateToMyProfile,
+   },
+  { icon: "calendar", text: "Reservtion", action: navigateToReservation },
   {
     icon: "notifications-none",
     text: "Notifications",
