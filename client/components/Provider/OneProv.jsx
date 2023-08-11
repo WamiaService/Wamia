@@ -11,19 +11,19 @@ const navigateToEditProfile = () => {
 };
 
 
-const navigateToSecurity = () => {
-  console.log("Security function");
+const navigateToReservation = () => {
+navigation.navigate("reservation")
 };
 
 const navigateToNotifications = () => {
   console.log("Notifications function");
 };
 
-const navigateToPrivacy = () => {
-  console.log("Privacy function");
+const navigateToAddPost = () => {
+  navigation.navigate("postprovider");
 };
 
-const navigateToSubscription = () => {
+const navigateToPayment = () => {
   navigation.navigate("payment");
 };
 
@@ -50,6 +50,10 @@ const navigateToReportProblem = () => {
 const addAccount = () => {
   console.log("Aadd account ");
 };
+const navigateToMyProfile = ()=>{
+  navigation.navigate("providerprofile");
+
+}
 
 const logout = () => {
   handleLogoutProvider()
@@ -58,28 +62,39 @@ const logout = () => {
 };
 
 
+
 const accountItems = [
   {
-    icon: "person-outline",
+   icon: "person-outline",
     text: "Edit Profile",
     action: navigateToEditProfile,
-  },
-  { icon: "calendar", text: "Reservtion", action: navigateToSecurity },
+  } ,
+  {
+    icon: "person-outline",
+     text: "My Profile",
+     action: navigateToMyProfile,
+   },
+  { icon: "calendar", text: "Reservtion", action: navigateToReservation },
   {
     icon: "notifications-none",
     text: "Notifications",
     action: navigateToNotifications,
   },
+  { icon: "add", text: "Add Post", action: navigateToAddPost },
 ];
 
 const supportItems = [
   {
     icon: "credit-card",
     text: "Payment",
-    action: navigateToSubscription,
+    action: navigateToPayment,
   },
   { icon: "help-outline", text: "Help & Support", action: navigateToSupport },
-  
+  {
+    icon: "info-outline",
+    text: "Terms and Policies",
+    action: navigateToTermsAndPolicies,
+  },
 ];
 
 const cacheAndCellularItems = [

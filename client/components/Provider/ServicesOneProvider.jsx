@@ -8,7 +8,7 @@ const Posts = ({providerId}) => {
 
   const del = (id) => {
     axios
-      .delete(`http://192.168.11.41:3000/service/delete/${id}`)
+      .delete(`http://192.168.104.5:3000/service/delete/${id}`)
       .then((res) => {
         console.log(res);
         fetch();
@@ -23,7 +23,7 @@ const Posts = ({providerId}) => {
   }, []);
 
   const fetch = () => {
-    axios.get(`http://192.168.11.41:3000/service/getall/${providerId}`)
+    axios.get(`http://192.168.104.5:3000/service/getall/1`)
       .then((res) => {
         setData(res?.data);
       })
