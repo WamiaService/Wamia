@@ -46,7 +46,7 @@ const Home = ({ providerId, custumorId }) => {
       setError(null);
       axios
         .get(
-          `http://192.168.1.17:3000/provider/search?category=${searchTerm}`
+          `http://192.168.104.6:3000/provider/search?category=${searchTerm}`
         )
         .then((response) => {
           setSearchResults(response.data);
@@ -80,7 +80,7 @@ const Home = ({ providerId, custumorId }) => {
       if (providerId) {
         try {
           const response = await axios.get(
-            `http://192.168.1.17:3000/provider/getOne/${providerId}`
+            `http://192.168.104.6:3000/provider/getOne/${providerId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
@@ -100,8 +100,8 @@ const Home = ({ providerId, custumorId }) => {
       if (custumorId) {
         try {
           const response = await axios.get(
-            `http://192.168.1.17:3000/custumor/getOne/${custumorId}`
-              `http://192.168.1.7:3000/custumor/getOne/${custumorId}`
+            `http://192.168.104.6:3000/custumor/getOne/${custumorId}`
+              `http://192.168.104.6:3000/custumor/getOne/${custumorId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof

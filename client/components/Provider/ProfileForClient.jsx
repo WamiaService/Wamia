@@ -73,15 +73,19 @@ const ProfileFOrClient = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Comments</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
           onPress={handleReservationButtonClick}
         >
           <Text style={styles.buttonText}>Reservation</Text>
         </TouchableOpacity>
+
       </View>
+      
       {showPosts && <PostOnlyClient />}
       {showComments && <View style={styles.commentSection}><Text>Comments Section</Text></View>}
+
     </View>
   );
 };

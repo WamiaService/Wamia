@@ -1,81 +1,122 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import UpdateService from "./UpdateService"
+import Test2 from './test2';
 
-const ServicesOneProvider = () => {
-  const [data, setData] = useState({
-    name: '',
-    imgprof: '',
-    patente: '',
-  });
+const Posts = ({providerId}) => {
+  const [data, setData] = useState([]);
+
+  const del = (id) => {
+    axios
+      .delete(`http://192.168.11.41:3000/service/delete/${id}`)
+      .then((res) => {
+        console.log(res);
+        fetch();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-    fetchData();
+    fetch();
   }, []);
 
-  const fetchData = () => {
-    axios.get(`http://192.168.104.6:3000/provider/getOne/1`)
+  const fetch = () => {
+    axios.get(`http://192.168.11.41:3000/service/getall/${providerId}`)
       .then((res) => {
-        setData(res.data);
+        setData(res?.data);
       })
-      .catch((err) => console.log(err));
-  }
- 
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <Image
-          source={{
-            uri: data.imgprof,
-          }}
-          style={styles.image}
-        />
-        <View style={styles.infoContainer}>
-          <Text style={styles.text}>{data.username}</Text>
-          <Text style={styles.number}>{data.mobile}</Text>
-
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      {data.map((item, index) => (
+        <View key={index} style={styles.postContainer}>
+          <Text style={styles.title}>{item.name}</Text>
+          <Image
+            source={{ uri: item.img }}
+            style={styles.image}
+          />
+          <Text style={styles.description}>{item.desc}</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() => del(item.id)}
+            >
+              <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
+            <Test2 style={styles.serviceButton} id={item.id} />
+          </View>
         </View>
-      </View>
-      <ServicesOneProvider/>
-    </View>
+      ))}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+  scrollViewContent: {
+    flexGrow: 1,
+    padding: 16,
   },
-  box: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 12,
-    backgroundColor: 'white',
-    width: 370,
-    shadowColor: 'black',
-    elevation: 3,
+  postContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    width: 300,
   },
-  infoContainer: {
-    marginLeft: 10,
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#333', // Updated color
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginRight: 10,
+    width: '100%', // Change to fill the container width
+    height: 200, // Set the desired height
+    marginBottom: 10,
   },
-  text: {
+  description: {
+    marginBottom: 10,
+    color: '#555', // Updated color
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 10, // Add some top padding for spacing
+  },
+  deleteButton: {
+    backgroundColor: '#ff0000',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    width: '45%',
+  },
+  serviceButton: {
+    backgroundColor: '#FFA500',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    width: '45%',
+  },
+  buttonText: {
+    color: '#fff',
     fontWeight: 'bold',
-    marginBottom: 5,
+    textAlign: 'center',
   },
-  number: {
-    marginBottom: 5,
-  }
 });
 
-export default ServicesOneProvider;
+export default Posts;

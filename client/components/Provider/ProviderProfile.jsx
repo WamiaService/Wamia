@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 import ServicesOneProvider from './ServicesOneProvider';
 import axios from 'axios';
 
-const ProviderProfile = () => {
+const ProviderProfile = ({providerId}) => {
   const [data, setData] = useState({
     name: '',
     imgprof: '',
@@ -15,7 +15,7 @@ const ProviderProfile = () => {
   }, []);
 
   const fetchData = () => {
-    axios.get(`http://192.168.104.6:3000/provider/getOne/1`)
+    axios.get(`http://192.168.104.6:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
