@@ -10,6 +10,7 @@ import One from './Custumor/One.jsx';
 import { useRoute } from '@react-navigation/native';
 import OneProv from './Provider/OneProv.jsx';
 import AllProviders from './Provider/AllProviders.jsx';
+import Chat from './chat/Chat.jsx';
 
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +56,7 @@ console.log("provider id =",providerId);
 </Tab.Screen>
      
      <Tab.Screen name="Providers" component={AllProviders} />
-     <Tab.Screen name="message" component={One}/>
+     <Tab.Screen name="message" component={Chat} />
      <Tab.Screen name="profile" component={role === 'provider' ? OneProv : One}  /> 
     </Tab.Navigator>
   );

@@ -11,20 +11,20 @@ const navigateToEditProfile = () => {
 };
 
 
-const navigateToSecurity = () => {
-  console.log("Security function");
+const navigateToReservation = () => {
+navigation.navigate("reservation")
 };
 
 const navigateToNotifications = () => {
   console.log("Notifications function");
 };
 
-const navigateToPrivacy = () => {
-  console.log("Privacy function");
+const navigateToAddPost = () => {
+  navigation.navigate("postprovider");
 };
 
-const navigateToSubscription = () => {
-  console.log("Subscription function");
+const navigateToPayment = () => {
+  navigation.navigate("payment");
 };
 
 const navigateToSupport = () => {
@@ -50,6 +50,10 @@ const navigateToReportProblem = () => {
 const addAccount = () => {
   console.log("Aadd account ");
 };
+const navigateToMyProfile = ()=>{
+  navigation.navigate("providerprofile");
+
+}
 
 const logout = () => {
   handleLogoutProvider()
@@ -58,26 +62,32 @@ const logout = () => {
 };
 
 
+
 const accountItems = [
   {
-    icon: "person-outline",
+   icon: "person-outline",
     text: "Edit Profile",
     action: navigateToEditProfile,
-  },
-  { icon: "calendar", text: "Reservtion", action: navigateToSecurity },
+  } ,
+  {
+    icon: "person-outline",
+     text: "My Profile",
+     action: navigateToMyProfile,
+   },
+  { icon: "calendar", text: "Reservtion", action: navigateToReservation },
   {
     icon: "notifications-none",
     text: "Notifications",
     action: navigateToNotifications,
   },
-  { icon: "lock-outline", text: "Privacy", action: navigateToPrivacy },
+  { icon: "add", text: "Add Post", action: navigateToAddPost },
 ];
 
 const supportItems = [
   {
     icon: "credit-card",
-    text: "My Subscription",
-    action: navigateToSubscription,
+    text: "Payment",
+    action: navigateToPayment,
   },
   { icon: "help-outline", text: "Help & Support", action: navigateToSupport },
   {

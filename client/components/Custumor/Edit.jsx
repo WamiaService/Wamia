@@ -127,7 +127,7 @@ import axios from 'axios'
       }
     };
 
-
+ console.log(infoCus)
     console.log(custumorId)
 
   

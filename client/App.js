@@ -14,6 +14,11 @@ import BottomTabNavigation from './components/BottomTavNav.jsx';
 import LoginC from './components/SignupLogin/LoginC.jsx';
 import SessionStorage from 'react-native-session-storage';
 import UpdateProvider from './components/Provider/UpdateProvider.jsx';
+import Payment from './components/payment/Payment.jsx';
+import ProviderPost from './components/Provider/PostProvider.jsx';
+import ProviderProfile from './components/Provider/ProviderProfile.jsx';
+import Reservation from './components/Provider/Reservation.jsx';
+import ProfileFOrClient from './components/Provider/ProfileForClient.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -118,7 +123,9 @@ const App = () => {
 
         <Stack.Screen name="bottomTabNav">
           {(props) => (
-            <BottomTabNavigation {...props} custumorId={custumorId} providerId={providerId} />
+            <BottomTabNavigation {...props} custumorId={custumorId} providerId={providerId} options={{
+              headerShown: false,
+            }} />
           )}
         </Stack.Screen>
         <Stack.Screen name="edit">
@@ -131,6 +138,33 @@ const App = () => {
             <UpdateProvider {...props} providerId={providerId} />
           )}
         </Stack.Screen>
+        <Stack.Screen name="payment">
+          {(props) => (
+            <Payment {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="postprovider">
+          {(props) => (
+            <ProviderPost {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="providerprofile">
+          {(props) => (
+            <ProviderProfile {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="reservation">
+          {(props) => (
+            <Reservation {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="profileforclient">
+          {(props) => (
+            <ProfileFOrClient {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        
+        
         <Stack.Screen name="one">
           {(props) => (
             <One {...props} handleLogoutCustumor={handleLogoutCustumor} handleLogoutProvider={handleLogoutProvider} />

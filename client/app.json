@@ -1,5 +1,6 @@
 {
   "expo": {
+    "permissions": ["LOCATION"],
     "name": "client",
     "slug": "client",
     "version": "1.0.0",
