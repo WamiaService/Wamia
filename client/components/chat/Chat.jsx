@@ -8,10 +8,19 @@ const ChatInput = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [isInputFocused, setInputFocused] = useState(false);
-  
+    const socket = io('http://192.168.104.5:4000')
     const sendMessage = () => {
       if (message.trim() !== '') {
-        setMessages([...messages, message]); // Add the typed message to the messages array
+        // Send the message to the server via WebSocket
+        socket.emit('newMessage', {
+          content: message,
+          senderId: 1, // Replace with the user's sender ID
+          receiverId: 2, // Replace with the admin's receiver ID
+        });
+  
+        // Add the typed message to the messages array
+        setMessages([...messages, message]);
+  
         setMessage('');
       }
     };
@@ -24,12 +33,17 @@ const ChatInput = () => {
       const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
         setInputFocused(false);
       });
+      socket.on('newMessage', (data) => {
+        // Add the received message to the messages array
+        setMessages([...messages, data.content]);
+      })
   
       return () => {
         keyboardDidShowListener.remove();
         keyboardDidHideListener.remove();
+        socket.disconnect();
       };
-    }, []);
+    }, [messages]);
   
     return (
       <View style={styles.container}>
