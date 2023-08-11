@@ -10,7 +10,6 @@ const ProfileFOrClient = ({ navigation }) => {
   const [data, setData] = useState({
     name: '',
     imgprof: '',
-    patente: '',
   });
 
   const [showPosts, setShowPosts] = useState(true);
@@ -50,7 +49,7 @@ const ProfileFOrClient = ({ navigation }) => {
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{data.username}</Text>
-          <Text style={styles.mobile}>{data.mobile}</Text>
+          <Text style={styles.mobile}>phone : +216 {data.mobile}</Text>
           <AirbnbRating
             count={5}
             defaultRating={0}
@@ -82,7 +81,7 @@ const ProfileFOrClient = ({ navigation }) => {
         </TouchableOpacity>
 
       </View>
-      
+
       {showPosts && <PostOnlyClient />}
       {showComments && <View style={styles.commentSection}><Text>Comments Section</Text></View>}
 

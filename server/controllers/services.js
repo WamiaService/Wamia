@@ -46,7 +46,9 @@ const serviceInfo={
       name, 
       img,
       desc 
-    } = req.body; 
+    } = req.body;
+
+   
 
     const {providerId}=req.params
 

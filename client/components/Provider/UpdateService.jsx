@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, Button, Modal, TouchableOpacity, Image, StyleSheet, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
+import * as ImagePicker from 'expo-image-picker'
 
-const updateService = ({ id }) => {
+const updateService = ({ id ,onUpdate }) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [desc, setDesc] = useState("");
+  const [updateCount, setUpdateCount] = useState(0)
   const [isModalVisible, setModalVisible] = useState(false);
 console.log(image)
   const toggleModal = () => {
@@ -21,8 +23,9 @@ console.log(image)
 
   const handleSubmit = async () => { 
     try {
-      await axios.put(`http://192.168.104.5:3000/service/update/${id}`, info);
-      toggleModal(); // Close the modal after submitting
+      await axios.put(`http://192.168.104.6:3000/service/update/${id}`, info);
+      toggleModal();// Close the modal after submitting
+      onUpdate() 
       // fetch()
     } catch (err) {
       console.log(err);

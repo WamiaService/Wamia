@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import Test2 from './test2';
+import UpdateService from './UpdateService';
 
-const Posts = ({providerId}) => {
+const ServicesOneProvider = ({providerId}) => {
   const [data, setData] = useState([]);
-
+  const [updateCount, setUpdateCount] = useState(0)
   const del = (id) => {
     axios
-      .delete(`http://192.168.104.5:3000/service/delete/${id}`)
+      .delete(`http://192.168.104.6:3000/service/delete/${id}`)
       .then((res) => {
         console.log(res);
-        fetch();
+        setUpdateCount(updateCount + 1)
       })
       .catch((err) => {
         console.log(err);
@@ -20,10 +20,10 @@ const Posts = ({providerId}) => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [updateCount]);
 
   const fetch = () => {
-    axios.get(`http://192.168.104.5:3000/service/getall/1`)
+    axios.get(`http://192.168.104.6:3000/service/getall/${providerId}`)
       .then((res) => {
         setData(res?.data);
       })
@@ -49,7 +49,8 @@ const Posts = ({providerId}) => {
             >
               <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
-            <Test2 style={styles.serviceButton} id={item.id} />
+            
+            <UpdateService  onUpdate={() => setUpdateCount(updateCount + 1)} style={styles.serviceButton} id={item.id}/>
           </View>
         </View>
       ))}
@@ -119,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Posts;
+export default ServicesOneProvider;
