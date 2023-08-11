@@ -70,7 +70,7 @@ const serviceInfo={
   updateService: async (req, res) => {
     const { id } = req.params;
     let {name,
-        img,
+        image,
        desc
     } = req.body;
 
@@ -80,7 +80,7 @@ const serviceInfo={
         return res.status(404).json({ error: "service not found" });
       }
         service.name=name;
-        service.img=img;
+        service.img=image;
         service.desc=desc;
       
       await service.save();

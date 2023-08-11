@@ -44,7 +44,7 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.104.13:3000/provider/update/${providerId}`, info)
+        axios.put(`http://192.168.104.6:3000/provider/update/${providerId}`, info)
           .then(res => {
             console.log('Profile updated successfully:', res.data);
             

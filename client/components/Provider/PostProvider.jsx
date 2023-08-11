@@ -19,7 +19,7 @@ const ProviderPost = () => {
 
   const handleSubmit = () => {
     axios
-      .post(`http://192.168.1.14:3000/service/post/1`, info)
+      .post(`http://192.168.104.6:3000/service/post/1`, info)
       .then((res) => {
         console.log(res);
       })

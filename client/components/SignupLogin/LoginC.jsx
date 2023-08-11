@@ -40,7 +40,7 @@ const LoginC = ({ handleLoginCustumor }) => {
 
   const loginn = async (username, password,activationCode) => {
     try {
-      const response = await axios.post('http://192.168.11.42:3000/custumor/login', {
+      const response = await axios.post('http://192.168.104.6:3000/custumor/login', {
         username: username,
         password: password,
         activationCode:activationCode

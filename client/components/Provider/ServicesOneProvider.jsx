@@ -4,79 +4,64 @@ import axios from 'axios';
 import UpdateService from "./UpdateService"
 
 const ServicesOneProvider = () => {
-  const [data, setData] = useState([]);
-
-  const del = (id) => {
-    axios
-      .delete(`http://192.168.1.14:3000/service/delete/${id}`)
-      .then((res) => {
-        console.log(res);
-        fetch(); 
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [data, setData] = useState({
+    name: '',
+    imgprof: '',
+    patente: '',
+  });
 
   useEffect(() => {
-    fetch();
+    fetchData();
   }, []);
 
-  const fetch = () => {
-    axios.get(`http://192.168.1.14:3000/service/getall/1`)
+  const fetchData = () => {
+    axios.get(`http://192.168.104.6:3000/provider/getOne/1`)
       .then((res) => {
-        setData(res?.data);
+        setData(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch((err) => console.log(err));
+  }
+ 
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      {data.map((item, index) => (
-        <View key={index} style={styles.postContainer}>
-          <Text>{item.name}</Text>
-          <Image
-            source={{
-              uri: item.img,
-            }}
-            style={styles.image}
-          />
-          <Text>{item.desc}</Text>
-          <UpdateService id={item.id} />
-          <TouchableOpacity
-            style={styles.deleteButton}
-            onPress={() => del(item.id)} 
-          >
-            <Text style={styles.deleteButtonText}>Delete</Text>
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.box}>
+        <Image
+          source={{
+            uri: data.imgprof,
+          }}
+          style={styles.image}
+        />
+        <View style={styles.infoContainer}>
+          <Text style={styles.text}>{data.username}</Text>
+          <Text style={styles.number}>{data.mobile}</Text>
+
         </View>
-      ))}
-    </ScrollView>
+      </View>
+      <ServicesOneProvider/>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexGrow: 1,
-    padding: 16,
+  container: {
+    flex: 1,
+    paddingTop: 50,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
-  postContainer: {
-    backgroundColor: '#ffffff',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    width: 300, 
-    height: 240,
+  box: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 12,
+    backgroundColor: 'white',
+    width: 370,
+    shadowColor: 'black',
+    elevation: 3,
+  },
+  infoContainer: {
+    marginLeft: 10,
   },
   image: {
     width: 100,
@@ -84,17 +69,13 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginRight: 10,
   },
-  deleteButton: {
-    backgroundColor: '#ff0000',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginTop: 10,
-  },
-  deleteButtonText: {
-    color: '#fff',
+  text: {
     fontWeight: 'bold',
+    marginBottom: 5,
   },
+  number: {
+    marginBottom: 5,
+  }
 });
 
 export default ServicesOneProvider;
