@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, Button, Modal, TouchableOpacity, Image, StyleSheet, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
+import * as ImagePicker from 'expo-image-picker'
 
-const Test2 = ({ id }) => {
+const updateService = ({ id ,onUpdate }) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [desc, setDesc] = useState("");
+  const [updateCount, setUpdateCount] = useState(0)
   const [isModalVisible, setModalVisible] = useState(false);
-
+console.log(image)
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -21,14 +23,16 @@ const Test2 = ({ id }) => {
 
   const handleSubmit = async () => { 
     try {
-      await axios.put(`http://192.168.104.5:3000/service/update/${id}`, info);
-      toggleModal(); // Close the modal after submitting
+      await axios.put(`http://192.168.104.6:3000/service/update/${id}`, info);
+      toggleModal();// Close the modal after submitting
+      onUpdate() 
+      // fetch()
     } catch (err) {
       console.log(err);
     }
   };
 
-  const _uploadImage = (photo, setImageUrl) => {
+  const _uploadImage = (photo) => {
     const data = new FormData();
     data.append('file', {
       uri: photo.assets[0].uri,
@@ -37,7 +41,7 @@ const Test2 = ({ id }) => {
     });
     data.append('upload_preset', 'phoneProduct');
     data.append('cloud_name', 'dgcdmrj7x');
-    fetch('https://api.cloudinary.com/v1_1/dgcdmrj7x/image/upload', {
+    return fetch('https://api.cloudinary.com/v1_1/dgcdmrj7x/image/upload', {
       method: 'POST',
       body: data,
       headers: {
@@ -47,15 +51,13 @@ const Test2 = ({ id }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setImage(data.url);
-        console.log(data);
+        setImage(data.url); 
+        console.log("data",data);
       })
       .catch((err) => {
         Alert.alert('Error While Uploading');
       });
   };
-
-
 
   const handleGalleryAccessProfile = async () => {
     try {
@@ -63,7 +65,7 @@ const Test2 = ({ id }) => {
       if (status !== 'granted') {
         console.log('Gallery permission denied');
         return;
-       }
+      }
 
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -71,7 +73,7 @@ const Test2 = ({ id }) => {
       });
 
       if (!result.cancelled) {
-        _uploadImage(result, setImage);
+        _uploadImage(result);
       }
     } catch (error) {
       console.log('Error selecting image from gallery:', error);
@@ -92,29 +94,43 @@ const Test2 = ({ id }) => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
+
+          <TouchableOpacity
+            style={styles.uploadButton}
+            onPress={handleGalleryAccessProfile}
+          >
+            <Text style={styles.uploadButtonText}>Upload Image</Text>
+          </TouchableOpacity>
+          {image ? (
+            <Image source={{ uri: image }} style={styles.profileImage} />
+          ) : null}
           <TextInput
             placeholder="Name"
             value={name}
             onChangeText={setName}
             style={styles.input}
           />
-          <TouchableOpacity
-            style={styles.uploadButton} 
-            onPress={handleGalleryAccessProfile}   
-          >
-            <Text style={styles.buttonText}>Upload Image</Text>
-          </TouchableOpacity>
-          {image ? (
-            <Image source={{ uri: image }} style={styles.profileImage} />
-          ) : null}
+      
           <TextInput
             placeholder="Description"
             value={desc}
             onChangeText={setDesc}
             style={styles.input}
           />
-          <Button title="Save" onPress={handleSubmit} />
-          <Button title="Cancel" onPress={toggleModal} />
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={toggleModal}
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -134,15 +150,10 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: 'white',
-    padding: 16,
-    borderRadius: 8,
-    width: 300,
+    padding: 20,
+    borderRadius: 10,
+    width: 320,
     alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
   },
   profileImage: {
     width: 100,
@@ -150,35 +161,60 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 10,
   },
-  updateButton: {
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: 'blue',
-  },
   input: {
     borderColor: 'black',
     borderWidth: 1,
     padding: 8,
     marginBottom: 10,
     width: '100%',
+    borderRadius: 15,
   },
   customButton: {
-    backgroundColor: 'blue', // Customize the background color
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: '#FFA500',
     borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     marginBottom: 10,
-    alignItems: 'center',
   },
   buttonText: {
     fontSize: 16,
-    color: 'white', // Customize the text color
-  }
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  uploadButton: {
+    backgroundColor: '#4477CE',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  uploadButtonText: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 20,
+  },
+  cancelButton: {
+    backgroundColor: 'red',
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    width: '45%',
+  },
+  saveButton: {
+    backgroundColor: '#FFA500',
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    width: '45%',
+  },
 });
 
-export default Test2;
+export default updateService;

@@ -4,10 +4,15 @@ import axios from "axios";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as ImagePicker from 'expo-image-picker'
-const ProviderPost = () => {
+import { useNavigation } from '@react-navigation/native';
+
+
+
+const ProviderPost = ({providerId}) => {
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
   const [desc, setDesc] = useState("");
+const navigation=useNavigation()
   const info = {
     name: name,
     img: img,
@@ -15,9 +20,10 @@ const ProviderPost = () => {
   };
   const handleSubmit = () => {
     axios
-      .post(`http:///192.168.104.5:3000/service/post/1`, info)
+      .post(`http://192.168.104.6:3000/service/post/${providerId}`, info)
       .then((res) => {
         console.log(res);
+        navigation.navigate("providerprofile")
       })
       .catch((err) => {
         console.log(err);

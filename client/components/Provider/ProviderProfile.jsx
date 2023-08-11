@@ -3,11 +3,10 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 import ServicesOneProvider from './ServicesOneProvider';
 import axios from 'axios';
 
-const ProviderProfile = () => {
+const ProviderProfile = ({providerId}) => {
   const [data, setData] = useState({
     name: '',
     imgprof: '',
-    patente: '',
   });
 
   useEffect(() => {
@@ -15,7 +14,7 @@ const ProviderProfile = () => {
   }, []);
 
   const fetchData = () => {
-    axios.get(`http://192.168.104.5:3000/provider/getOne/1`)
+    axios.get(`http://192.168.104.6:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -33,11 +32,11 @@ const ProviderProfile = () => {
         />
         <View style={styles.infoContainer}>
           <Text style={styles.text}>{data.username}</Text>
-          <Text style={styles.number}>{data.mobile}</Text>
-          <Text style={styles.category}>{data.patente}</Text>
+          <Text style={styles.number}>phone : +216 {data.mobile}</Text>
+          
         </View>
       </View>
-      <ServicesOneProvider/>
+      <ServicesOneProvider providerId={providerId}/>
     </View>
   );
 };
