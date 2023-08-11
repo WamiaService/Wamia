@@ -5,7 +5,9 @@ const Admin = sequelize.define('admin', {
   username: DataTypes.STRING,
   password: DataTypes.STRING,
   email: DataTypes.STRING,
-});
+},
+{ timestamps: false }
+);
 
 Admin.hasMany(Message, { foreignKey: 'senderId' });
 Admin.hasMany(Message, { foreignKey: 'receiverId' })

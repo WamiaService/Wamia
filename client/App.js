@@ -18,6 +18,7 @@ import Payment from './components/payment/Payment.jsx';
 import ProviderPost from './components/Provider/PostProvider.jsx';
 import ProviderProfile from './components/Provider/ProviderProfile.jsx';
 import Reservation from './components/Provider/Reservation.jsx';
+import ProfileFOrClient from './components/Provider/ProfileForClient.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -155,6 +156,11 @@ const App = () => {
         <Stack.Screen name="reservation">
           {(props) => (
             <Reservation {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="profileforclient">
+          {(props) => (
+            <ProfileFOrClient {...props} providerId={providerId} />
           )}
         </Stack.Screen>
         

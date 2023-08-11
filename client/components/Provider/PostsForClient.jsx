@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 
-const PostOnlyClient = () => {
+const PostForClient = ({providerId}) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ const PostOnlyClient = () => {
   }, []);
 
   const fetch = () => {
-    axios.get('http://192.168.104.6:3000/service/getall/1')
+    axios.get(`http://192.168.104.5:3000/service/getall/${providerId}`)
       .then((res) => {
         setData(res?.data);
       })
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostOnlyClient;
+export default PostForClient;

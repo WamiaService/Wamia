@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
-// ... (previous code)
-
-const ChatInput = () => {
+import io from 'socket.io-client'
+const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [isInputFocused, setInputFocused] = useState(false);
@@ -43,7 +41,7 @@ const ChatInput = () => {
         keyboardDidHideListener.remove();
         socket.disconnect();
       };
-    }, [messages]);
+    }, []);
   
     return (
       <View style={styles.container}>
@@ -118,5 +116,5 @@ const ChatInput = () => {
     },
   });
   
-  export default ChatInput;
+  export default Chat;
   

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
-import PostOnlyClient from './PostOnlyClient';
 import { useNavigation } from '@react-navigation/native';
-import Res from './Res';
+import PostForClient from './PostsForClient';
 
-const ProfileFOrClient = ({ navigation }) => {
+const ProfileFOrClient = ({ providerId,navigation }) => {
   const [data, setData] = useState({
     name: '',
     imgprof: '',
@@ -20,7 +19,7 @@ const ProfileFOrClient = ({ navigation }) => {
   }, []);
 
   const fetchData = () => {
-    axios.get('http://192.168.104.6:3000/provider/getOne/1')
+    axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -82,7 +81,7 @@ const ProfileFOrClient = ({ navigation }) => {
 
       </View>
 
-      {showPosts && <PostOnlyClient />}
+      {showPosts && <PostForClient providerId={providerId} />}
       {showComments && <View style={styles.commentSection}><Text>Comments Section</Text></View>}
 
     </View>
