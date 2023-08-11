@@ -24,7 +24,7 @@ const navigateToPrivacy = () => {
 };
 
 const navigateToSubscription = () => {
-  console.log("Subscription function");
+  navigation.navigate("payment");
 };
 
 const navigateToSupport = () => {
@@ -70,21 +70,16 @@ const accountItems = [
     text: "Notifications",
     action: navigateToNotifications,
   },
-  { icon: "lock-outline", text: "Privacy", action: navigateToPrivacy },
 ];
 
 const supportItems = [
   {
     icon: "credit-card",
-    text: "My Subscription",
+    text: "Payment",
     action: navigateToSubscription,
   },
   { icon: "help-outline", text: "Help & Support", action: navigateToSupport },
-  {
-    icon: "info-outline",
-    text: "Terms and Policies",
-    action: navigateToTermsAndPolicies,
-  },
+  
 ];
 
 const cacheAndCellularItems = [
