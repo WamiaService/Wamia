@@ -179,7 +179,7 @@ const getAllProvider = async (req, res) => {
       mobile,  
       imgprof
     } = req.body;
-      
+     
     try{
       const hashedPassword = await bcrypt.hash(password, 10);
       const providerProfile= await Provider.findByPk(id)
