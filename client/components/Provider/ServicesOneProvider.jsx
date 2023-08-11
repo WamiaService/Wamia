@@ -8,7 +8,7 @@ const ServicesOneProvider = () => {
 
   const del = (id) => {
     axios
-      .delete(`http://192.168.1.14:3000/service/delete/${id}`)
+      .delete(`http://192.168.104.5:3000/service/delete/${id}`)
       .then((res) => {
         console.log(res);
         fetch(); 
@@ -23,7 +23,7 @@ const ServicesOneProvider = () => {
   }, []);
 
   const fetch = () => {
-    axios.get(`http://192.168.1.14:3000/service/getall/1`)
+    axios.get(`http://192.168.104.5:3000/service/getall/1`)
       .then((res) => {
         setData(res?.data);
       })

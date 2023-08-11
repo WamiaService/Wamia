@@ -19,11 +19,11 @@ const navigateToNotifications = () => {
   console.log("Notifications function");
 };
 
-const navigateToPrivacy = () => {
-  console.log("Privacy function");
+const navigateToAddPost = () => {
+  navigation.navigate("postprovider");
 };
 
-const navigateToSubscription = () => {
+const navigateToPayment = () => {
   navigation.navigate("payment");
 };
 
@@ -70,16 +70,21 @@ const accountItems = [
     text: "Notifications",
     action: navigateToNotifications,
   },
+  { icon: "add", text: "Add Post", action: navigateToAddPost },
 ];
 
 const supportItems = [
   {
     icon: "credit-card",
     text: "Payment",
-    action: navigateToSubscription,
+    action: navigateToPayment,
   },
   { icon: "help-outline", text: "Help & Support", action: navigateToSupport },
-  
+  {
+    icon: "info-outline",
+    text: "Terms and Policies",
+    action: navigateToTermsAndPolicies,
+  },
 ];
 
 const cacheAndCellularItems = [

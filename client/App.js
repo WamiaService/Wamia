@@ -15,6 +15,7 @@ import LoginC from './components/SignupLogin/LoginC.jsx';
 import SessionStorage from 'react-native-session-storage';
 import UpdateProvider from './components/Provider/UpdateProvider.jsx';
 import Payment from './components/payment/Payment.jsx';
+import ProviderPost from './components/Provider/PostProvider.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -137,6 +138,11 @@ const App = () => {
         <Stack.Screen name="payment">
           {(props) => (
             <Payment {...props} providerId={providerId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="postprovider">
+          {(props) => (
+            <ProviderPost {...props} providerId={providerId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="one">
