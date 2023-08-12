@@ -1,10 +1,6 @@
 import axios from 'axios';
 import React from 'react'
-<<<<<<< HEAD
-import { useState,useEffect,useRef } from 'react';
-=======
 import { useState, useEffect } from 'react';
->>>>>>> 15ef8fe1166edbde55e04145c528b8bc70f276d6
 import "./verification.css";
 import Dialog from './dialog';
 import { Button } from '@mui/material';
@@ -14,45 +10,6 @@ const VerificationProvider = () => {
 
   const [data, setData] = useState([]);
   const [refrech, setrefrech] = useState(false);
-<<<<<<< HEAD
-  
-  
-  const [dialog,setDialog]=useState({
-    message:"Are you sure you want to delete?",
-    isLoading:false,
-  })
-  const idproviderRef = useRef()
-  const idproviderupRef= useRef()
-  const areUsureToUpdate = (choose)=>{
-    if(choose){
-      handleUpdate(idproviderupRef.current) 
-      setDialog({
-             
-        isLoading : false})
-    }
-    setDialog({
-             
-      isLoading : false
-    })
-  }
-  
-  const handleDelete=(id)=>{
-    setDialog({
-      
-      isLoading : true
-    })
-    idproviderRef.current = id
-   }
-   const Update =(id)=>{
-    setDialog({
-      isLoading : true
-    })
-    idproviderupRef.current = id
-   }
-  
-=======
-
->>>>>>> 15ef8fe1166edbde55e04145c528b8bc70f276d6
   const handleUpdate = async (id) => {
 
 
@@ -101,16 +58,6 @@ const VerificationProvider = () => {
       <div className="card-list">
         {data.map((item, index) => (
 
-<<<<<<< HEAD
-          <img src={item.patente} className="card-img"  />
-          <div className='buttons'>
-          <Button onClick={()=>Update(item.id)} variant="contained" color="success" className='butt'>
-  accept
-</Button>
-<Button onClick={() => deleteData  (item.id)} variant="outlined" color="error" className='butt'>
-  delete
-</Button>
-=======
           <div className="card" key={index}>
 
             <div className="card-body">
@@ -130,18 +77,10 @@ const VerificationProvider = () => {
                 </Button>
               </div>
             </div>
->>>>>>> 15ef8fe1166edbde55e04145c528b8bc70f276d6
           </div>
         ))}
       </div>
     </div>
-<<<<<<< HEAD
-    {dialog.isLoading && <Dialog ondialog={areUsureToUpdate} message ={dialog.message}/>}
-    </div>
-   
-=======
-
->>>>>>> 15ef8fe1166edbde55e04145c528b8bc70f276d6
   )
 }
 

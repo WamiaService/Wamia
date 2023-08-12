@@ -49,7 +49,7 @@ import axios from 'axios'
     const getOneCustumor = async (custumorId)=> {
       console.log('u');
       try {
-        const response = await axios.get(`http://192.168.1.7:3000/custumor/getOne/${custumorId}`);
+        const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
         setData(response.data); 
       } catch (error) {
         console.error('Error :', error);
@@ -120,7 +120,7 @@ import axios from 'axios'
   
     const update = async (custumorId) => {
       try {
-        await axios.put(`http://192.168.1.7:3000/custumor/update/${custumorId}`, infoCus);
+        await axios.put(`http://192.168.104.5:3000/custumor/update/${custumorId}`, infoCus);
         setRefetech(!refetch)
       } catch (err) {
         console.log(err);
