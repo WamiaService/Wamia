@@ -4,12 +4,13 @@ import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import PostForClient from './PostsForClient';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useRoute } from '@react-navigation/native';
 
-const ProfileFOrClient = ({ providerId,navigation }) => {
-  const [data, setData] = useState({
-    name: '',
-    imgprof: '',
-  });
+const ProfileFOrClient = ({ navigation }) => {
+  const route = useRoute();
+  const providerId = route.params?.providerId; 
+  const [data, setData] = useState([]);
 
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
@@ -19,7 +20,8 @@ const ProfileFOrClient = ({ providerId,navigation }) => {
   }, []);
 
   const fetchData = () => {
-    axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+    axios
+      .get(`http://192.168.1.6:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -39,7 +41,8 @@ const ProfileFOrClient = ({ providerId,navigation }) => {
   const handleReservationButtonClick = () => {
     navigation.navigate('Res'); // Navigate to Reservation page
   };
-
+  console.log('');
+console.log('profile for client',providerId);
   return (
     <View style={styles.container}>
       <View style={styles.box}>
@@ -49,6 +52,14 @@ const ProfileFOrClient = ({ providerId,navigation }) => {
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{data.username}</Text>
           <Text style={styles.mobile}>phone : +216 {data.mobile}</Text>
+          {data.is_approved && (
+            <Icon
+              name="check-circle"
+              size={30}
+              color="blue"
+              style={{ marginTop: -60 }}
+            />
+          )}
           <AirbnbRating
             count={5}
             defaultRating={0}
@@ -78,12 +89,14 @@ const ProfileFOrClient = ({ providerId,navigation }) => {
         >
           <Text style={styles.buttonText}>Reservation</Text>
         </TouchableOpacity>
-
       </View>
 
       {showPosts && <PostForClient providerId={providerId} />}
-      {showComments && <View style={styles.commentSection}><Text>Comments Section</Text></View>}
-
+      {showComments && (
+        <View style={styles.commentSection}>
+          <Text>Comments Section</Text>
+        </View>
+      )}
     </View>
   );
 };

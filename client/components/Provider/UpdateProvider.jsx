@@ -18,6 +18,7 @@ const UpdateProvider = ({providerId}) => {
     const [data,setData]=useState([])
     const navigation = useNavigation()
 console.log("prov id in update",providerId);
+
     useEffect(()=>{
         fetchData()
     },[])
@@ -26,7 +27,7 @@ console.log("prov id in update",providerId);
       // const cookie = new Cookies();
       // const token = jwtDecoder(cookie.get("jwt-token"));
       // console.log("token",token);
-        axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+        axios.get(`http://192.168.1.6:3000/provider/getOne/${providerId}`)
    
           .then((res) => {
             setData(res.data);
@@ -50,10 +51,8 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.104.5:3000/provider/update/${providerId}`, info)
-         
-        axios.put(`http://192.168.100.12:3000/provider/update/${providerId}`, info)
-          .then(res => {
+        axios.put(`http://192.168.1.6:3000/provider/update/${providerId}`, info)
+                   .then(res => {
             console.log('Profile updated successfully:', res.data);
             navigation.navigate("providerprofile")
 

@@ -1,13 +1,14 @@
+const { Op } = require('sequelize'); // Add this import for Op
+
 const Message = require('../database/models/messages');
 
-// Get all messages between a sender and a receiver
 const getAllMessages = async (req, res) => {
   try {
     const { senderId, receiverId } = req.params;
 
     const messages = await Message.findAll({
       where: {
-        [sequelize.Op.or]: [
+        [Op.or]: [
           {
             senderId,
             receiverId,
@@ -28,7 +29,6 @@ const getAllMessages = async (req, res) => {
   }
 };
 
-// Create a new message
 const createMessage = async (req, res) => {
   try {
     const { content, senderId, receiverId } = req.body;

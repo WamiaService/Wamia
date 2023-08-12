@@ -4,17 +4,14 @@ import ServicesOneProvider from './ServicesOneProvider';
 import axios from 'axios';
 
 const ProviderProfile = ({providerId}) => {
-  const [data, setData] = useState({
-    name: '',
-    imgprof: '',
-  });
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
-    axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+    axios.get(`http://192.168.1.6:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
