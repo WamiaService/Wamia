@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ActivityIndicator , View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
-import { useRoute, useFocusEffect } from '@react-navigation/native';
+import { useRoute, useFocusEffect, useNavigation } from '@react-navigation/native';
 
 function AllProviders() {
   const route = useRoute();
@@ -29,8 +29,8 @@ function AllProviders() {
         setLoading(true);
     
         const endpoint = category
-            ? `http://192.168.1.6:3000/provider/search?category=${category}`
-            : `http://192.168.1.6:3000/provider`;
+            ? `http://192.168.1.14:3000/provider/search?category=${category}`
+            : `http://192.168.1.14:3000/provider`;
            
     
         axios.get(endpoint)
@@ -55,7 +55,7 @@ function AllProviders() {
           };
         }, [route.params?.category])
       );
-
+      const navigation = useNavigation();
 useEffect(() => {
   if (selectedCategory) {
     fetchData(selectedCategory);
@@ -92,19 +92,26 @@ useEffect(() => {
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <FlatList
+        
+        <FlatList 
           data={providers}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <TouchableOpacity onPress={()=> navigation.navigate('profileforclient', { providerId: item.id })}>
+            <View style={styles.card}
+            
+            >
               <Image source={{ uri: item.imgprof }} style={styles.profileImage} />
               <View style={styles.textContainer}>
                 <Text style={styles.username}>{item.username}</Text>
                 <Text style={styles.category}>{item.category}</Text>
               </View>
             </View>
+            </TouchableOpacity>
           )}
+          
         />
+       
       )}
     </View>
   </View>
