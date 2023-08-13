@@ -12,7 +12,7 @@ verifyProvider()
 },[activationcode])
 
 const verifyProvider = ()=>{
-    axios.post(`http://192.168.104.5:3000/provider/verify/${activationcode}`)
+    axios.post(`http://192.168.1.14:3000/provider/verify/${activationcode}`)
 }
   return (
     <View>

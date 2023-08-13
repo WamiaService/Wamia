@@ -5,6 +5,8 @@ import axios from 'axios';
 import PostOnlyClient from './PostOnlyClient';
 import { useNavigation } from '@react-navigation/native';
 import Res from './Res';
+import Icon from 'react-native-vector-icons/FontAwesome'; 
+
 
 const ProfileFOrClient = ({ navigation }) => {
   const [data, setData] = useState({
@@ -20,7 +22,7 @@ const ProfileFOrClient = ({ navigation }) => {
   }, []);
 
   const fetchData = () => {
-    axios.get('http://192.168.104.6:3000/provider/getOne/1')
+    axios.get('http://192.168.1.14:3000/provider/getOne/1')
       .then((res) => {
         setData(res.data);
       })
@@ -38,7 +40,7 @@ const ProfileFOrClient = ({ navigation }) => {
   };
 
   const handleReservationButtonClick = () => {
-    navigation.navigate('Res'); // Navigate to Reservation page
+    navigation.navigate('Res');                                  
   };
 
   return (
@@ -50,6 +52,14 @@ const ProfileFOrClient = ({ navigation }) => {
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{data.username}</Text>
           <Text style={styles.mobile}>phone : +216 {data.mobile}</Text>
+          {data.is_approved && (
+        <Icon
+          name="check-circle"
+          size={30}
+          color="blue"
+          style={{ marginTop: -60 }}
+        />
+      )} 
           <AirbnbRating
             count={5}
             defaultRating={0}
@@ -57,6 +67,7 @@ const ProfileFOrClient = ({ navigation }) => {
             showRating={false}
             onFinishRating={(rating) => console.log('Rating:', rating)}
           />
+          
         </View>
       </View>
       <View style={styles.buttonContainer}>
