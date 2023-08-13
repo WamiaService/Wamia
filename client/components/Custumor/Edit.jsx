@@ -43,11 +43,11 @@ import axios from 'axios'
   console.log("data",data)
 
 
-    
-
-
-    const getOneCustumor = async (custumorId)=> {
+  
+  
+    const getOneCustumor = async ()=> {
       console.log('u');
+      console.log("in edit cust",custumorId);
       try {
         const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
         setData(response.data); 
