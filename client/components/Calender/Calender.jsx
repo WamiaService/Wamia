@@ -14,7 +14,7 @@ import { useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
 ;
 
-export default function Reservation() {
+export default function Calender() {
   const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
 
 
@@ -33,7 +33,7 @@ const image=require('../../assets/w.png')
        const date =new Date()
        console.log(date)
     try {
-     let reservation = await axios.post('http://192.168.1.7:3000/reservation/book', {date:selectedStartDate,})
+     let reservation = await axios.post('http://192.168.1.6:3000/reservation/book', {date:selectedStartDate,})
      console.log(selectedStartDate)
         res=reservation.data 
        
