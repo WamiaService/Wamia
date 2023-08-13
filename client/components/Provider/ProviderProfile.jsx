@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import ServicesOneProvider from './ServicesOneProvider';
 import axios from 'axios';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const ProviderProfile = ({providerId}) => {
   const [data, setData] = useState([]);
 
@@ -30,6 +30,14 @@ const ProviderProfile = ({providerId}) => {
         <View style={styles.infoContainer}>
           <Text style={styles.text}>{data.username}</Text>
           <Text style={styles.number}>phone : +216 {data.mobile}</Text>
+          {data.is_approved && (
+            <Icon
+              name="check-circle"
+              size={30}
+              color="blue"
+              style={{ position:"absolute", top:-20, left:190 }}
+            />
+          )}
           
         </View>
       </View>

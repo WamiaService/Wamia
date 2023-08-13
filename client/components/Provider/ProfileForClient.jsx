@@ -39,7 +39,7 @@ const ProfileFOrClient = ({ navigation }) => {
   };
 
   const handleReservationButtonClick = () => {
-    navigation.navigate('Res'); // Navigate to Reservation page
+    navigation.navigate('calender'); // Navigate to Reservation page
   };
   console.log('');
 console.log('profile for client',providerId);
@@ -57,7 +57,7 @@ console.log('profile for client',providerId);
               name="check-circle"
               size={30}
               color="blue"
-              style={{ marginTop: -60 }}
+              style={{ position:"absolute", top:-20, left:190 }}
             />
           )}
           <AirbnbRating

@@ -10,7 +10,7 @@ const PostForClient = ({providerId}) => {
   }, []);
 
   const fetch = () => {
-    axios.get(`http://192.168.1.14:3000/service/getall/${providerId}`)
+    axios.get(`http://192.168.1.6:3000/service/getall/${providerId}`)
       .then((res) => {
         setData(res?.data);
       })
