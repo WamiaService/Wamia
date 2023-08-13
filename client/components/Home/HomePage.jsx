@@ -24,6 +24,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigation from '../BottomTavNav.jsx';
 import axios from 'axios';
 import ShimmerEffect from './ShimmerEffect.jsx';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const Home = ({ providerId, custumorId }) => {
   const windowHeight = Dimensions.get('window').height;
@@ -242,7 +244,7 @@ const Home = ({ providerId, custumorId }) => {
             <View   style={styles.resultContainer} key={result.id}>
               <Image source={{ uri: result.imgprof }} style={styles.resultImage} />
               <View  style={styles.resultTextContainer}>
-                <Text onPress={()=> navigation.navigate('providerprofile', { providerId: providerId })}  style={styles.resultName}>{result.username}</Text>
+                <Text onPress={()=> navigation.navigate('profileforclient', { providerId: providerId })}  style={styles.resultName}>{result.username}</Text>
                 <Text style={styles.resultCategory}>{result.category}</Text>
               </View>
 

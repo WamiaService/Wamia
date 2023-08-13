@@ -71,7 +71,7 @@ const App = () => {
 
     SessionStorage.removeItem('providerId');
   };
-  const handleLogoutCustumor = () => {
+  var handleLogoutCustumor = () => {
     setToken('');
     setCustumorId('');
 
@@ -173,7 +173,7 @@ const App = () => {
         
         <Stack.Screen name="one">
           {(props) => (
-            <One {...props} handleLogoutCustumor={handleLogoutCustumor} handleLogoutProvider={handleLogoutProvider} />
+            <One {...props} handleLogoutCustumor={handleLogoutCustumor} />
           )}
         </Stack.Screen>  
             </Stack.Navigator>
