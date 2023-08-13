@@ -242,7 +242,7 @@ const Home = ({ providerId, custumorId }) => {
             <View   style={styles.resultContainer} key={result.id}>
               <Image source={{ uri: result.imgprof }} style={styles.resultImage} />
               <View  style={styles.resultTextContainer}>
-                <Text onPress={()=> navigation.navigate('profileforclient', { providerId: providerId })}  style={styles.resultName}>{result.username}</Text>
+                <Text onPress={()=> navigation.navigate('providerprofile', { providerId: providerId })}  style={styles.resultName}>{result.username}</Text>
                 <Text style={styles.resultCategory}>{result.category}</Text>
               </View>
 
