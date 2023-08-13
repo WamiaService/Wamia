@@ -47,7 +47,7 @@ const calculateAverage=async(req,res)=>{
         return res.status(404).json({ error: "rate not found for this provider" })
 
     }
-    const totalRate=rate.reduce((sum,rating)=>sum+rate.value,0)
+    const totalRate=rate.reduce((sum,rate)=>sum+rate.value,0)
     const avrRating=totalRate/rate.length;
     res.status(200).json({avrRating})
   }
