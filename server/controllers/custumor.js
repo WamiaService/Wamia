@@ -111,17 +111,15 @@ const logincustumor = async (req, res) => {
       
     console.log(req.body)
     try{
-      const client= await Custumor.findByPk(id)
-      console.log("client",client)
+      const client= await Provider.findByPk(id)
       if (!client) {
-        return res.status(404).json({ error: "Custumor profile not found" });
+        return res.status(404).json({ error: "User profile not found" });
       } 
-  
-  
+   
       client.username=username;
       client.adresse=adresse;
-      client.imgprof=imgprof;
-      client.mobile =mobile
+      client.mobile=mobile;
+      client.imgprof=imgprof
   
   
     await client.save();

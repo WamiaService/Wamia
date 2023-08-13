@@ -11,20 +11,11 @@
    border: 1px solid #ddd;
   /* padding: 10px; */
   font-family: Arial, sans-serif;
-<<<<<<< HEAD
-  font-size: 14px; */
-  width: 90%;
-  
-  margin-left: 245px;
-  margin-top: 5px;
-  background-color: rgb(255, 255, 255) ;
-=======
   font-size: 14px; 
   /* width: 90%; */
   /* margin-left: 245px;
   margin-top: 5px; */
   /* background-color: rgba(105, 40, 40, 0.333) ; */
->>>>>>> 15ef8fe1166edbde55e04145c528b8bc70f276d6
   backdrop-filter:blur(7px);
   box-shadow : 0 .4rem .8rem #0005;
   border-radius : .8rem;
