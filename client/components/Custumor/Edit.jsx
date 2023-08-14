@@ -9,21 +9,22 @@ import {
   } from "react-native";
   import React, { useState,useEffect } from "react";
   import { SafeAreaView } from "react-native-safe-area-context";
-
   import { COLORS, FONTS } from "./constant";
   import { MaterialIcons } from "@expo/vector-icons";
   import * as ImagePicker from 'expo-image-picker';
-import axios from 'axios'
+   import axios from 'axios'
+   import { useNavigation } from '@react-navigation/native';
 
   
   const EditProfile = ({custumorId}) => {
+    const navigation = useNavigation()
 
     const [data,setData]=useState([])
     const [name, setName] = useState("");
   
     const [password, setPassword] = useState("");
 
-    const[imageprof,setImage]=useState("")
+    const[imgprof,setImage]=useState("")
     const [adresse,setAdresse]=useState("")
     const [mobile,setMobile]=useState()
     const[refetch,setRefetech]=useState(false)
@@ -31,13 +32,13 @@ import axios from 'axios'
     const infoCus={
       username: name,
       adresse:adresse,
-      imgprof:imageprof,
+      imgprof:imgprof,
       mobile:mobile
 
     }
 
     useEffect(() => {
-      getOneCustumor(custumorId)
+      getOneCustumor()
     }, [!refetch]);
 
   console.log("data",data)
@@ -49,7 +50,7 @@ import axios from 'axios'
       console.log('u');
       console.log("in edit cust",custumorId);
       try {
-        const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
+        const response = await axios.get(`http://192.168.104.7:3000/custumor/getOne/${custumorId}`);
         setData(response.data); 
       } catch (error) {
         console.error('Error :', error);
@@ -60,7 +61,7 @@ import axios from 'axios'
     console.log(custumorId)
 
 
-    const _uploadImage = (photo, setImage) => {
+    const _uploadImage = (photo) => {
       const data = new FormData();
       data.append('file', {
         uri: photo.assets[0].uri,
@@ -79,7 +80,7 @@ import axios from 'axios'
       })
         .then((res) => res.json())
         .then((data) => {
-          setImage(data.url);
+          setImage(data.secure_url);
           console.log(data);
         })
         .catch((err) => {
@@ -120,8 +121,13 @@ import axios from 'axios'
   
     const update = async (custumorId) => {
       try {
-        await axios.put(`http://192.168.104.5:3000/custumor/update/${custumorId}`, infoCus);
+        await axios.put(`http://192.168.104.7:3000/custumor/update/${custumorId}`, infoCus);
+        console.log(infoCus)
+        console.log("4",!refetch)
         setRefetech(!refetch)
+        alert('Your profil  is updated');
+        navigation.navigate("custprofile")
+
       } catch (err) {
         console.log(err);
       }
@@ -193,7 +199,7 @@ const handleAdresse= (text) => {
         >
           <TouchableOpacity >
             <Image
-                
+                source={{uri:imgprof}}
               style={{
                 height: 170,
                 width: 170,
@@ -202,7 +208,7 @@ const handleAdresse= (text) => {
                 borderColor: COLORS.color,
               }}
 
-              value={imageprof}
+       
             />
 
             <View
@@ -232,7 +238,7 @@ const handleAdresse= (text) => {
               marginBottom: 6,
             }}
           >
-            <Text style={{ ...FONTS.h4 }}>Username</Text>
+            <Text style={{ ...FONTS.h3}}>Username</Text>
             <View
               style={{
                 height: 44,
@@ -259,7 +265,7 @@ const handleAdresse= (text) => {
             marginBottom: 6,
           }}
         >
-          <Text style={{ ...FONTS.h4 }}>Adresse</Text>
+          <Text style={{ ...FONTS.h3}}>Adresse</Text>
           <View
             style={{
               height: 44,
@@ -290,7 +296,7 @@ const handleAdresse= (text) => {
               marginBottom: 6,
             }}
           >
-            <Text style={{ ...FONTS.h4 }}>Mobile Phone</Text>
+            <Text style={{ ...FONTS.h3 }}>Mobile Phone</Text>
             <View
               style={{
                 height: 44,
@@ -317,7 +323,7 @@ const handleAdresse= (text) => {
               flexDirection: "column",
               marginBottom: 6,
             }}
-          > */}
+          > *
             {/* <Text style={{ ...FONTS.h4 }}>Password</Text>
             <View
               style={{
@@ -372,7 +378,7 @@ const handleAdresse= (text) => {
               color: COLORS.white,
             }}
           
-            onPress={()=>{update(custumorId), _uploadImage()}}
+            onPress={()=>{update(custumorId)}}
       
           >
             Save Change

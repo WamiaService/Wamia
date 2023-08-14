@@ -20,6 +20,7 @@ import ProviderProfile from './components/Provider/ProviderProfile.jsx';
 import Reservation from './components/Provider/Reservation.jsx';
 import ProfileFOrClient from './components/Provider/ProfileForClient.jsx';
 import Infocus from './components/Custumor/InfoCus.jsx';
+import Calender from './components/Calender/Calender.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -71,7 +72,7 @@ const App = () => {
 
     SessionStorage.removeItem('providerId');
   };
-  const handleLogoutCustumor = () => {
+  var handleLogoutCustumor = () => {
     setToken('');
     setCustumorId('');
 
@@ -169,11 +170,16 @@ const App = () => {
             <Infocus {...props} custumorId={custumorId} />
           )}
         </Stack.Screen>
+        <Stack.Screen name="calender">
+          {(props) => (
+            <Calender {...props} custumorId={custumorId} />
+          )}
+        </Stack.Screen>
         
         
         <Stack.Screen name="one">
           {(props) => (
-            <One {...props} handleLogoutCustumor={handleLogoutCustumor} handleLogoutProvider={handleLogoutProvider} />
+            <One {...props} handleLogoutCustumor={handleLogoutCustumor} />
           )}
         </Stack.Screen>  
             </Stack.Navigator>

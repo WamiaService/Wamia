@@ -6,7 +6,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [isInputFocused, setInputFocused] = useState(false);
-    const socket = io('http://192.168.104.5:4000')
+    const socket = io('http://192.168.104.7:4000')
     const sendMessage = () => {
       if (message.trim() !== '') {
         // Send the message to the server via WebSocket

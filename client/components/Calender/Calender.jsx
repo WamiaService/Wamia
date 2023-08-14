@@ -8,29 +8,54 @@ import {
   Modal,
   Image
 } from "react-native";
+import axios from 'axios';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
-import { getFormatedDate } from "react-native-modern-datepicker";
-import { TextInput } from "react-native-paper";
+;
 
-export default function Reservation() {
+export default function Calender() {
   const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
-  const today = new Date();
-  const startDate = getFormatedDate(
-    today.setDate(today.getDate() + 1),
-    "YYYY/MM/DD"
-  );
-  const [selectedStartDate, setSelectedStartDate] = useState("");
-  const [startedDate, setStartedDate] = useState("12/12/2023");
-const image=require('../../assets/w.png')
-  function handleChangeStartDate(propDate) {
-    setStartedDate(propDate);
-  }
 
+
+  const [selectedStartDate, setSelectedStartDate] = useState("");
+ 
+const image=require('../../assets/w.png')
+
+// control the date picker in the model is open
   const handleOnPressStartDate = () => {
     setOpenStartDatePicker(!openStartDatePicker);
   };
+
+
+
+  const handleReservation = async (req,res) => {
+       const date =new Date()
+       console.log(date)
+    try {
+     let reservation = await axios.post('http://192.168.104.7:3000/reservation/book', {date:selectedStartDate,})
+     console.log(selectedStartDate)
+        res=reservation.data 
+       
+
+      console.log('r',res) 
+      alert('Reservation created successfully');
+
+
+    } catch (error) {
+
+      console.log('Error creating reservation:', error);
+    }
+  };
+
+
+
+
+
+
+
+
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -66,7 +91,7 @@ const image=require('../../assets/w.png')
             </View>
 
             <TouchableOpacity
-              onPress={() => console.log("Subimit data")}
+              onPress={handleReservation}
               style={styles.submitBtn}
             >
               <Text style={{ fontSize: 20, color: "white" }}>Submit</Text>
@@ -84,9 +109,7 @@ const image=require('../../assets/w.png')
               <View style={styles.modalView}>
               <DatePicker
                 mode="calendar"
-                minimumDate={startDate}
-                selected={startedDate}
-                onDateChanged={handleChangeStartDate}
+            
                 onSelectedChange={(date) => setSelectedStartDate(date)}
                 options={{
                   backgroundColor: "#080516",

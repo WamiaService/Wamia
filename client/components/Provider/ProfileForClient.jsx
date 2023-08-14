@@ -40,10 +40,21 @@ const ProfileFOrClient = ({ navigation }) => {
   };
 
   const handleReservationButtonClick = () => {
-    navigation.navigate('Res');                                  
+    navigation.navigate('calender'); // Navigate to Reservation page
   };
   console.log('');
 console.log('profile for client',providerId);
+
+//handle rating 
+
+
+
+
+
+
+
+
+
   return (
     <View style={styles.container}>
       <View style={styles.box}>
@@ -52,7 +63,7 @@ console.log('profile for client',providerId);
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{data.username}</Text>
-          <Text style={styles.mobile}>phone : +216 {data.mobile}</Text>
+          <Text style={styles.mobile}>phone : +216 {data.mobile ? data.mobile : "98432756"}</Text>
           {data.is_approved && (
             <Icon
               name="check-circle"

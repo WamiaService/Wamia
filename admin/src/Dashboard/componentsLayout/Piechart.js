@@ -4,25 +4,29 @@ import Chart from 'react-google-charts';
 
 
 
-const PieChart = ({Electricien,Climatisation,plombier,nbtransporteur,peinture,laver,camerman}) => {
+const PieChart = ({Electricien,Climatisation,plombier,nbtransporteur,peinture,laver,camerman,menuisier}) => {
     const pieData = [
         ['Task', 'Hours per Day'],
-        ['ELECTRICIEN', Electricien],
+        ['Electricité', Electricien],
         ['Climatisation', Climatisation],
-        ['plombier', plombier],
-        ['nbtransporteur', nbtransporteur],
+        ['plomberie', plombier],
+        ['transporteur', nbtransporteur],
         ['peinture', peinture],
-        ['laver', laver],
-        ['cameramen',camerman]
+        ['Machine a laver', laver],
+        ['camera de surveillance',camerman],
+        ['menuiserie',menuisier]
       ];
       
       const pieOptions = {
-        title: 'My Daily Activities',
+        title: 'Distribution of Tasks',
+        titleTextStyle: {
+          fontSize: 24, // Set the font size here
+        },
         pieHole: 0.4,
       };
   return (
     <div className="container mt-5">
-      <h2>Donut Chart</h2>
+      
       <Chart
         width={'700px'}
         height={'420px'}
