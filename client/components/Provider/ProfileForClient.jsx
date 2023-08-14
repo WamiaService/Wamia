@@ -21,7 +21,7 @@ const ProfileFOrClient = ({ navigation }) => {
 
   const fetchData = () => {
     axios
-      .get(`http://192.168.1.6:3000/provider/getOne/${providerId}`)
+      .get(`http://192.168.104.7:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -62,7 +62,7 @@ console.log('profile for client',providerId);
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{data.username}</Text>
-          <Text style={styles.mobile}>phone : +216 {data.mobile}</Text>
+          <Text style={styles.mobile}>phone : +216 {data.mobile ? data.mobile : "98432756"}</Text>
           {data.is_approved && (
             <Icon
               name="check-circle"
