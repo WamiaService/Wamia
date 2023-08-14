@@ -1,5 +1,5 @@
 import { TouchableOpacity ,View, Text, TextInput, Image, KeyboardAvoidingView, Platform , ScrollView} from 'react-native';
-import React from 'react'
+import React, { useState } from 'react'
 
 const Comments = () => {
     const [comment, setComment] = useState('');

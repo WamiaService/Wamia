@@ -101,14 +101,31 @@ const SignupCust = () => {
         console.log('Error taking photo:', error);
       }
     };
+    const isValidEmail = (email) => {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
 
+    
+
+const isValidPassword = (password) => {
+      return /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/.test(password);
+    }
     const singUppp =  (username,password,email,imgprof,identity,adresse) => {
+      if (!isValidEmail(email)) {
+        // Invalid email format
+        Alert.alert('Invalid email format');
+        return;
+      }else if (!isValidPassword(password)){
+        Alert.alert('Password must contain at least one letter and one number, and be at least 6 characters long');
+        return;
+      }
            axios.post('http://192.168.104.7:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
           .then((res)=>{
     console.log(res.data);
             alert('check yore mail')
             navigation.navigate('loginc');
           }).catch((err)=>{
+            
             console.log(err);
           })
         

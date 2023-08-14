@@ -117,6 +117,7 @@ const Login = ({ handleLogin}) => {
 
       <View style={styles.inputContainer}>
   <AntDesign name="key" size={24} color="black" style={styles.icon} />
+  
   <TextInput
     onChangeText={(val) => setActivationCode(val)}
     style={styles.inp}
