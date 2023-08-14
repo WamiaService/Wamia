@@ -103,7 +103,7 @@ const SignupCust = () => {
     };
 
     const singUppp =  (username,password,email,imgprof,identity,adresse) => {
-           axios.post('http://192.168.1.6:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
+           axios.post('http://192.168.1.7:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
           .then((res)=>{
     console.log(res.data);
             alert('check yore mail')

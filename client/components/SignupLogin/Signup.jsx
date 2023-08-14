@@ -113,7 +113,7 @@ const Signup = () => {
 
     axios
       
-      .post('http://192.168.1.6:3000/provider/signup', {
+      .post('http://192.168.1.7:3000/provider/signup', {
         username: username,
         email: email,
         password: password,

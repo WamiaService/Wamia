@@ -7,5 +7,5 @@ router.get('/', getAllcustumor);
 router.get('/getOne/:custumorId', getOnecustumor);
 router.post('/signup', signupcustumor);
 router.post('/login', logincustumor);
-router.put('/update/:id',updateCustumor)
+router.put('/update/:custumorId',updateCustumor)
 module.exports = router;
