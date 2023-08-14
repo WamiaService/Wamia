@@ -6,6 +6,7 @@ const servicesRoutes= require('./routes/services.routes')
 const Adminrouter = require("./routes/admin.routes")
 const rateRouter=require('./routes/rating.routes')
 const payementRouter= require('./routes/payment.routes')
+const reservationRoutes = require('./routes/reservation.routes.js')
 require("dotenv").config()
 
 PORT  = 3000 ; 
@@ -15,7 +16,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
-
+//!reservation
+app.use('/reservation', reservationRoutes)
 //!services
 app.use('/rate',rateRouter)
 app.use('/service', servicesRoutes)

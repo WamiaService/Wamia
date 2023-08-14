@@ -7,14 +7,14 @@ import PostForClient from './PostsForClient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
 
-const ProfileFOrClient = ({ navigation }) => {
+const ProfileFOrClient = ({ custumorId,navigation }) => {
   const route = useRoute();
   const providerId = route.params?.providerId; 
   const [data, setData] = useState([]);
 
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
-
+  const [rate,setRate]=useState()
   useEffect(() => {
     fetchData();
   }, []);
@@ -47,7 +47,30 @@ console.log('profile for client',providerId);
 //handle rating 
 
 
+const handleRating=async(req,res)=>{
+   const {rate,custumorId}=req.body
+try{
+  const rating= axios.post(`http://192.168.100.10:3000/rate/create/${providerId}`,{
+  
+   rate:rate,
+   custumorId:custumorId
+  
+  }
 
+  )
+  consile.log("r",rating)
+  res=setRate(rating.data)
+  
+
+}
+
+ catch(error){
+ 
+  console.error('An error occurred', error);
+  
+ }
+  
+}
 
 
 
@@ -75,6 +98,7 @@ console.log('profile for client',providerId);
             count={5}
             defaultRating={0}
             size={20}
+            onPress={handleRating}
             showRating={false}
             onFinishRating={(rating) => console.log('Rating:', rating)}
           />

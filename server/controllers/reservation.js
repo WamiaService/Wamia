@@ -3,10 +3,10 @@ const { Op } = require("sequelize");
 
 // post date 
 const bookDate=async(req,res)=>{
-
-
+  // const {providerId}=req.params
+   
   try {
-    const {  date } = req.body;
+    const {  date ,custumorId,providerId} = req.body;
 
     // Validate and parse the incoming date
     const bookingdate = new Date(date);
@@ -15,7 +15,7 @@ const bookDate=async(req,res)=>{
       return res.status(400).json({ error: 'Invalid date format' });
     }
 
-    const reservation = await Reservation.create({date: bookingdate})
+    const reservation = await Reservation.create({date: bookingdate,custumorId:custumorId,providerId:providerId})
 
     res.status(201).json({ message: 'Reservation created successfully' });
   } catch (error) {

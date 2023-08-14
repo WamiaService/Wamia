@@ -162,7 +162,7 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name="profileforclient">
           {(props) => (
-            <ProfileFOrClient {...props} providerId={providerId} />
+            <ProfileFOrClient {...props} providerId={providerId} custumorId={custumorId}/>
           )}
         </Stack.Screen>
         <Stack.Screen name="custprofile">
