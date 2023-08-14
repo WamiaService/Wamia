@@ -103,9 +103,9 @@ const Custumor = () => {
   
    
   return (
-    <div className='container' >
-    <div className="table-header">List of custumors</div>
-    <div className="table-container">
+    <div className='container1' >
+    <div className="table-header"></div>
+    <div className="custumor-container">
       <DataGrid
      
         rows={rows}
