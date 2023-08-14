@@ -101,7 +101,6 @@ const Home = ({ providerId, custumorId }) => {
         try {
           const response = await axios.get(
             `http://192.168.1.14:3000/custumor/getOne/${custumorId}`
-            `http://192.168.1.14:3000/custumor/getOne/${custumorId}`
           );
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
@@ -240,10 +239,10 @@ const Home = ({ providerId, custumorId }) => {
             />
           </View>
           {searchResults.map((result) => (
-            <View style={styles.resultContainer} key={result.id}>
+            <View   style={styles.resultContainer} key={result.id}>
               <Image source={{ uri: result.imgprof }} style={styles.resultImage} />
-              <View style={styles.resultTextContainer}>
-                <Text style={styles.resultName}>{result.username}</Text>
+              <View  style={styles.resultTextContainer}>
+                <Text onPress={()=> navigation.navigate('providerprofile', { providerId: providerId })}  style={styles.resultName}>{result.username}</Text>
                 <Text style={styles.resultCategory}>{result.category}</Text>
               </View>
 

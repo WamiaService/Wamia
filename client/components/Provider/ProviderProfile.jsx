@@ -31,7 +31,6 @@ const ProviderProfile = ({providerId}) => {
         <View style={styles.infoContainer}>
           <Text style={styles.text}>{data.username}</Text>
           <Text style={styles.number}>phone : +216 {data.mobile}</Text>
-          
           {data.is_approved && (
         <Icon
           name="check-circle"
@@ -39,7 +38,8 @@ const ProviderProfile = ({providerId}) => {
           color="blue"
           style={{ position:"absolute", top:-20, left:190 }}
         />
-      )}   
+      )} 
+          
         </View>
       </View>
       <ServicesOneProvider providerId={providerId}/>

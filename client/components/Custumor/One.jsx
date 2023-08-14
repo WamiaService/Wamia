@@ -57,7 +57,9 @@ const logout = () => {
   navigation.navigate("login");
 
 };
-
+const navigateToMyProfile =()=>{
+  navigation.navigate("custprofile")
+}
 
 const accountItems = [
   {
@@ -65,6 +67,12 @@ const accountItems = [
     text: "Edit Profile",
     action: navigateToEditProfile,
   },
+  {
+    icon: "person-outline",
+     text: "My Profile",
+     action: navigateToMyProfile,
+   },
+
   { icon: "calendar", text: "Reservtion", action: navigateToSecurity },
   {
     icon: "notifications-none",
@@ -80,6 +88,7 @@ const supportItems = [
     text: "My Subscription",
     action: navigateToSubscription,
   },
+  
   { icon: "help-outline", text: "Help & Support", action: navigateToSupport },
   {
     icon: "info-outline",

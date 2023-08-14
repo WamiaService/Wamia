@@ -29,8 +29,9 @@ function AllProviders() {
         setLoading(true);
     
         const endpoint = category
-            ? `http://192.168.104.6:3000/provider/search?category=${category}`
-            : `http://192.168.104.6:3000/provider`;
+            ? `http://192.168.1.6:3000/provider/search?category=${category}`
+            : `http://192.168.1.6:3000/provider`;
+           
     
         axios.get(endpoint)
             .then(response => {

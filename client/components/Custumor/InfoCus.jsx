@@ -11,12 +11,14 @@ import {
   import { COLORS, FONTS, SIZES, images } from "./constant.jsx";
   import { StatusBar } from "expo-status-bar";
   import { MaterialIcons } from "@expo/vector-icons";
+  import { useNavigation } from '@react-navigation/native';
 
 
   
- const Infocus=()=>{
+ const Infocus=({custumorId})=>{
   
-
+  const navigation = useNavigation();
+console.log("infocust",custumorId);
     
     return (
 
@@ -117,6 +119,9 @@ import {
               }}
             >
               <Text
+              onPress={()=>{
+              navigation.navigate('edit')
+              }}
                 style={{
                   ...FONTS.body4,
                   color: COLORS.white,

@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
-import PostOnlyClient from './PostOnlyClient';
 import { useNavigation } from '@react-navigation/native';
-import Res from './Res';
-import Icon from 'react-native-vector-icons/FontAwesome'; 
-
+import PostForClient from './PostsForClient';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useRoute } from '@react-navigation/native';
+import Comments from './Comments';
 
 const ProfileFOrClient = ({ navigation }) => {
-  const [data, setData] = useState({
-    name: '',
-    imgprof: '',
-  });
+  const route = useRoute();
+  const providerId = route.params?.providerId; 
+  const [data, setData] = useState([]);
 
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
@@ -22,7 +21,8 @@ const ProfileFOrClient = ({ navigation }) => {
   }, []);
 
   const fetchData = () => {
-    axios.get('http://192.168.1.14:3000/provider/getOne/1')
+    axios
+      .get(`http://192.168.1.14:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -42,7 +42,8 @@ const ProfileFOrClient = ({ navigation }) => {
   const handleReservationButtonClick = () => {
     navigation.navigate('Res');                                  
   };
-
+  console.log('');
+console.log('profile for client',providerId);
   return (
     <View style={styles.container}>
       <View style={styles.box}>
@@ -53,13 +54,13 @@ const ProfileFOrClient = ({ navigation }) => {
           <Text style={styles.name}>{data.username}</Text>
           <Text style={styles.mobile}>phone : +216 {data.mobile}</Text>
           {data.is_approved && (
-        <Icon
-          name="check-circle"
-          size={30}
-          color="blue"
-          style={{ marginTop: -60 }}
-        />
-      )} 
+            <Icon
+              name="check-circle"
+              size={30}
+              color="blue"
+              style={{ position:"absolute", top:-20, left:190 }}
+            />
+          )}
           <AirbnbRating
             count={5}
             defaultRating={0}
@@ -90,12 +91,11 @@ const ProfileFOrClient = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Reservation</Text>
         </TouchableOpacity>
-
       </View>
 
-      {showPosts && <PostOnlyClient />}
-      {showComments && <View style={styles.commentSection}><Text>Comments Section</Text></View>}
-
+      {showPosts && <PostForClient providerId={providerId} />}
+      {showComments && (
+        <Comments/>  )}
     </View>
   );
 };
