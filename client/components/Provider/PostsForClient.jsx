@@ -10,6 +10,7 @@ const PostForClient = ({providerId}) => {
   }, []);
 
   const fetch = () => {
+
     axios.get(`http://192.168.100.10:3000/service/getall/${providerId}`)
       .then((res) => {
         setData(res?.data);

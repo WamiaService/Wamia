@@ -37,6 +37,7 @@ const getAllRerservation = async (req, res) => {
     res.status(500).json({ error: 'Failed to find  ' });
   }
 };
+
 // get  all  reservation for one custumor 
 const getOneRerservation = async (req, res) => {
   try {
@@ -53,6 +54,7 @@ const getOneRerservation = async (req, res) => {
     res.status(500).json({ error: 'Failed to find a reservation  ' });
   }
 };
+
 
 
 

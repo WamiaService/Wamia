@@ -35,7 +35,7 @@
   height: 300vh;
   width:150vh;
   
-}
+} 
 .dash{
   margin-left: 5%;
 }
@@ -53,3 +53,14 @@ background-color: rgb(246, 242, 242);
   margin-right: 100px;
   justify-content: space-between;
 }
+.dashboard-container{
+  margin-right: 5%; 
+}
+.Bar{
+ margin-left: 10%;
+
+} 
+/* .charts{
+  display: flex;
+
+} */

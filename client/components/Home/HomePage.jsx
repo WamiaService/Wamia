@@ -48,6 +48,7 @@ const Home = ({ providerId, custumorId }) => {
       setError(null);
       axios
         .get(
+        
           `http://192.168.100.10:3000/provider/search?category=${searchTerm}`
         )
         .then((response) => {
@@ -82,6 +83,7 @@ const Home = ({ providerId, custumorId }) => {
       if (providerId) {
         try {
           const response = await axios.get(
+            `http://192.168.104.7:3000/provider/getOne/${providerId}`
             `http://192.168.100.10:3000/provider/getOne/${providerId}`
           );
           const imgprof = response.data.imgprof;
@@ -102,6 +104,7 @@ const Home = ({ providerId, custumorId }) => {
       if (custumorId) {
         try {
           const response = await axios.get(
+            `http://192.168.104.7:3000/custumor/getOne/${custumorId}`
             `http://192.168.100.10:3000/custumor/getOne/${custumorId}`
           );
           const imgprof = response.data.imgprof;

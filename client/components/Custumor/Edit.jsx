@@ -13,9 +13,11 @@ import {
   import { MaterialIcons } from "@expo/vector-icons";
   import * as ImagePicker from 'expo-image-picker';
    import axios from 'axios'
+   import { useNavigation } from '@react-navigation/native';
 
   
   const EditProfile = ({custumorId}) => {
+    const navigation = useNavigation()
 
     const [data,setData]=useState([])
     const [name, setName] = useState("");
@@ -48,7 +50,7 @@ import {
       console.log('u');
       console.log("in edit cust",custumorId);
       try {
-        const response = await axios.get(`http://192.168.1.6:3000/custumor/getOne/${custumorId}`);
+        const response = await axios.get(`http://192.168.104.7:3000/custumor/getOne/${custumorId}`);
         setData(response.data); 
       } catch (error) {
         console.error('Error :', error);
@@ -119,11 +121,13 @@ import {
   
     const update = async (custumorId) => {
       try {
-        await axios.put(`http://192.168.1.7:3000/custumor/update/${custumorId}`, infoCus);
+        await axios.put(`http://192.168.104.7:3000/custumor/update/${custumorId}`, infoCus);
         console.log(infoCus)
         console.log("4",!refetch)
         setRefetech(!refetch)
         alert('Your profil  is updated');
+        navigation.navigate("custprofile")
+
       } catch (err) {
         console.log(err);
       }

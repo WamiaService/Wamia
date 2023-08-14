@@ -27,6 +27,9 @@ const custumorRoute = require('./routes/custumor.routes')
 app.use('/custumor',custumorRoute)
 app.use("/api/admin", Adminrouter);
 app.use("/api/payement",payementRouter)
+const reservationRoutes = require('./routes/reservation.routes.js')
+//!reservation
+app.use('/reservation', reservationRoutes)
 sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');

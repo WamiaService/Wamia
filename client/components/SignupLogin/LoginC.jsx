@@ -26,6 +26,7 @@ const LoginC = ({ handleLoginCustumor }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [activationCode,setActivationCode]= useState('')
+  const [is_approved, setIs_approved] = useState(false)
 
   const navigation = useNavigation();
 
@@ -40,6 +41,7 @@ const LoginC = ({ handleLoginCustumor }) => {
 
   const loginn = async (username, password,activationCode) => {
     try {
+   
       const response = await axios.post('http://192.168.100.10:3000/custumor/login', {
         username: username,
         password: password,
@@ -56,6 +58,9 @@ const LoginC = ({ handleLoginCustumor }) => {
   
         // Adjust this part based on your payload structure
         if (payload && payload.custumorId) {
+          if (!is_approved) {
+            await SecureStore.setItemAsync('is_approved', 'true');
+          }
           // Save the token in SecureStore
           await SecureStore.setItemAsync('jwt-token', token);
   
