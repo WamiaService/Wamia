@@ -107,8 +107,25 @@ const Signup = () => {
       console.log('Error taking photo:', error);
     }
   };
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
+  
+
+const isValidPassword = (password) => {
+    return /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/.test(password);
+  }
   const singUppp =  (username,password,email,imgprof,patente,category) => {
+
+    if (!isValidEmail(email)) {
+      // Invalid email format
+      Alert.alert('Invalid email format');
+      return;
+    }else if (!isValidPassword(password)){
+      Alert.alert('Password must contain at least one letter and one number, and be at least 6 characters long');
+      return;
+    }
     const selectedCategory = category[0] || category[1];
 
     axios
