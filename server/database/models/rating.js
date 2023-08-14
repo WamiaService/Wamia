@@ -5,13 +5,11 @@ const Custumor = require('./custumor')
 
 
 const Rating = sequelize.define('rating', {
-  rate: {
+rate: {
     type: DataTypes.INTEGER,
+     
     allowNull: false,
-    validate: {
-      min: 1,
-      max: 5,
-    },
+   
   },
 
   review: {

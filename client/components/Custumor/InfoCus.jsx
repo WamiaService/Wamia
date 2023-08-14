@@ -6,16 +6,49 @@ import {
     // useWindowDimensions,
 
   } from "react-native";
-  import React, { useState } from "react";
+  import React, { useState,useEffect } from "react";
   import { SafeAreaView } from "react-native-safe-area-context";
-  import { COLORS, FONTS, SIZES, images } from "./constant.jsx";
+  import { COLORS, FONTS, SIZES,} from "./constant.jsx";
   import { StatusBar } from "expo-status-bar";
   import { MaterialIcons } from "@expo/vector-icons";
-
+  import { useNavigation } from '@react-navigation/native';
+  import axios from 'axios'
 
   
- const Infocus=()=>{
+ const Infocus=({custumorId})=>{
   
+  const navigation = useNavigation();
+console.log("infocust",custumorId);
+const [data,setData]=useState([])
+const[refetch,setRefetech]=useState(false)
+
+
+useEffect(() => {
+  getOneCustumor(custumorId)
+}, [!refetch]);
+ console.log(data)
+
+
+const getOneCustumor = async (custumorId)=> {
+       
+  try {
+    const response = await axios.get(`http://192.168.1.7:3000/custumor/getOne/${custumorId}`);
+
+    setData(response.data); 
+    
+  } catch (error) {
+    console.error('Error :', error);
+  }
+};
+
+
+
+
+
+
+
+
+
 
     
     return (
@@ -30,18 +63,21 @@ import {
         <StatusBar backgroundColor={COLORS.gray} />
         <View style={{ width: "100%" }}>
           <Image
-            // source={images.cover}
+            //  source={image}
             // resizeMode="cover"
             style={{
               height: 228,
-              width: "100%",
+              width: "20%",
+              backgroundColor:"#black"
             }}
           />
         </View>
   
         <View style={{ flex: 1, alignItems: "center" }}>
           <Image
-            source="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+           source={{
+            uri: data.imgprof,
+          }}
             resizeMode="contain"
             style={{
               height: 155,
@@ -60,8 +96,9 @@ import {
               marginVertical: 8,
             }}
           >
-          Custumor name 
+       {data.username}
           </Text>
+               
       
   
           <View
@@ -75,11 +112,11 @@ import {
  />
             <Text
               style={{
-                ...FONTS.body3,
+                ...FONTS.h3,
                 marginLeft: 4,
               }}
             >
-              Adresse
+          {data.adresse}
             </Text>
           </View>
   
@@ -117,6 +154,9 @@ import {
               }}
             >
               <Text
+              onPress={()=>{
+              navigation.navigate('edit')
+              }}
                 style={{
                   ...FONTS.body4,
                   color: COLORS.white,
@@ -149,15 +189,7 @@ import {
           </View>
         </View>
   
-        {/* <View style={{ flex: 1, marginHorizontal: 22, marginTop: 20 }}>
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: layout.width }}
-            renderTabBar={renderTabBar}
-          />
-        </View> */}
+        
       </SafeAreaView>
     );
             }

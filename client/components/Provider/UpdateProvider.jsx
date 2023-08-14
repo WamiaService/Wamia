@@ -5,6 +5,8 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import jwtDecoder from "jwt-decode";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker'
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const UpdateProvider = ({providerId}) => {
@@ -14,20 +16,25 @@ const UpdateProvider = ({providerId}) => {
     const [mobile, setMobile]=useState(null)
     const [imgprof, setImgprof]=useState("")
     const [data,setData]=useState([])
+    const navigation = useNavigation()
 console.log("prov id in update",providerId);
+
     useEffect(()=>{
         fetchData()
-    },[imgprof])
-
+    },[])
 
     const fetchData = () => {
       // const cookie = new Cookies();
       // const token = jwtDecoder(cookie.get("jwt-token"));
       // console.log("token",token);
-        axios.get(`http://192.168.104.13:3000/provider/getOne/${providerId}`)
+        axios.get(`http://192.168.1.6:3000/provider/getOne/${providerId}`)
+   
           .then((res) => {
             setData(res.data);
-            setImgprof(res.data.imgprof)
+            setUsername(res.data.username); // Add this line to set username
+            setEmail(res.data.email); // Add this line to set email
+            setMobile(res.data.mobile); // Add this line to set mobile
+            setImgprof(res.data.imgprof);
             console.log(res.data)
           })
           .catch((err) => console.log(err));
@@ -44,9 +51,11 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.104.13:3000/provider/update/${providerId}`, info)
-          .then(res => {
+        axios.put(`http://192.168.1.6:3000/provider/update/${providerId}`, info)
+                   .then(res => {
             console.log('Profile updated successfully:', res.data);
+            navigation.navigate("providerprofile")
+
             
           })
           .catch(err => {
@@ -81,8 +90,6 @@ console.log("prov id in update",providerId);
             Alert.alert('Error While Uploading');
           });
       };
-      
-  
       const handleGalleryAccessProfile = async () => {
         try {
           const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -90,19 +97,17 @@ console.log("prov id in update",providerId);
             console.log('Gallery permission denied');
             return;
            }
-    
           const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             quality: 1.0,
           });
-    
           if (!result.cancelled) {
-            _uploadImage(result, setImgprof);
+            _uploadImage(result);
           }
         } catch (error) {
           console.log('Error selecting image from gallery:', error);
         }
-      };
+      }
 
 
   return (
@@ -110,7 +115,7 @@ console.log("prov id in update",providerId);
      <TouchableOpacity>
         {imgprof ? (
           <Image
-            source={{ uri: imgprof}} // Display the fetched image
+            source={{ uri: imgprof}} 
             style={{
               height: 170,
               width: 170,
@@ -151,11 +156,9 @@ console.log("prov id in update",providerId);
           />
         </View>
       </TouchableOpacity>
-
             <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, padding: 10, marginVertical: 10, width: 260, borderRadius: 15 }}>
         <AntDesign name="profile" size={24} color="black" style={{ marginRight: 10 }} />
         <TextInput
-          value={username}
           onChangeText={setUsername}
           placeholder="Username"
           style={{ flex: 1 }} 
@@ -165,7 +168,7 @@ console.log("prov id in update",providerId);
       <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, padding: 10, marginVertical: 10, width: 260, borderRadius: 15 }}>
   <AntDesign name="mail" size={24} color="black" style={{ marginRight: 10 }} />
   <TextInput
-    value={email}
+ 
     onChangeText={setEmail}
     placeholder="Email"
     keyboardType="email-address"

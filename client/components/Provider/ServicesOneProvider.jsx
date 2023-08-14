@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import UpdateService from "./UpdateService"
+import UpdateService from './UpdateService';
 
-const ServicesOneProvider = () => {
+const ServicesOneProvider = ({providerId}) => {
   const [data, setData] = useState([]);
-
+  const [updateCount, setUpdateCount] = useState(0)
   const del = (id) => {
     axios
-      .delete(`http://192.168.1.14:3000/service/delete/${id}`)
+      .delete(`http://192.168.1.6:3000/service/delete/${id}`)
       .then((res) => {
         console.log(res);
-        fetch(); 
+        setUpdateCount(updateCount + 1)
       })
       .catch((err) => {
         console.log(err);
@@ -20,10 +20,10 @@ const ServicesOneProvider = () => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [updateCount]);
 
   const fetch = () => {
-    axios.get(`http://192.168.1.14:3000/service/getall/1`)
+    axios.get(`http://192.168.1.6:3000/service/getall/${providerId}`)
       .then((res) => {
         setData(res?.data);
       })
@@ -36,21 +36,22 @@ const ServicesOneProvider = () => {
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       {data.map((item, index) => (
         <View key={index} style={styles.postContainer}>
-          <Text>{item.name}</Text>
+          <Text style={styles.title}>{item.name}</Text>
           <Image
-            source={{
-              uri: item.img,
-            }}
+            source={{ uri: item.img }}
             style={styles.image}
           />
-          <Text>{item.desc}</Text>
-          <UpdateService id={item.id} />
-          <TouchableOpacity
-            style={styles.deleteButton}
-            onPress={() => del(item.id)} 
-          >
-            <Text style={styles.deleteButtonText}>Delete</Text>
-          </TouchableOpacity>
+          <Text style={styles.description}>{item.desc}</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() => del(item.id)}
+            >
+              <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
+            
+            <UpdateService  onUpdate={() => setUpdateCount(updateCount + 1)} style={styles.serviceButton} id={item.id}/>
+          </View>
         </View>
       ))}
     </ScrollView>
@@ -75,25 +76,47 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    width: 300, 
-    height: 240,
+    width: 300,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#333', // Updated color
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginRight: 10,
+    width: '100%', // Change to fill the container width
+    height: 200, // Set the desired height
+    marginBottom: 10,
+  },
+  description: {
+    marginBottom: 10,
+    color: '#555', // Updated color
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 10, // Add some top padding for spacing
   },
   deleteButton: {
     backgroundColor: '#ff0000',
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    marginTop: 10,
+    width: '45%',
   },
-  deleteButtonText: {
+  serviceButton: {
+    backgroundColor: '#FFA500',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    width: '45%',
+  },
+  buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

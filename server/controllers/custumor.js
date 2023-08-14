@@ -101,28 +101,29 @@ const logincustumor = async (req, res) => {
 
 
   const updateCustumor= async(req,res)=>{
-    const { id } = req.params;
+    const {custumorId } = req.params;
+    console.log('f',custumorId)
     let {
       username,
       adresse,
       imgprof,  
       mobile,
+      password
     } = req.body;
       
     console.log(req.body)
     try{
-      const client= await Custumor.findByPk(id)
-      console.log("client",client)
+     
+      const client= await Custumor.findByPk(custumorId)
       if (!client) {
-        return res.status(404).json({ error: "Custumor profile not found" });
+        return res.status(404).json({ error: "User profile not found" });
       } 
-  
-  
+   
       client.username=username;
       client.adresse=adresse;
-      client.imgprof=imgprof;
-      client.mobile =mobile
-  
+      client.mobile=mobile;
+      client.imgprof=imgprof
+      
   
     await client.save();
     res.json(client);
