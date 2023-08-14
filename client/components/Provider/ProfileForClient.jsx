@@ -43,6 +43,17 @@ const ProfileFOrClient = ({ navigation }) => {
   };
   console.log('');
 console.log('profile for client',providerId);
+
+//handle rating 
+
+
+
+
+
+
+
+
+
   return (
     <View style={styles.container}>
       <View style={styles.box}>
