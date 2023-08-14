@@ -3,8 +3,6 @@ const { Op } = require("sequelize");
 
 // post date 
 const bookDate=async(req,res)=>{
-
-
   try {
     const {  date } = req.body;
 
@@ -37,6 +35,7 @@ const getAllRerservation = async (req, res) => {
     res.status(500).json({ error: 'Failed to find  ' });
   }
 };
+
 // get  all  reservation for one custumor 
 const getOneRerservation = async (req, res) => {
   try {
