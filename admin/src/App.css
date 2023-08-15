@@ -3,16 +3,21 @@
   flex-direction:column;
   width:100vw;
   height:100vh;
+  /* background-color: rgb(54, 43, 43); */
 }
 .AppHeader{
   height:50px;
   display:flex;
+  
   justify-content:space-between;
   align-items:center;
   padding:4px 20px 4px 12px;
   border-bottom: 1px solid rgba(0,0,0.15 );
   background-color: rgb(246, 242, 242) ;
 
+}
+.ADash1{
+  margin-right: 500px;
 }
 .AppFooter{
   height:50px;
@@ -63,4 +68,10 @@ background-color: rgb(246, 242, 242);
 /* .charts{
   display: flex;
 
+} */
+.pie{
+  margin-left: -0px ;
+}
+/* .charts{
+  background-color: red;
 } */
