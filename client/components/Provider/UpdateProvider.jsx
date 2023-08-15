@@ -24,7 +24,11 @@ console.log("prov id in update",providerId);
     },[])
 
     const fetchData = () => {
-        axios.get(`http://192.168.104.7:3000/provider/getOne/${providerId}`)
+      // const cookie = new Cookies();
+      // const token = jwtDecoder(cookie.get("jwt-token"));
+      // console.log("token",token);
+        axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+   
           .then((res) => {
             setData(res.data);
             setUsername(res.data.username); 
@@ -47,7 +51,7 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.104.4:3000/provider/update/${providerId}`, info)
+        axios.put(`http://192.168.104.5:3000/provider/update/${providerId}`, info)
                    .then(res => {
             console.log('Profile updated successfully:', res.data);
             navigation.navigate("providerprofile")
