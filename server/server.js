@@ -1,11 +1,15 @@
 const express = require('express');
 const cors = require("cors")
+const Stripe = require('stripe')
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
 const cookieParser = require("cookie-parser")
 const sequelize = require("./database/db")
 const servicesRoutes= require('./routes/services.routes')
 const Adminrouter = require("./routes/admin.routes")
 const rateRouter=require('./routes/rating.routes')
 const payementRouter= require('./routes/payment.routes')
+
+
 require("dotenv").config()
 
 PORT  = 3000 ; 
@@ -28,6 +32,7 @@ app.use("/api/payement",payementRouter)
 const reservationRoutes = require('./routes/reservation.routes.js')
 //!reservation
 app.use('/reservation', reservationRoutes)
+
 sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
