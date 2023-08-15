@@ -1,29 +1,32 @@
 import { View, ScrollView, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react'
-
+import axios from "axios"
 
 const Reservation = ({providerId}) => {
-  const [data,setData]=useState
+  const [data,setData]=useState([])
  
   useEffect(() => {
     fetch();
   }, []);
 
 
+  
   const fetch = () => {
-    axios.get(`http://192.168.104.7:3000/reservation/ProvReservation/${providerId}`)
+    axios.get(`http://192.168.104.4:3000/reservation/ProvReservation/${providerId}`)
       .then((res) => {
-        setData(res?.data);
+       setData(res.data.filter((e)=>{
+        return  e.status==="pending"
+       }))
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handle=(id)=>{
-    axios.get(`http://192.168.104.7:3000/reservation/resUpdate/${id}`)
+  const handle=(id,str)=>{
+    axios.put(`http://192.168.104.4:3000/reservation/resUpdate/${id}`,{status:str})
     .then((res) => {
-      setData(res?.data);
+     console.log(res)
     })
     .catch((err) => {
       console.log(err);
@@ -31,18 +34,18 @@ const Reservation = ({providerId}) => {
   }
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {boxes.map((ele, i) => (
-        <View key={index} style={styles.box}>
-          <Image source={{ uri: ele.imageUrl }} style={styles.image} />
+      {data.map((ele, i) => (
+        <View key={i} style={styles.box}>
+          <Image source={{ uri: ele.custumor.imgprof }} style={styles.image} />
           <View style={styles.infoContainer}>
-            <Text style={styles.text}>{ele.name}</Text>
-            <Text style={styles.number}>phone: {ele.phone}</Text>
+            <Text style={styles.text}>{ele.custumor.username}</Text>
+            <Text style={styles.number}>phone: {ele.custumor.mobile}</Text>
             <Text style={styles.date}>Date: {ele.date}</Text>
           </View>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>accept</Text>
+          <TouchableOpacity style={styles.button} onPress={()=>handle(ele.id,"accepted")}>
+            <Text style={styles.buttonText} >accept</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.rejectButton}>
+          <TouchableOpacity style={styles.rejectButton} onPress={()=>handle(ele.id,"rejected")}>
             <Text style={styles.buttonText}>reject</Text>
           </TouchableOpacity>
         </View>
