@@ -163,7 +163,7 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name="profileforclient">
           {(props) => (
-            <ProfileFOrClient {...props} providerId={providerId} />
+            <ProfileFOrClient {...props} custumorId={custumorId} providerId={providerId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="custprofile">
@@ -173,7 +173,7 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name="calender">
           {(props) => (
-            <Calender {...props} custumorId={custumorId} />
+            <Calender {...props}  providerId={providerId} custumorId={custumorId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="webviewscreen">
