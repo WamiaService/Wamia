@@ -23,8 +23,8 @@ function Dialog({ondialog}){
             }}>
                 <h3>Are you sure ?</h3>
                 <div style={{display:"flex",alignItems:"center"}}>
-                    <button onClick={()=>ondialog(true)}  style={{background:"red",color:"white",padding:"10px",marginRight:"4px",border:"none",cursor:"pointer"}}>Yes</button>
-                    <button onClick={()=>ondialog(false)} style={{background:"green",color:"white",padding:"10px",marginLeft:"4px",border:"none",cursor:"pointer"}}>No</button>
+                    <button onClick={()=>ondialog(true)}  style={{background:"green",color:"white",padding:"10px",marginRight:"4px",border:"none",cursor:"pointer"}}>Yes</button>
+                    <button onClick={()=>ondialog(false)} style={{background:"red",color:"white",padding:"10px",marginLeft:"4px",border:"none",cursor:"pointer"}}>No</button>
                 </div>
             </div>
         </div>
