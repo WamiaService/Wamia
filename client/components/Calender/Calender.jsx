@@ -33,7 +33,7 @@ const image=require('../../assets/w.png')
        const date =new Date()
        console.log(date)
     try {
-     let reservation = await axios.post('http://192.168.104.7:3000/reservation/book', {date:selectedStartDate,})
+     let reservation = await axios.post('http://192.168.104.4:3000/reservation/book', {date:selectedStartDate,})
      console.log(selectedStartDate)
         res=reservation.data 
        
