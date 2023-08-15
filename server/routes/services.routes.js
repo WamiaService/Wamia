@@ -10,5 +10,6 @@ router.delete("/delete/:id",services.deleteService)
 router.put("/update/:id",services.updateService)
 
 router.post('/post/:providerId', services.postService);
+router.put('/resUpdate')
 
 module.exports=router
