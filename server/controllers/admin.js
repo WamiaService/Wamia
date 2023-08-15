@@ -59,7 +59,7 @@ module.exports = {
              provider
                 .findAll({
                   where: {
-                    is_approved : false
+                    is_approvede : false
                 }
             })
               .then((providers) => {
@@ -75,7 +75,7 @@ module.exports = {
             const id= req.params.id;
         
             provider
-              .update({ is_approved : true}, { where: { id: id } })
+              .update({ is_approvede : true}, { where: { id: id } })
               .then(() => {
                 res.sendStatus(200);
               })
