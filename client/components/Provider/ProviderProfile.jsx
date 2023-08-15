@@ -30,7 +30,7 @@ const ProviderProfile = ({providerId}) => {
         <View style={styles.infoContainer}>
           <Text style={styles.text}>{data.username}</Text>
           <Text style={styles.number}>phone : +216 {data.mobile}</Text>
-          {data.is_approved && (
+          {data.is_approvede && (
             <Icon
               name="check-circle"
               size={30}
