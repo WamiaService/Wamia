@@ -25,7 +25,7 @@ import Edit from './Edit.jsx'
     console.log("token",token)
          
        axios
-        .post("http://192.168.104.7:3000/custumor/login"),{
+        .post("http://192.168.104.8:3000/custumor/login"),{
 
         username:token.username
         }

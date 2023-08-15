@@ -50,7 +50,7 @@ import {
       console.log('u');
       console.log("in edit cust",custumorId);
       try {
-        const response = await axios.get(`http://192.168.104.7:3000/custumor/getOne/${custumorId}`);
+        const response = await axios.get(`http://192.168.104.8:3000/custumor/getOne/${custumorId}`);
         setData(response.data); 
       } catch (error) {
         console.error('Error :', error);

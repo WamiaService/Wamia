@@ -16,8 +16,8 @@ const Rating=require("../database/models/rating")
         const newRate = await Rating.create({
           
           rate:rate,
-          custumorId:custumorId
-        
+          custumorId:custumorId,
+          providerId:providerId
         });
         console.log("rae",newRate)
         res.status(201).json(newRate);

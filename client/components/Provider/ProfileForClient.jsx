@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity , Alert} from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -22,7 +22,7 @@ const ProfileFOrClient = ({ navigation }) => {
 
   const fetchData = () => {
     axios
-      .get(`http://192.168.104.7:3000/provider/getOne/${providerId}`)
+      .get(`http://192.168.104.4:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -45,14 +45,22 @@ const ProfileFOrClient = ({ navigation }) => {
   console.log('');
 console.log('profile for client',providerId);
 
-//handle rating 
+//!handle rating 
 
 
-
-
-
-
-
+const handleReview=(rating)=>{
+  console.log(providerId)
+  // console.log("number",num)
+  axios.post(`http://192.168.104.8:3000/rate/create/${providerId}`,{rate:rating,
+})
+  .then((res)=>{
+    console.log(res)
+    Alert.alert('Success', 'Rated successfully')
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+}
 
 
   return (
@@ -77,7 +85,7 @@ console.log('profile for client',providerId);
             defaultRating={0}
             size={20}
             showRating={false}
-            onFinishRating={(rating) => console.log('Rating:', rating)}
+            onFinishRating={(rating) => handleReview(rating)}
           />
           
         </View>

@@ -4,10 +4,10 @@ import axios from "axios"
 
 const Reservation = ({providerId}) => {
   const [data,setData]=useState([])
- 
+  const [trigger,setTrigger]=useState(false)
   useEffect(() => {
     fetch();
-  }, []);
+  }, [trigger]);
 
 
   
@@ -16,7 +16,9 @@ const Reservation = ({providerId}) => {
       .then((res) => {
        setData(res.data.filter((e)=>{
         return  e.status==="pending"
+        
        }))
+       setTrigger(true)
       })
       .catch((err) => {
         console.log(err);
@@ -26,12 +28,13 @@ const Reservation = ({providerId}) => {
   const handle=(id,str)=>{
     axios.put(`http://192.168.104.4:3000/reservation/resUpdate/${id}`,{status:str})
     .then((res) => {
-     console.log(res)
+      setData(data.filter((ele) => ele.id !== id))
     })
     .catch((err) => {
       console.log(err);
     });
   }
+  parseInt
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {data.map((ele, i) => (
