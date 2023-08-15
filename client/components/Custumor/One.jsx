@@ -20,37 +20,23 @@ const navigateToNotifications = () => {
   console.log("Notifications function");
 };
 
-const navigateToPrivacy = () => {
-  console.log("Privacy function");
-};
 
-const navigateToSubscription = () => {
-  console.log("Subscription function");
-};
+
+
 
 const navigateToSupport = () => {
   console.log("Support function");
 };
 
-const navigateToTermsAndPolicies = () => {
-  console.log("Terms and Policies function");
-};
 
-const navigateToFreeSpace = () => {
-  console.log("Free Space function");
-};
 
-const navigateToDateSaver = () => {
-  console.log("Date saver");
-};
 
-const navigateToReportProblem = () => {
-  console.log("Report a problem");
-};
 
-const addAccount = () => {
-  console.log("Aadd account ");
-};
+
+
+
+
+
 
 const logout = () => {
   navigation.navigate("choose");
@@ -78,40 +64,19 @@ const accountItems = [
     text: "Notifications",
     action: navigateToNotifications,
   },
-  { icon: "lock-outline", text: "Privacy", action: navigateToPrivacy },
 ];
 
 const supportItems = [
-  {
-    icon: "credit-card",
-    text: "My Subscription",
-    action: navigateToSubscription,
-  },
+ 
   
   { icon: "help-outline", text: "Help & Support", action: navigateToSupport },
-  {
-    icon: "info-outline",
-    text: "Terms and Policies",
-    action: navigateToTermsAndPolicies,
-  },
+ 
 ];
 
-const cacheAndCellularItems = [
-  {
-    icon: "delete-outline",
-    text: "Free up space",
-    action: navigateToFreeSpace,
-  },
-  { icon: "save-alt", text: "Date Saver", action: navigateToDateSaver },
-];
+
 
 const actionsItems = [
-  {
-    icon: "outlined-flag",
-    text: "Report a problem",
-    action: navigateToReportProblem,
-  },
-  { icon: "people-outline", text: "Add Account", action: addAccount },
+ 
   { icon: "logout", text: "Log out", action: logout },
 ];
 
@@ -209,24 +174,7 @@ return (
         </View>
       </View>
 
-      {/* Cache & Cellular */}
-      <View style={{ marginBottom: 12 }}>
-        <Text style={{ ...FONTS.h4, marginVertical: 10 }}>
-          Cache & Cellular{" "}
-        </Text>
-        <View
-          style={{
-            borderRadius: 12,
-            backgrounColor: COLORS.gray,
-          }}
-        >
-          {cacheAndCellularItems.map((item, index) => (
-            <React.Fragment key={index}>
-              {renderSettingsItem(item)}
-            </React.Fragment>
-          ))}
-        </View>
-      </View>
+      
 
       {/* Actions Settings */}
 

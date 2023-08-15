@@ -157,7 +157,7 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name="reservation">
           {(props) => (
-            <Reservation {...props} providerId={providerId} />
+            <Reservation {...props} custumorId={custumorId} providerId={providerId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="profileforclient">
@@ -175,6 +175,7 @@ const App = () => {
             <Calender {...props} custumorId={custumorId} />
           )}
         </Stack.Screen>
+        
         
         
         <Stack.Screen name="one">
