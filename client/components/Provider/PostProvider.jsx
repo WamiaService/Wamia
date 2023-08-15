@@ -20,6 +20,7 @@ const navigation=useNavigation()
   };
   const handleSubmit = () => {
     axios
+      
      
       .post(`http://192.168.100.12:3000/service/post/${providerId}`, info)
       .then((res) => {

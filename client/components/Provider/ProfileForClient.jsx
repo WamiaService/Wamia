@@ -22,6 +22,7 @@ const ProfileFOrClient = ({ custumorId,navigation }) => {
 
   const fetchData = () => {
     axios
+      
       .get(`http://192.168.100.4:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);

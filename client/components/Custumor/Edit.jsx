@@ -64,16 +64,17 @@ import {
 
   
   
-    // const getOneCustumor = async ()=> {
-    //   console.log('u');
-    //   console.log("in edit cust",custumorId);
-    //   try {
-    //     const response = await axios.get(`http://192.168.100.4:3000/custumor/getOne/${custumorId}`);
-    //     setData(response.data); 
-    //   } catch (error) {
-    //     console.error('Error :', error);
-    //   }
-    // };
+    const getOneCustumor = async ()=> {
+      console.log('u');
+      console.log("in edit cust",custumorId);
+      try {
+        const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
+        setData(response.data); 
+      } catch (error) {
+        console.error('Error :', error);
+      }
+    };
+
 
 
     console.log(custumorId)
@@ -133,6 +134,21 @@ import {
 
 
 
+
+
+
+  
+    const update = async (custumorId) => {
+      try {
+        await axios.put(`http://192.168.104.5:3000/custumor/update/${custumorId}`, infoCus);
+        console.log(infoCus)
+        console.log("4",!refetch)
+        setRefetech(!refetch)
+        alert('Your profil  is updated');
+        navigation.navigate("custprofile")
+
+      } catch (err) {
+        console.log(err);
   
     const update =  () => {
      axios.put(`http://192.168.100.4:3000/custumor/update/${custumorId}`, infoCus)
@@ -142,10 +158,7 @@ import {
       }
 
       )
-      .catch (err=>{
-        console.log( "Error",err);
-      })
-    };
+
 
  console.log(infoCus)
     console.log(custumorId)

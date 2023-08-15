@@ -29,13 +29,14 @@ console.log("prov id in update",providerId);
       // const token = jwtDecoder(cookie.get("jwt-token"));
       // console.log("token",token);
       
+      
         axios.get(`http://192.168.100.4:3000/provider/getOne/${providerId}`)
    
           .then((res) => {
             setData(res.data);
-            setUsername(res.data.username); // Add this line to set username
-            setEmail(res.data.email); // Add this line to set email
-            setMobile(res.data.mobile); // Add this line to set mobile
+            setUsername(res.data.username); 
+            setEmail(res.data.email); 
+            setMobile(res.data.mobile); 
             setImgprof(res.data.imgprof);
             console.log(res.data)
           })
@@ -53,6 +54,7 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
+        axios.put(`http://192.168.104.5:3000/provider/update/${providerId}`, info)
        
         axios.put(`http://192.168.100.4:3000/provider/update/${providerId}`, info)
                    .then(res => {

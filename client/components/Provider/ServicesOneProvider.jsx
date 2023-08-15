@@ -9,6 +9,7 @@ const ServicesOneProvider = ({providerId}) => {
   const del = (id) => {
     axios
       
+      
       .delete(`http://192.168.100.4:3000/service/delete/${id}`)
       .then((res) => {
         console.log(res);
@@ -24,6 +25,7 @@ const ServicesOneProvider = ({providerId}) => {
   }, [updateCount]);
 
   const fetch = () => {
+    axios.get(`http://192.168.104.5:3000/service/getall/${providerId}`)
    
     axios.get(`http://192.168.100.4:3000/service/getall/${providerId}`)
       .then((res) => {

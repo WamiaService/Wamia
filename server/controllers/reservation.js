@@ -1,7 +1,13 @@
+const Provider = require('../database/models/provider');
 const Reservation=require('../database/models/reservation')
+const Custumor = require('../database/models/custumor')
 const { Op } = require("sequelize");
 
+<<<<<<< HEAD
 // post date 
+=======
+//! post date 
+>>>>>>> 0bfabcf9d8ad290f5f90e2341a06b7ec05e6a54b
 const bookDate = async (req, res) => {
   try {
     const { date, custumorId, providerId } = req.body;
@@ -27,7 +33,7 @@ const bookDate = async (req, res) => {
 };
 
 
-// get all reservation
+//! get all reservation
 
 const getAllRerservation = async (req, res) => {
     
@@ -57,11 +63,54 @@ const getOneRerservation = async (req, res) => {
   }
 };
 
+//!getAll Reservation for One Provider
 
+const getAllProvider = async (req, res) => {
+  try {
+    const providerId = req.params.providerId; 
+
+    const reservations = await Reservation.findAll({
+      where: {
+        providerId: providerId
+      },
+      include: [{ model: Custumor }] 
+    });
+
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error('Get Provider Reservations Error:', error);
+    res.status(500).json({ error: 'Failed to find reservations for the provider' });
+  }
+};
+
+
+//!updateReservationStatus
+
+const updateReservationStatus = async (req, res) => {
+  try {
+    const id=req.params.id
+    console.log(req.body)
+    const reservation = await Reservation.findByPk(id);
+
+    if (!reservation) {
+      return res.status(404).json({ error: 'Reservation not found' });
+    }
+    console.log("before",reservation)
+    await reservation.update({ status: req.body.status });
+    console.log("after",reservation)
+
+    res.status(200).json({ message: 'Reservation status updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  } 
+};
 
 
 module.exports = {
   getAllRerservation,
   getOneRerservation,
-  bookDate
+  bookDate,
+  getAllProvider,
+  updateReservationStatus
 }

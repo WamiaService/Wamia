@@ -130,6 +130,7 @@ const isValidPassword = (password) => {
 
     axios
       
+      
 
       .post('http://192.168.100.12:3000/provider/signup', {
         username: username,

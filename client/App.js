@@ -21,6 +21,7 @@ import Reservation from './components/Provider/Reservation.jsx';
 import ProfileFOrClient from './components/Provider/ProfileForClient.jsx';
 import Infocus from './components/Custumor/InfoCus.jsx';
 import Calender from './components/Calender/Calender.jsx';
+import WebViewScreen from './components/payment/WebViewScreen.jsx';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -162,7 +163,7 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name="profileforclient">
           {(props) => (
-            <ProfileFOrClient {...props} providerId={providerId} custumorId={custumorId}/>
+            <ProfileFOrClient {...props} custumorId={custumorId} providerId={providerId} />
           )}
         </Stack.Screen>
         <Stack.Screen name="custprofile">
@@ -172,10 +173,16 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name="calender">
           {(props) => (
-            <Calender {...props} custumorId={custumorId} />
+            <Calender {...props}  providerId={providerId} custumorId={custumorId} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="webviewscreen">
+          {(props) => (
+            <WebViewScreen {...props} custumorId={custumorId} />
           )}
         </Stack.Screen>
         
+       
         
         
         <Stack.Screen name="one">

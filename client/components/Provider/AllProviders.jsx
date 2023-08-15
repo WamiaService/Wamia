@@ -29,6 +29,7 @@ function AllProviders() {
         setLoading(true);
     
         const endpoint = category
+          
          
             ? `http://192.168.100.10:3000/provider/search?category=${category}`
             : `http://192.168.100.10:3000/provider`;
