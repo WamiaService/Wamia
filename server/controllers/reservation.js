@@ -2,27 +2,29 @@ const Reservation=require('../database/models/reservation')
 const { Op } = require("sequelize");
 
 // post date 
-const bookDate=async(req,res)=>{
-  // const {providerId}=req.params
-   
+const bookDate = async (req, res) => {
   try {
-    const {  date ,custumorId,providerId} = req.body;
+    const { date, custumorId, providerId } = req.body;
 
     // Validate and parse the incoming date
-    const bookingdate = new Date(date);
+    const bookingDate = new Date(date);
 
-    if (isNaN(bookingdate)) {
+    if (isNaN(bookingDate)) {
       return res.status(400).json({ error: 'Invalid date format' });
     }
 
-    const reservation = await Reservation.create({date: bookingdate,custumorId:custumorId,providerId:providerId})
+    const reservation = await Reservation.create({
+      date: bookingDate,
+      custumorId,    // Assuming customerId is the property name in the request body
+      providerId     // Assuming providerId is the property name in the request body
+    });
 
     res.status(201).json({ message: 'Reservation created successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
   }
-}
+};
 
 
 // get all reservation

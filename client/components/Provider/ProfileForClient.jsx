@@ -22,7 +22,7 @@ const ProfileFOrClient = ({ custumorId,navigation }) => {
 
   const fetchData = () => {
     axios
-      .get(`http://192.168.104.7:3000/provider/getOne/${providerId}`)
+      .get(`http://192.168.100.4:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -51,7 +51,7 @@ console.log('profile for client',providerId);
 const handleRating=async(req,res)=>{
    const {rate,custumorId}=req.body
 try{
-  const rating= axios.post(`http://192.168.100.10:3000/rate/create/${providerId}`,{
+  const rating= axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
   
    rate:rate,
    custumorId:custumorId

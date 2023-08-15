@@ -5,16 +5,19 @@ const Custumor = require('./custumor')
 
 
 const Reservation = sequelize.define('reservation', {
-    date: DataTypes.DATE,
-    status:{
-      type : DataTypes.ENUM(
-        "pending",
-        "accepted",
-        "rejected"
-      ),
+  
+
+  date: DataTypes.DATE,
+  status:{
+    type : DataTypes.ENUM(
+      "pending",
+      "accepted",
+      "rejected"
+    ),
 defaultValue:"pending",
-    }
-  });
+  }
+  
+    })
 
   Reservation.belongsTo(Provider)
   Reservation.belongsTo(Custumor)

@@ -104,9 +104,8 @@ const Home = ({ providerId, custumorId }) => {
       if (custumorId) {
         try {
           const response = await axios.get(
-            `http://192.168.104.7:3000/custumor/getOne/${custumorId}`
-            `http://192.168.100.10:3000/custumor/getOne/${custumorId}`
-          );
+            `http://192.168.100.12:3000/custumor/getOne/${custumorId}`
+          )
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
           setImageprofile(imgprof);
