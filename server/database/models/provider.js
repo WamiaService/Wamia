@@ -50,6 +50,10 @@ const Provider = sequelize.define('provider', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  is_approvede: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
   activationCode : DataTypes.STRING
 },
 { timestamps: false });

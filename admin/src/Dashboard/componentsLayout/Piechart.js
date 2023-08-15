@@ -4,21 +4,21 @@ import Chart from 'react-google-charts';
 
 
 
-const PieChart = ({Electricien,Climatisation,plombier,nbtransporteur,peinture,laver,camerman,menuisier}) => {
+const PieChart = ({getCategoryCount,DataP }) => {
     const pieData = [
-        ['Task', 'Hours per Day'],
-        ['Electricité', Electricien],
-        ['Climatisation', Climatisation],
-        ['plomberie', plombier],
-        ['transporteur', nbtransporteur],
-        ['peinture', peinture],
-        ['Machine a laver', laver],
-        ['camera de surveillance',camerman],
-        ['menuiserie',menuisier]
+        ['Task', 'proportion'],
+        ['Electricité', getCategoryCount(DataP,"electricien") ],
+        ['Climatisation', getCategoryCount(DataP,"climatisation") ],
+        ['plomberie', getCategoryCount(DataP,"plombier") ],
+        ['transporteur', getCategoryCount(DataP,"transporteur") ],
+        ['peinture', getCategoryCount(DataP,"peinture") ],
+        ['Machine a laver', getCategoryCount(DataP,"machine a laver") ],
+        ['camera de surveillance',getCategoryCount(DataP,"menuisier") ],
+        ['menuiserie',getCategoryCount(DataP,"camera") ]
       ];
       
       const pieOptions = {
-        title: 'Distribution of Tasks',
+        title: 'Proportion of Providers by Category',
         titleTextStyle: {
           fontSize: 24, // Set the font size here
         },

@@ -7,14 +7,14 @@ const Header = () => {
   return (
     <div className="AppHeader">
      <Image />
-     <Typography.Title> ADMIN DASHBOARD</Typography.Title>
+     <Typography.Title className='ADash1'> ADMIN DASHBOARD</Typography.Title>
      <Space className='mail'>
-        <Badge count={10} >
+        {/* <Badge count={10} >
         <MailOutlined style={{fontSize:32}}/>
         </Badge>
         <Badge count={20}>
         <BellFilled style={{fontSize:32}}/>
-        </Badge>
+        </Badge> */}
      </Space>
     </div>
   )

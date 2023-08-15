@@ -3,27 +3,18 @@ import Chart from "react-apexcharts";
 
 
 
-function ApexColumnBarChart({PTunis,PAriana,PManouba,PBenArous,PNabeul,PSousse,PBeja,PGasrine,PSfax,NTunis,NAriana,NManouba,NBenArous,NNabeul,NSousse,NBeja,NGasrine,NSfax}) {
-  
-
-  
-  
-  
-
-   
-    
-
-  
+function ApexColumnBarChart({getStateCount,DataP,DataN}) {
+ 
 
   const data = {
     series: [
       {
         name: "Providers",
-        data: [PTunis,PAriana,PManouba,PBenArous,PNabeul,PSousse,PBeja,PGasrine,PSfax],
+        data: [getStateCount(DataP,"Tunis"),getStateCount(DataP,"Ariana"),getStateCount(DataP,"Manouba"),getStateCount(DataP,"BenArous"),getStateCount(DataP,"Nabeul"),getStateCount(DataP,"Sousse"),getStateCount(DataP,"Beja"),getStateCount(DataP,"Gasrine"),getStateCount(DataP,"Mahdia"),getStateCount(DataP,"Sfax")],
       },
       {
         name: "Custumors",
-        data: [NTunis,NAriana,NManouba,NBenArous,NNabeul,NSousse,NBeja,NGasrine,NSfax],
+        data: [getStateCount(DataN,"Tunis"),getStateCount(DataN,"Ariana"),getStateCount(DataN,"Manouba"),getStateCount(DataN,"BenArous"),getStateCount(DataN,"Nabeul"),getStateCount(DataN,"Sousse"),getStateCount(DataN,"Beja"),getStateCount(DataN,"Gasrine"),getStateCount(DataN,"Mahdia"),getStateCount(DataN,"Sfax")],
       },
       
     ],
