@@ -31,9 +31,9 @@ console.log("prov id in update",providerId);
    
           .then((res) => {
             setData(res.data);
-            setUsername(res.data.username); // Add this line to set username
-            setEmail(res.data.email); // Add this line to set email
-            setMobile(res.data.mobile); // Add this line to set mobile
+            setUsername(res.data.username); 
+            setEmail(res.data.email); 
+            setMobile(res.data.mobile); 
             setImgprof(res.data.imgprof);
             console.log(res.data)
           })
