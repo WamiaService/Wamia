@@ -38,3 +38,13 @@
   margin-right: 5px;
 
 }
+.card-title {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.card-text {
+  font-size: 16px;
+  color: #666;
+}
