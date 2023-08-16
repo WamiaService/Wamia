@@ -54,6 +54,10 @@ const Provider = sequelize.define('provider', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  ispay: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
   activationCode : DataTypes.STRING
 },
 { timestamps: false });

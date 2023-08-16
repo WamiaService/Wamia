@@ -7,19 +7,18 @@ import { useNavigation } from "@react-navigation/native";
 import { useStripe } from "@stripe/stripe-react-native";
 import axios from "axios";
 
-const OneProv=({handleLogoutCustumor,handleLogoutProvider})=>{
+const OneProv=({providerId,handleLogoutProvider})=>{
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const navigation = useNavigation();
   const [clientSecret, setClientSecret] = useState("");
+  
   useEffect(() => {
-    // Make an API request to your server to create a payment intent
     axios
       .post("http://192.168.104.5:3000/api/payment/pay", {
-        amount: 1000, // Set your desired amount here
+        amount: 1000, 
       })
       .then((response) => {
         setClientSecret(response.data.clientSecret);
-        // Initialize the payment sheet
         initPaymentSheet({
           paymentIntentClientSecret: response.data.clientSecret,
         });
@@ -27,7 +26,8 @@ const OneProv=({handleLogoutCustumor,handleLogoutProvider})=>{
       .catch((error) => {
         console.log(error);
       });
-  }, [initPaymentSheet]);
+  }, [initPaymentSheet])
+
 const navigateToEditProfile = () => {
   navigation.navigate("updateprovider");
 };
@@ -45,13 +45,9 @@ const navigateToAddPost = () => {
   navigation.navigate("postprovider");
 };
 
-// const navigateToPayment = () => {
 
-//   navigation.navigate("payment");
-// };
 const pay = async () => {
   try {
-    // Present the payment sheet to the user
     const presentResponse = await presentPaymentSheet({
       clientSecret: clientSecret,
     });
@@ -67,17 +63,23 @@ const pay = async () => {
         "Payment Successful",
         "Your payment has been processed successfully!"
       );
+
+     
+      console.log("provid payment",providerId);
+      // const providerId = 3; 
+      await axios.post(`http://192.168.104.5:3000/api/payment/success/${providerId}`);
+
+
       navigation.navigate("providerprofile");
     }
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 const navigateToSupport = () => {
   console.log("Support function");
 };
-
 
 
 
