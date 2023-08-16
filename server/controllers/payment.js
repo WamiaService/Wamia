@@ -1,23 +1,19 @@
-const { default: axios } = require("axios")
-const Stripe = require('stripe')
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
-module.exports = {
-Add : async (req,res)=>{
-   try{
-    const {name}=req.body
-    if(!name) res.status(400).json({message:'Please enter a name'})
-    const paymentIntent = await stripe.paymentIntents.create({
-amount : req.body.amount,
-currency:'eur',
-payment_method_types:("card"),
-metadata:{name}
+const stripe = require("stripe")("sk_test_51NdUs4K6fT8eoEEpBbnFibRAsIRToDOQVt8iLAnnZFgrAIzj7CT2an0MzBuwrlkmeSdS53wwBQyuxGswaDBnGCgg00nBHMJfeF");
 
-})
-const clientSecret = paymentIntent.client_secret;
-res.json({message: 'payment initiated',clientSecret})
-   }catch (err){
-    console.error(err)
-    res.status(500).json({message:'Internal server error'})
-   } 
-}
-}
+module.exports = {
+  intent: async (req, res) => {
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: req.body.amount, // Use req.body.amount to get the amount from the request body
+        currency: "EUR",
+        payment_method_types: ["card"],
+      });
+
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (e) {
+      res.status(400).json({
+        error: e.message,
+      });
+    }
+  },
+};

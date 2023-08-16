@@ -1,8 +1,7 @@
 const express = require("express");
 const Router = express.Router();
-const {Add}=require ("../controllers/payment")
-Router.post("/pay",Add)
+const { intent } = require("../controllers/payment");
 
+Router.post("/pay", intent);
 
-
-module.exports = Router 
+module.exports = Router;
