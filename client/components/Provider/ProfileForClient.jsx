@@ -12,10 +12,11 @@ const ProfileFOrClient = ({ navigation ,custumorId }) => {
   const route = useRoute();
   const providerId = route.params?.providerId; 
   const [data, setData] = useState([]);
-
+ console.log("p",providerId);
+ console.log("cus",custumorId);
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
-
+  const [rate,setRate]=useState()
   useEffect(() => {
     fetchData();
   }, []);
@@ -37,10 +38,12 @@ const ProfileFOrClient = ({ navigation ,custumorId }) => {
   const handleCommentsButtonClick = () => {
     setShowPosts(false);
     setShowComments(true);
+    // navigation.navigate('comment',{providerId,custumorId})
+    
   };
 
   const handleReservationButtonClick = () => {
-    navigation.navigate('calender'); // Navigate to Reservation page
+    navigation.navigate('calender',{providerId}); // Navigate to Reservation page
   };
   console.log('');
 console.log('profile for client',providerId);
@@ -85,6 +88,7 @@ const handleReview=(rating)=>{
             count={5}
             defaultRating={0}
             size={20}
+            onPress={handleRating}
             showRating={false}
             onFinishRating={(rating) => handleReview(rating)}
           />
@@ -115,7 +119,7 @@ const handleReview=(rating)=>{
 
       {showPosts && <PostForClient providerId={providerId} />}
       {showComments && (
-        <Comments/>  )}
+        <Comments  custumorId={custumorId} handleRating={handleRating}    />  )}
     </View>
   );
 };

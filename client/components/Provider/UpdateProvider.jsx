@@ -16,12 +16,13 @@ const UpdateProvider = ({providerId}) => {
     const [mobile, setMobile]=useState(null)
     const [imgprof, setImgprof]=useState("")
     const [data,setData]=useState([])
+    const[refetch,setRefetech]=useState(false)
     const navigation = useNavigation()
 console.log("prov id in update",providerId);
 
     useEffect(()=>{
         fetchData()
-    },[])
+    },[!refetch])
 
     const fetchData = () => {
         axios.get(`http://192.168.104.8:3000/provider/getOne/${providerId}`)
@@ -49,8 +50,9 @@ console.log("prov id in update",providerId);
     
         axios.put(`http://192.168.104.8:3000/provider/update/${providerId}`, info)
                    .then(res => {
-            console.log('Profile updated successfully:', res.data);
+            console.log('Profile updated successfully:', res.data)
             navigation.navigate("providerprofile")
+          
 
             
           })
@@ -202,6 +204,38 @@ console.log("prov id in update",providerId);
   )
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    padding: 10,
+    marginVertical: 10,
+    width: 260,
+    borderRadius: 15,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+  },
+  updateButton: {
+    backgroundColor: '#FFA500',
+    padding: 10,
+    borderRadius: 15,
+  },
+  updateButtonText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+})
 export default UpdateProvider
 
 

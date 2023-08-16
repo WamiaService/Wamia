@@ -10,7 +10,6 @@ const rateRouter=require('./routes/rating.routes')
 const payementRouter= require('./routes/payment.routes')
 
 
-require("dotenv").config()
 
 PORT  = 3000 ; 
 
@@ -28,7 +27,7 @@ app.use('/provider',providerRoute)
 const custumorRoute = require('./routes/custumor.routes')
 app.use('/custumor',custumorRoute)
 app.use("/api/admin", Adminrouter);
-app.use("/api/payement",payementRouter)
+app.use("/api/payment",payementRouter)
 const reservationRoutes = require('./routes/reservation.routes.js')
 //!reservation
 app.use('/reservation', reservationRoutes)

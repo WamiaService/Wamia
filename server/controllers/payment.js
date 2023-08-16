@@ -1,23 +1,36 @@
-const { default: axios } = require("axios")
-const Stripe = require('stripe')
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
-module.exports = {
-Add : async (req,res)=>{
-   try{
-    const {name}=req.body
-    if(!name) res.status(400).json({message:'Please enter a name'})
-    const paymentIntent = await stripe.paymentIntents.create({
-amount : req.body.amount,
-currency:'eur',
-payment_method_types:("card"),
-metadata:{name}
+// controllers/payment.js
+const stripe = require("stripe")("sk_test_51NdUs4K6fT8eoEEpBbnFibRAsIRToDOQVt8iLAnnZFgrAIzj7CT2an0MzBuwrlkmeSdS53wwBQyuxGswaDBnGCgg00nBHMJfeF");
+const Provider = require('../database/models/provider'); // Import the Provider model
 
-})
-const clientSecret = paymentIntent.client_secret;
-res.json({message: 'payment initiated',clientSecret})
-   }catch (err){
-    console.error(err)
-    res.status(500).json({message:'Internal server error'})
-   } 
-}
-}
+module.exports = {
+  intent: async (req, res) => {
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: req.body.amount,
+        currency: "EUR",
+        payment_method_types: ["card"],
+      });
+
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (e) {
+      res.status(400).json({
+        error: e.message,
+      });
+    }
+  },
+  success: async (req, res) => {
+    try {
+      const providerId = req.params.providerId;
+      // Update the ispay field for the provider with the given ID
+      await Provider.update({ ispay: true }, {
+        where: { id: providerId }
+      });
+
+      res.status(200).json({ message: "Payment successful" });
+    } catch (e) {
+      res.status(400).json({
+        error: e.message,
+      });
+    }
+  },
+};

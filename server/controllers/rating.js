@@ -88,8 +88,24 @@ const calculateAverage=async(req,res)=>{
 
 }
 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
 module.exports={
     createRate,
-    calculateAverage
+    calculateAverage,
+
 
 }

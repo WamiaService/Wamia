@@ -3,8 +3,10 @@ const Reservation=require('../database/models/reservation')
 const Custumor = require('../database/models/custumor')
 const { Op } = require("sequelize");
 
-//! post date 
+// post date 
+ 
 const bookDate = async (req, res) => {
+   const{providerId}=req.params
   try {
     const { date, custumorId, providerId } = req.body;
 

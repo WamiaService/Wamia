@@ -18,7 +18,7 @@ import {
   
   const EditProfile = ({custumorId}) => {
     const navigation = useNavigation()
-
+   
     const [data,setData]=useState([])
     const [name, setName] = useState("");
   
@@ -27,7 +27,8 @@ import {
     const[imgprof,setImage]=useState("")
     const [adresse,setAdresse]=useState("")
     const [mobile,setMobile]=useState()
-    const[refetch,setRefetech]=useState(false)
+    const[refetch,setRefetch]=useState(false)
+
 
     const infoCus={
       username: name,
@@ -38,24 +39,32 @@ import {
     }
 
     useEffect(() => {
-      getOneCustumor()
-    }, [!refetch]);
+     fetchDataCus()
+    }, []);
 
   console.log("data",data)
 
+  const fetchDataCus = () => {
+    // const cookie = new Cookies();
+    // const token = jwtDecoder(cookie.get("jwt-token"));
+    // console.log("token",token);
+    
+      axios.get(`http://192.168.100.12:3000/custumor/getOne/${custumorId}`)
+ 
+        .then((res) => {
+          setData(res.data);
+          setName(res.data.username); // Add this line to set username
+          setAdresse(res.data.adresse); // Add this line to set adresse
+          setMobile(res.data.mobile); // Add this line to set mobile
+          setImage(res.data.imgprof);
+          console.log(res.data)
+        })
+        .catch((err) => console.log(err));
+    }
 
   
   
-    const getOneCustumor = async ()=> {
-      console.log('u');
-      console.log("in edit cust",custumorId);
-      try {
-        const response = await axios.get(`http://192.168.104.8:3000/custumor/getOne/${custumorId}`);
-        setData(response.data); 
-      } catch (error) {
-        console.error('Error :', error);
-      }
-    };
+
 
 
     console.log(custumorId)
@@ -119,44 +128,43 @@ import {
 
 
   
-    const update = async (custumorId) => {
-      try {
-        await axios.put(`http://192.168.104.5:3000/custumor/update/${custumorId}`, infoCus);
-        console.log(infoCus)
-        console.log("4",!refetch)
-        setRefetech(!refetch)
-        alert('Your profil  is updated');
-        navigation.navigate("custprofile")
-
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  
+  
+    const update =  () => {
+     axios.put(`http://192.168.1.7:3000/custumor/update/${custumorId}`, infoCus)
+      .then(res => {
+         console.log('Profile updated successfully:', res.data);
+             navigation.navigate("one")
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+    }
 
  console.log(infoCus)
     console.log(custumorId)
 
-  
+    
 
   
 // Function to handle changes to the input
- const handleName =(text) => {
- setName(text);
-};
-// const handleImage= (text) => {
-//   setImage(text);
+//  const handleName =(text) => {
+//  setName(text);
 // };
-const handleMobile= (text) => {
-  setMobile(text);
-};
+// // const handleImage= (text) => {
+// //   setImage(text);
+// // };
+// const handleMobile= (text) => {
+//   setMobile(text);
+// };
 
-const handlePass= (text) => {
-  setPassword(text);
-};
+// const handlePass= (text) => {
+//   setPassword(text);
+// };
 
-const handleAdresse= (text) => {
-  setAdresse(text);
-};
+// const handleAdresse= (text) => {
+//   setAdresse(text);
+// };
 
   return (
     <SafeAreaView
@@ -253,7 +261,7 @@ const handleAdresse= (text) => {
             >
               <TextInput
                 value={name}
-                onChangeText={handleName} 
+                onChangeText={setName} 
                 placeholder="username"
                 editable={true}
               />
@@ -281,7 +289,7 @@ const handleAdresse= (text) => {
 
         <TextInput
                    value={adresse}
-             onChangeText={handleAdresse} 
+             onChangeText={setAdresse} 
                placeholder="adresse"
                 editable={true}
             
@@ -311,7 +319,7 @@ const handleAdresse= (text) => {
             >
               <TextInput
                 value={mobile}
-                onChangeText={handleMobile} 
+                onChangeText={setMobile} 
                 placeholder="mobile phone"
                 editable={true}
               />
@@ -378,7 +386,7 @@ const handleAdresse= (text) => {
               color: COLORS.white,
             }}
           
-            onPress={()=>{update(custumorId)}}
+            onPress={()=>{update()}}
       
           >
             Save Change
@@ -388,9 +396,9 @@ const handleAdresse= (text) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+
   
-   
+          }
     
   
   export default EditProfile;
