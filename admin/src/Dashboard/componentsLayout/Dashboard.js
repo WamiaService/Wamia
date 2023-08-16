@@ -7,6 +7,7 @@ import {useState,useEffect} from "react"
 import axios from 'axios'
 import PiieChart from './Piechart';
 import ApexColumnBarChart from "./BarChart"
+import PiieChart2 from '../componentsLayout/PieChar2'
 
 const Dashboard = () => {
   const[numberProvider,setNumberProv]=useState(0)
@@ -56,20 +57,23 @@ const Dashboard = () => {
     <div className='dash1'>
       <Typography.Title level={4}></Typography.Title>
       <Space>
-       <DashboardCard icon={<UserOutlined style={{color:"green",backgroundColor:"rgba(0,255,0,0.25)",borderRadius:20,fontSize:24,padding:8}}/>} title={"Custumors"} value={numberCustumors}/>
-       <DashboardCard icon={<UserOutlined style={{color:"blue",backgroundColor:"rgba(0,255,255,0.25)",borderRadius:20,fontSize:24,padding:8}}/>} title={"Providers "} value={numberProvider}/>
-       <DashboardCard icon={<DollarCircleOutlined style={{color:"red",backgroundColor:"rgba(255,0,0,0.25)",borderRadius:20,fontSize:24,padding:8}}/>} title={"Revenue"} value={numberProvider*10}/>
+       <DashboardCard className="dashboard-icon" icon={<UserOutlined style={{color:"green",backgroundColor:"rgba(0,255,0,0.25)",borderRadius:20,fontSize:24,padding:8}}/>} title={"Custumors"} value={numberCustumors}/>
+       <DashboardCard className="dashboard-icon" icon={<UserOutlined style={{color:"blue",backgroundColor:"rgba(0,255,255,0.25)",borderRadius:20,fontSize:24,padding:8}}/>} title={"Providers "} value={numberProvider}/>
+       <DashboardCard className="dashboard-icon" icon={<DollarCircleOutlined style={{color:"red",backgroundColor:"rgba(255,0,0,0.25)",borderRadius:20,fontSize:24,padding:8}}/>} title={"Profits"} value={numberProvider*10}/>
       </Space>
     </div>
     <div className='charts'>
     <div className='pie'>
     <PiieChart  getCategoryCount={getCategoryCount }   DataP={DataP}  />
     </div>
-
+    <div className='pie2'>
+    <PiieChart2  getCategoryCount={getCategoryCount }   DataP={DataP}  />
+    </div>
+    </div>
     <div className='Bar'>
     <ApexColumnBarChart  getStateCount={getStateCount} DataN={DataN} DataP={DataP}/>
     </div>
-    </div>
+    
     </div>
     
   )

@@ -70,8 +70,17 @@ background-color: rgb(246, 242, 242);
 
 } */
 .pie{
-  margin-left: -0px ;
+  margin-left: -220px ;
 }
-/* .charts{
-  background-color: red;
-} */
+.charts{
+  /* background-color: red; */
+  display: flex;
+}
+.pie2{
+  margin-left: -180px ;
+}
+
+
+.dashboard-icon:hover {
+  color: pink;
+}
