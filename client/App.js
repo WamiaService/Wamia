@@ -21,7 +21,9 @@ import Reservation from './components/Provider/Reservation.jsx';
 import ProfileFOrClient from './components/Provider/ProfileForClient.jsx';
 import Infocus from './components/Custumor/InfoCus.jsx';
 import Calender from './components/Calender/Calender.jsx';
-import WebViewScreen from './components/payment/WebViewScreen.jsx';
+import { StripeProvider } from "@stripe/stripe-react-native";
+const STRIPE_KEY="pk_test_51NdUs4K6fT8eoEEp6JPAos9zSkBbl1ag3EbDAbkq4cDPlvmda1JpBFT1uRVs2koxHNlVIzNLeJvYQntDEMaMabih00FNGtROAs"
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -86,6 +88,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
+      <StripeProvider publishableKey={STRIPE_KEY}>
       <Stack.Navigator>
         {showSignup ? (
           <Stack.Screen
@@ -141,11 +144,11 @@ const App = () => {
             <UpdateProvider {...props} providerId={providerId} />
           )}
         </Stack.Screen>
-        <Stack.Screen name="payment">
+        {/* <Stack.Screen name="payment">
           {(props) => (
             <Payment {...props} providerId={providerId} />
           )}
-        </Stack.Screen>
+        </Stack.Screen> */}
         <Stack.Screen name="postprovider">
           {(props) => (
             <ProviderPost {...props} providerId={providerId} />
@@ -176,21 +179,20 @@ const App = () => {
             <Calender {...props}  providerId={providerId} custumorId={custumorId} />
           )}
         </Stack.Screen>
-        <Stack.Screen name="webviewscreen">
-          {(props) => (
-            <WebViewScreen {...props} custumorId={custumorId} />
-          )}
-        </Stack.Screen>
         
+
+        <Stack.Screen name='payment' component={Payment} />
+
        
         
         
         <Stack.Screen name="one">
           {(props) => (
             <One {...props} handleLogoutCustumor={handleLogoutCustumor} />
-          )}
+            )}
         </Stack.Screen>  
             </Stack.Navigator>
+            </StripeProvider>
     </NavigationContainer>
   );
 };

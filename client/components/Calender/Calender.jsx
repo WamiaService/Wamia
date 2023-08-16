@@ -37,7 +37,7 @@ console.log("pCALNDER",providerId)
     try {
     
 
-     let reservation = await axios.post(`http://192.168.100.12:3000/reservation/book/${providerId}`, {date:selectedStartDate,custumorId:custumorId,providerId:providerId})
+     let reservation = await axios.post(`http://192.168.104.5:3000/reservation/book/${providerId}`, {date:selectedStartDate,custumorId:custumorId,providerId:providerId})
      console.log(selectedStartDate)
         res=reservation.data 
        

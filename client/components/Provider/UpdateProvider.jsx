@@ -30,7 +30,7 @@ console.log("prov id in update",providerId);
       // console.log("token",token);
       
       
-        axios.get(`http://192.168.100.4:3000/provider/getOne/${providerId}`)
+        axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
    
           .then((res) => {
             setData(res.data);
@@ -54,7 +54,7 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.1.7:3000/provider/update/${providerId}`, info)
+        axios.put(`http://192.168.104.5:3000/provider/update/${providerId}`, info)
        
 
                    .then(res => {
@@ -212,6 +212,38 @@ console.log("prov id in update",providerId);
   )
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    padding: 10,
+    marginVertical: 10,
+    width: 260,
+    borderRadius: 15,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+  },
+  updateButton: {
+    backgroundColor: '#FFA500',
+    padding: 10,
+    borderRadius: 15,
+  },
+  updateButtonText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+})
 export default UpdateProvider
 
 
