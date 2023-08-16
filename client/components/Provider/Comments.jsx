@@ -1,25 +1,44 @@
 import { TouchableOpacity ,View, Text, TextInput, Image, KeyboardAvoidingView, Platform , ScrollView} from 'react-native';
-import React, { useState } from 'react'
-
-const Comments = () => {
+import React, { useState,useEffect } from 'react'
+import axios from 'axios'
+const Comments = ({custumorId}) => {
     const [comment, setComment] = useState('');
     const [commentsList, setCommentsList] = useState([
-      { id: 1, text: 'This is a comment!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 2, text: 'Another comment here.', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 3, text: 'Here is a new comment.', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 4, text: 'Adding more comments!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 5, text: 'Yet another comment.', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 6, text: 'Keep the comments coming!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 7, text: 'Commenting is fun!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 8, text: 'Let\'s add more variety!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 9, text: 'One more comment for the list.', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 10, text: 'The comments keep on coming!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 11, text: 'Yet another comment.', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-      { id: 12, text: 'Adding more comments!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },
-    ]);
+      { id: 1, text: 'This is a comment!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },]);
   
+
+      const [data,setData]=useState([])
+
+      console.log('c',custumorId)
+
+useEffect(() => {
+  getOneCustumor()
+}, []);
+ console.log(data)
+
+
+const getOneCustumor = async (custumorId)=> {
+       
+  try {
+
+    const response = await axios.get(`http://192.168.100.12:3000/custumor/getOne/${custumorId}`);
+
+    setData(response.data); 
+    
+  } catch (error) {
+    console.error('Error :', error);
+  }
+};
+
     
   
+
+
+
+
+
+
+
   
   
   

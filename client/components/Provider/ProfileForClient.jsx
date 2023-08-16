@@ -8,21 +8,23 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
 import Comments from './Comments';
 
-const ProfileFOrClient = ({ navigation }) => {
+const ProfileFOrClient = ({ custumorId,navigation }) => {
   const route = useRoute();
   const providerId = route.params?.providerId; 
   const [data, setData] = useState([]);
-
+ console.log("p",providerId);
+ console.log("cus",custumorId);
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
-
+  const [rate,setRate]=useState()
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
     axios
-      .get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+      
+      .get(`http://192.168.100.12:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -37,10 +39,12 @@ const ProfileFOrClient = ({ navigation }) => {
   const handleCommentsButtonClick = () => {
     setShowPosts(false);
     setShowComments(true);
+    // navigation.navigate('comment',{providerId,custumorId})
+    
   };
 
   const handleReservationButtonClick = () => {
-    navigation.navigate('calender'); // Navigate to Reservation page
+    navigation.navigate('calender',{providerId}); // Navigate to Reservation page
   };
   console.log('');
 console.log('profile for client',providerId);
@@ -48,7 +52,31 @@ console.log('profile for client',providerId);
 //handle rating 
 
 
+const handleRating=async(req,res)=>{
+   const {rate,custumorId,review}=req.body
+try{
+  const rating= axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
+  
+   rate:rate,
+   review:review,
+   custumorId:custumorId
+  
+  }
 
+  )
+  consile.log("r",rating)
+  res=setRate(rating.data)
+  
+
+}
+
+ catch(error){
+ 
+  console.error('An error occurred', error);
+  
+ }
+  
+}
 
 
 
@@ -76,6 +104,7 @@ console.log('profile for client',providerId);
             count={5}
             defaultRating={0}
             size={20}
+            onPress={handleRating}
             showRating={false}
             onFinishRating={(rating) => console.log('Rating:', rating)}
           />
@@ -106,7 +135,7 @@ console.log('profile for client',providerId);
 
       {showPosts && <PostForClient providerId={providerId} />}
       {showComments && (
-        <Comments/>  )}
+        <Comments  custumorId={custumorId} handleRating={handleRating}    />  )}
     </View>
   );
 };

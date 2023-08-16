@@ -12,11 +12,13 @@ import axios from 'axios';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
-;
+import { useRoute } from '@react-navigation/native';
 
-export default function Calender() {
+
+export default function Calender({ custumorId}) {
   const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
-
+  const route = useRoute();
+  const providerId = route.params?.providerId;
 
   const [selectedStartDate, setSelectedStartDate] = useState("");
  
@@ -27,13 +29,15 @@ const image=require('../../assets/w.png')
     setOpenStartDatePicker(!openStartDatePicker);
   };
 
-
-
+console.log('c',custumorId)
+console.log("pCALNDER",providerId)
   const handleReservation = async (req,res) => {
        const date =new Date()
        console.log(date)
     try {
-     let reservation = await axios.post('http://192.168.104.4:3000/reservation/book', {date:selectedStartDate,})
+    
+
+     let reservation = await axios.post(`http://192.168.100.12:3000/reservation/book/${providerId}`, {date:selectedStartDate,custumorId:custumorId,providerId:providerId})
      console.log(selectedStartDate)
         res=reservation.data 
        

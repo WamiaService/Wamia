@@ -39,14 +39,12 @@ const Login = ({ handleLogin }) => {
 
   const loginn = async (username, password, activationCode) => {
     try {
-      const response = await axios.post(
-        'http://192.168.104.5:3000/provider/login',
-        {
-          username: username,
-          password: password,
-          activationCode: activationCode,
-        }
-      );
+
+      const response = await axios.post('http://192.168.100.12:3000/provider/login', {
+        username: username,
+        password: password,
+        activationCode: activationCode
+      });
 
       console.log('Response Data:', response.data);
       const token = response.data.token;
