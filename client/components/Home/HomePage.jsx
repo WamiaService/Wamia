@@ -45,9 +45,11 @@ const Home = ({ providerId, custumorId }) => {
   useEffect(() => {
     if (searchTerm.trim() !== '') {
       setIsLoading(true);
-      setError(null);
+      setError(null); 
       axios
         .get(
+          
+        
           `http://192.168.104.5:3000/provider/search?category=${searchTerm}`
         )
         .then((response) => {
@@ -82,8 +84,9 @@ const Home = ({ providerId, custumorId }) => {
       if (providerId) {
         try {
           const response = await axios.get(
+            
             `http://192.168.104.5:3000/provider/getOne/${providerId}`
-          );
+          )
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
           setAvatarUrl(imgprof);
@@ -104,6 +107,8 @@ const Home = ({ providerId, custumorId }) => {
           const response = await axios.get(
             `http://192.168.104.5:3000/custumor/getOne/${custumorId}`
           );
+         
+          
           const imgprof = response.data.imgprof;
           console.log('imgprof taswirraaaa:', imgprof); // Check the value of imgprof
           setImageprofile(imgprof);

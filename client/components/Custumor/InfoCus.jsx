@@ -20,19 +20,20 @@ import {
   const navigation = useNavigation();
 console.log("infocust",custumorId);
 const [data,setData]=useState([])
-const[refetch,setRefetech]=useState(false)
+
 
 
 useEffect(() => {
-  getOneCustumor(custumorId)
-}, [!refetch]);
+  getOneCustumor()
+}, []);
  console.log(data)
 
 
-const getOneCustumor = async (custumorId)=> {
+const getOneCustumor = async ()=> {
        
   try {
-    const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
+
+    const response = await axios.get(`http://192.168.100.12:3000/custumor/getOne/${custumorId}`);
 
     setData(response.data); 
     

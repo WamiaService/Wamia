@@ -55,9 +55,11 @@ console.log("provider id =",providerId);
   {() => <Home custumorId={custumorId} providerId={providerId} />}
 </Tab.Screen>
      
-     <Tab.Screen name="Providers" component={AllProviders} />
+     <Tab.Screen name="Providers" component={AllProviders}  />
      <Tab.Screen name="message" component={Chat} />
-     <Tab.Screen name="profile" component={role === 'provider' ? OneProv : One}  /> 
+     <Tab.Screen name="profile" >
+     {()=> role ==='provider' ? <OneProv providerId={providerId}/> : <One/>  }
+        </Tab.Screen> 
     </Tab.Navigator>
   );
 };

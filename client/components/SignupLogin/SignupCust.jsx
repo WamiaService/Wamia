@@ -119,6 +119,7 @@ const isValidPassword = (password) => {
         Alert.alert('Password must contain at least one letter and one number, and be at least 6 characters long');
         return;
       }
+        
            axios.post('http://192.168.104.5:3000/custumor/signup', { username :username, email:email, password:password , imgprof:imgprof,identity:identity,adresse:adresse })
           .then((res)=>{
     console.log(res.data);
