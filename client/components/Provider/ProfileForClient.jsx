@@ -17,6 +17,8 @@ const ProfileFOrClient = ({ custumorId,navigation }) => {
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
   const [rate,setRate]=useState()
+  const [review,setReview]=useState('')
+  const [rating,setRating]=useState()
   useEffect(() => {
     fetchData();
   }, []);
@@ -52,18 +54,17 @@ console.log('profile for client',providerId);
 //handle rating 
 
 
-const handleRating=async(req,res)=>{
-   const {rate,custumorId,review}=req.body
+const handleRating=async()=>{
+   
 try{
-  const rating= axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
+  const rating= await axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
   
-   rate:rate,
+   rating:rating,
    review:review,
    custumorId:custumorId
   
-  }
+  })
 
-  )
   consile.log("r",rating)
   res=setRate(rating.data)
   
@@ -106,7 +107,7 @@ try{
             size={20}
             onPress={handleRating}
             showRating={false}
-            onFinishRating={(rating) => console.log('Rating:', rating)}
+            onFinishRating={(rating)=>{handleRating()}}
           />
           
         </View>
@@ -135,7 +136,7 @@ try{
 
       {showPosts && <PostForClient providerId={providerId} />}
       {showComments && (
-        <Comments  custumorId={custumorId} handleRating={handleRating}    />  )}
+        <Comments  custumorId={custumorId}   providerId={providerId} rate={rating}    />  )}
     </View>
   );
 };
