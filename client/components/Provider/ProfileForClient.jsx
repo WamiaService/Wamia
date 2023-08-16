@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity , Alert} from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
 import Comments from './Comments';
 
-const ProfileFOrClient = ({ custumorId,navigation }) => {
+const ProfileFOrClient = ({ navigation ,custumorId }) => {
   const route = useRoute();
   const providerId = route.params?.providerId; 
   const [data, setData] = useState([]);
@@ -23,8 +23,7 @@ const ProfileFOrClient = ({ custumorId,navigation }) => {
 
   const fetchData = () => {
     axios
-      
-      .get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+      .get(`http://192.168.104.4:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -49,38 +48,23 @@ const ProfileFOrClient = ({ custumorId,navigation }) => {
   console.log('');
 console.log('profile for client',providerId);
 
-//handle rating 
+//!handle rating 
 
 
-const handleRating=async(req,res)=>{
-   const {rate,custumorId,review}=req.body
-try{
-  const rating= axios.post(`http://192.168.104.5:3000/rate/create/${providerId}`,{
-  
-   rate:rate,
-   review:review,
-   custumorId:custumorId
-  
-  }
-
-  )
-  consile.log("r",rating)
-  res=setRate(rating.data)
-  
-
+const handleReview=(rating)=>{
+  console.log(providerId)
+  // console.log("number",num)
+  axios.post(`http://192.168.104.8:3000/rate/create/${providerId}`,{rate:rating,
+  custumorId:custumorId
+})
+  .then((res)=>{
+    console.log(res)
+    Alert.alert('Success', 'Rated successfully')
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
 }
-
- catch(error){
- 
-  console.error('An error occurred', error);
-  
- }
-  
-}
-
-
-
-
 
 
   return (
@@ -106,7 +90,7 @@ try{
             size={20}
             onPress={handleRating}
             showRating={false}
-            onFinishRating={(rating) => console.log('Rating:', rating)}
+            onFinishRating={(rating) => handleReview(rating)}
           />
           
         </View>

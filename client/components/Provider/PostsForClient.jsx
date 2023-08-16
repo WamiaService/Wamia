@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 
-const PostForClient = ({providerId}) => {
+const PostForClient = ({providerId }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
