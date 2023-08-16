@@ -121,7 +121,7 @@ import {
   
     const update = async (custumorId) => {
       try {
-        await axios.put(`http://192.168.104.7:3000/custumor/update/${custumorId}`, infoCus);
+        await axios.put(`http://192.168.104.5:3000/custumor/update/${custumorId}`, infoCus);
         console.log(infoCus)
         console.log("4",!refetch)
         setRefetech(!refetch)

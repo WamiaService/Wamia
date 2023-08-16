@@ -14,19 +14,18 @@ import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import * as SecureStore from 'expo-secure-store'; 
+import * as SecureStore from 'expo-secure-store';
 import { decode as base64Decode } from 'base-64';
 import { useRoute } from '@react-navigation/native';
 
-
-const Login = ({ handleLogin}) => {
-    const route = useRoute();
-  const role = route.params?.role; 
-  console.log("role in login:",role);
+const Login = ({ handleLogin }) => {
+  const route = useRoute();
+  const role = route.params?.role;
+  console.log('role in login:', role);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [is_approved, setIs_approved] = useState(false)
-  const [activationCode,setActivationCode]= useState('')
+  const [is_approved, setIs_approved] = useState(false);
+  const [activationCode, setActivationCode] = useState('');
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -40,12 +39,14 @@ const Login = ({ handleLogin}) => {
 
   const loginn = async (username, password, activationCode) => {
     try {
-       
-      const response = await axios.post('http://192.168.104.4:3000/provider/login', {
-        username: username,
-        password: password,
-        activationCode: activationCode
-      });
+      const response = await axios.post(
+        'http://192.168.104.8:3000/provider/login',
+        {
+          username: username,
+          password: password,
+          activationCode: activationCode,
+        }
+      );
 
       console.log('Response Data:', response.data);
       const token = response.data.token;
@@ -80,13 +81,9 @@ const Login = ({ handleLogin}) => {
       alert('Login failed');
     }
   };
-  
-  
-  
-  
 
   const handleLoginn = () => {
-    loginn(username,password,activationCode); 
+    loginn(username, password, activationCode);
   };
 
   return (
@@ -116,16 +113,21 @@ const Login = ({ handleLogin}) => {
       </View>
 
       <View style={styles.inputContainer}>
-  <AntDesign name="key" size={24} color="black" style={styles.icon} />
-  
-  <TextInput
-    onChangeText={(val) => setActivationCode(val)}
-    style={styles.inp}
-    placeholder="Activation Code ..."
-    keyboardType="numeric"
-  />
-</View>
-      <Button onPress={handleLoginn} title="Login" color="#FFA500" borderRadius={30} />
+        <AntDesign name="key" size={24} color="black" style={styles.icon} />
+
+        <TextInput
+          onChangeText={(val) => setActivationCode(val)}
+          style={styles.inp}
+          placeholder="Activation Code ..."
+          keyboardType="numeric"
+        />
+      </View>
+      <Button
+        onPress={handleLoginn}
+        title="Login"
+        color="#FFA500"
+        borderRadius={30}
+      />
     </View>
   );
 };

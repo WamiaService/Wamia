@@ -1,4 +1,4 @@
-import {View,Text,Image,TextInput,Button,TouchableOpacity} from "react-native";
+import {View,Text,Image,TextInput,Button,TouchableOpacity, Alert} from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -20,7 +20,7 @@ const navigation=useNavigation()
   };
   const handleSubmit = () => {
     axios
-      .post(`http://192.168.104.7:3000/service/post/${providerId}`, info)
+      .post(`http://192.168.104.5:3000/service/post/${providerId}`, info)
       .then((res) => {
         console.log(res);
         navigation.navigate("providerprofile")
@@ -48,8 +48,9 @@ const navigation=useNavigation()
     })
       .then((res) => res.json())
       .then((data) => {
-        setImg(data.url); // Update imgprof with the secure_url
+        setImg(data.url); 
         console.log(data);
+        Alert.alert('Image Uploaded', 'The image has been successfully uploaded.')
       })
       .catch((err) => {
         Alert.alert('Error While Uploading');

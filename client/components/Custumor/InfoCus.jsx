@@ -32,7 +32,7 @@ useEffect(() => {
 const getOneCustumor = async (custumorId)=> {
        
   try {
-    const response = await axios.get(`http://192.168.104.7:3000/custumor/getOne/${custumorId}`);
+    const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
 
     setData(response.data); 
     

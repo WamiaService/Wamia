@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
 import Comments from './Comments';
 
-const ProfileFOrClient = ({ navigation }) => {
+const ProfileFOrClient = ({ navigation ,custumorId }) => {
   const route = useRoute();
   const providerId = route.params?.providerId; 
   const [data, setData] = useState([]);
@@ -52,6 +52,7 @@ const handleReview=(rating)=>{
   console.log(providerId)
   // console.log("number",num)
   axios.post(`http://192.168.104.8:3000/rate/create/${providerId}`,{rate:rating,
+  custumorId:custumorId
 })
   .then((res)=>{
     console.log(res)
