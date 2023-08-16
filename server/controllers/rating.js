@@ -5,38 +5,61 @@ const Rating=require("../database/models/rating")
 
 
 
-  const createRate=async(req,res)=>{
-      const {providerId}=req.params
-      if(providerId){
-    const { rate,review,custumorId,providerId} = req.body;
-   if(rate<1 || rate>5){
-   
-      return res.status(400).json({message:"invalid rating value"})
-  }
-  if(!rate|| !review){
-    try {
-        const newRate = await Rating.create({
+  // const createRate=async(req,res)=>{
+  //     const {providerId}=req.params
+  //     if(providerId){
+  //   const { rate,custumorId} = req.body;
+  //   if(rate<1 || rate>5){
+  //     return res.status(400).json({message:"invalid rating value"})
+  // }
+  //   try {
+  //       const newRate = await Rating.create({
           
-          rate:rate,
-          review:review,
-          custumorId:custumorId,
-          providerId:providerId
-        
-        });
-        console.log("rae",newRate)
-        res.status(201).json(newRate);
-      } catch (error) {
-        console.log("e",error)
-        res.status(500).json('Error submitting rating');
-       }
+  //         rate:rate,
+  //         custumorId:custumorId,
+  //         providerId:providerId
+  //       });
+  //       console.log("rae",newRate)
+  //       res.status(201).json(newRate);
+  //     } catch (error) {
+  //       console.log("e",error)
+  //       res.status(500).json('Error submitting rating');
+  //      }
 
-      }
-  }
-}
+  //     }
+  // }
 //
 
 
+const createRate=async(req,res)=>{
+  const {providerId}=req.params
+  if (!providerId) {
+    return res.status(400).json({ message: "Invalid provider ID" });
+  }
+const { rate,review,custumorId} = req.body;
+if(rate<1 || rate>5){
+  return res.status(400).json({message:"invalid rating value"})
+}
+if(!rate|| !review){
+try {
+    const newRate = await Rating.create({
+      
+      rate:rate,
+      review:review,
+      custumorId:custumorId,
+      providerId:providerId
+    
+    });
+    console.log("rae",newRate)
+    res.status(201).json(newRate);
+  } catch (error) {
+    console.log("e",error)
+    res.status(500).json('Error submitting rating');
+   }
 
+  
+}
+}
 
 
 
