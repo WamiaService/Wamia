@@ -19,10 +19,7 @@ const navigation=useNavigation()
     desc: desc,
   };
   const handleSubmit = () => {
-    axios
-      
-     
-      .post(`http://192.168.104.5:3000/service/post/${providerId}`, info)
+    axios .post(`http://192.168.1.14:3000/service/post/${providerId}`, info)
       .then((res) => {
         console.log(res);
         navigation.navigate("providerprofile")
