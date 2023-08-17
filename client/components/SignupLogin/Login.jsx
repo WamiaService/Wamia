@@ -49,6 +49,7 @@ const Login = ({ handleLogin }) => {
       console.log('Response Data:', response.data);
       const token = response.data.token;
 
+
       if (response.data && token) {
         const payload = JSON.parse(base64Decode(token.split('.')[1]));
 
@@ -67,7 +68,8 @@ const Login = ({ handleLogin }) => {
           console.log('Provider ID:', payload.providerId);
           console.log('Response Data:', response.data);
           navigation.navigate('bottomTabNav', { role });
-          alert('Login successful');
+          Alert.alert('Login successful');
+
         } else {
           alert('Login failed: Invalid payload data');
         }
