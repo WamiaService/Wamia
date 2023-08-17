@@ -199,8 +199,8 @@ console.log("prov id in update",providerId);
     style={{ flex: 1 }} 
   />
 </View>
-     <TouchableOpacity onPress={handleUpdate} style={{ backgroundColor: '#FFA500', padding: 10 , borderRadius:15 }}>
-        <Text style={{ color: 'white', textAlign: 'center' }}>Update Profile</Text>
+     <TouchableOpacity onPress={handleUpdate} style={styles.updateButton}>
+        <Text style={styles.updateButtonText}>Update Profile</Text>
       </TouchableOpacity>
 
     </View>

@@ -23,7 +23,7 @@ console.log(image)
 
   const handleSubmit = async () => { 
     try {
-      await axios.put(`http://192.168.104.8:3000/service/update/${id}`, info);
+      await axios.put(`http://192.168.1.14:3000/service/update/${id}`, info);
       toggleModal();// Close the modal after submitting
       onUpdate() 
       // fetch()
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   uploadButton: {
-    backgroundColor: '#4477CE',
+    backgroundColor: '#FFA500',
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,

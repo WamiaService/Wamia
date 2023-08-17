@@ -8,7 +8,7 @@ const { Op } = require("sequelize");
 const bookDate = async (req, res) => {
    const{providerId}=req.params
   try {
-    const { date, custumorId, providerId } = req.body;
+    const { date, custumorId} = req.body;
 
     // Validate and parse the incoming date
     const bookingDate = new Date(date);
