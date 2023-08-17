@@ -137,7 +137,9 @@ const getAllProvider = async (req, res) => {
   
   const searchProviders = async (req, res) => {
     try {
-      let whereClause = {};
+      let whereClause = {
+        ispay: true, 
+      };
   
       if (req.query.username) {
         whereClause.username = {
@@ -167,6 +169,7 @@ const getAllProvider = async (req, res) => {
       res.status(500).json({ error: 'Failed to retrieve providers based on the search criteria' });
     }
   };
+  ;
 
 
   //! update Provider
