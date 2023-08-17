@@ -203,6 +203,20 @@ const getAllProvider = async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   }
+  const getpayProviders=(req, res)=> {
+    Provider.findAll({
+      where: {
+        ispay:1, 
+      },
+    })
+      .then((providers) => {
+        res.status(200).json(providers);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: "Failed to get providers" });
+      });
+  };
   
   module.exports = {
     getAllProvider,
@@ -211,5 +225,6 @@ const getAllProvider = async (req, res) => {
     loginProvider,
     verifyProvider,
     searchProviders,
-    updateProvider
+    updateProvider,
+    getpayProviders
   }

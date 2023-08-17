@@ -5,7 +5,8 @@ const{
     deleteCustumor,
     deleteProvider,
     getNpProviders,
-    updateProvider
+    updateProvider,
+    getAllReservation
 } = require("../controllers/admin")
 
 router.get("/allcustumor",getAllCustumor);
@@ -14,5 +15,6 @@ router.delete("/deletecustumor/:custumorid",deleteCustumor);
 router.delete("/deleteprovider/:providerid",deleteProvider);
 router.get("/allnpProviders",getNpProviders);
 router.put("/approveprovider/:id",updateProvider)
+router.get("/getreservation/",getAllReservation)
 
 module.exports = router 
