@@ -20,7 +20,7 @@ const PieChart = ({getCategoryCount,DataP }) => {
       const pieOptions = {
         title: 'Proportion of Providers by Category',
         titleTextStyle: {
-          fontSize: 24, // Set the font size here
+          fontSize: 24, 
         },
         pieHole: 0.4,
       };
