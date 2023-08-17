@@ -77,10 +77,36 @@ background-color: rgb(246, 242, 242);
   display: flex;
 }
 .pie2{
-  margin-left: -180px ;
+  margin-left: -230px ;
 }
 
 
 .dashboard-icon:hover {
   color: pink;
 }
+.vertical-line {
+  width: 1px;
+  background-color: rgb(8, 6, 6);
+  height: 100%; 
+  margin: 0 20px; 
+}
+/* ... your existing styles ... */
+
+.charts {
+  display: flex;
+  align-items: flex-start;
+}
+
+
+
+.vertical-line {
+  width: 1px;
+  background-color: rgb(8, 6, 6);
+  height: 100%;
+  margin: 0 20px;
+}
+
+
+
+
+

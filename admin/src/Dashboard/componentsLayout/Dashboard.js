@@ -66,6 +66,7 @@ const Dashboard = () => {
     <div className='pie'>
     <PiieChart  getCategoryCount={getCategoryCount }   DataP={DataP}  />
     </div>
+    <div className='vertical-line'></div>
     <div className='pie2'>
     <PiieChart2  getCategoryCount={getCategoryCount }   DataP={DataP}  />
     </div>

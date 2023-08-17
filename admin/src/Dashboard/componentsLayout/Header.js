@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="AppHeader">
      <Image />
-     <Typography.Title className='ADash1'> ADMIN DASHBOARD</Typography.Title>
+     <Typography.Title className='ADash1'> </Typography.Title>
      <Space className='mail'>
         {/* <Badge count={10} >
         <MailOutlined style={{fontSize:32}}/>

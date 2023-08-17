@@ -32,10 +32,10 @@
   padding: 24px;
 }
 .verif{
-  justify-content: center !important;
-  align-content: center !important;
-
-  margin-right: 5px;
+  width: 100%;
+  background-color: red;
+margin-top: 5%;
+  margin-right: 50px;
 
 }
 .card-title {
