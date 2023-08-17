@@ -1,11 +1,33 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity,Alert, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, FONTS } from "../Custumor/constant.jsx";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-const OneProv=({handleLogoutCustumor,handleLogoutProvider})=>{
-  const navigation = useNavigation()
+import { useStripe } from "@stripe/stripe-react-native";
+import axios from "axios";
+
+const OneProv=({providerId,handleLogoutProvider})=>{
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const navigation = useNavigation();
+  const [clientSecret, setClientSecret] = useState("");
+  
+  useEffect(() => {
+    axios
+      .post("http://192.168.104.5:3000/api/payment/pay", {
+        amount: 1000, 
+      })
+      .then((response) => {
+        setClientSecret(response.data.clientSecret);
+        initPaymentSheet({
+          paymentIntentClientSecret: response.data.clientSecret,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [initPaymentSheet])
+
 const navigateToEditProfile = () => {
   navigation.navigate("updateprovider");
 };
@@ -23,14 +45,41 @@ const navigateToAddPost = () => {
   navigation.navigate("postprovider");
 };
 
-const navigateToPayment = () => {
-  navigation.navigate("payment");
-};
+
+const pay = async () => {
+  try {
+    const presentResponse = await presentPaymentSheet({
+      clientSecret: clientSecret,
+    });
+
+    if (presentResponse.error) {
+      console.log(presentResponse.error);
+      Alert.alert(
+        `Error code: ${presentResponse.error.code}`,
+        presentResponse.error.message
+      );
+    } else {
+      Alert.alert(
+        "Payment Successful",
+        "Your payment has been processed successfully!"
+      );
+
+     
+      console.log("provid payment",providerId);
+      // const providerId = 3; 
+      await axios.post(`http://192.168.100.12:3000/api/payment/success/${providerId}`);
+
+
+      navigation.navigate("providerprofile");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const navigateToSupport = () => {
   console.log("Support function");
 };
-
 
 
 
@@ -73,7 +122,7 @@ const supportItems = [
   {
     icon: "credit-card",
     text: "Payment",
-    action: navigateToPayment,
+    action: pay,
   },
   { icon: "help-outline", text: "Help & Support", action: navigateToSupport },
  

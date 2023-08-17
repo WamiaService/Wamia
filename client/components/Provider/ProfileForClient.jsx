@@ -57,6 +57,7 @@ console.log('profile for client',providerId);
 const handleRating=async()=>{
    
 try{
+
   const rating= await axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
   
    rating:rating,

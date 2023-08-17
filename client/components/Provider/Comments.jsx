@@ -7,16 +7,21 @@ const Comments = ({custumorId ,providerId} ) => {
      const[reviews,setReviews]=useState([])//all comments
        const [review,setReview]=useState('')
       const [data,setData]=useState([])
-      const [rate,setRate]=useState()
+       const[refetch,setRefecth]=useState()
       console.log('c',custumorId)
       console.log('prov' ,providerId )
-   
-
+    const rev={
+      review:review,
+      custumorId:custumorId,
+      providerId:providerId
+    }
+  console.log("gggg",review)
 useEffect(() => {
   getOneCustumor(custumorId)
-}, []);
+  getOneReview()
+}, [!refetch]);
  console.log('cus',data)
-
+ console.log("reviews",reviews)
 
 const getOneCustumor = async (custumorId)=> {
        
@@ -31,18 +36,35 @@ const getOneCustumor = async (custumorId)=> {
   }
 };
 
-    
-const handleRating=async(req,res)=>{
 
- console.log(rate)
+// getALLREVIE
+ 
+const getOneReview= async ()=> {
+       
+  try {
+
+    const response = await axios.get(`http://192.168.100.12:3000/review/getAll/${providerId}`);
+ 
+    setReviews(response.data); 
+    
+  } catch (error) {
+    console.error('Error :', error);
+  }
+};
+
+
+
+
+    //post Review 
+const handleReview=async(req,res)=>{
+
+
 try{
- const rating= await axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
-  rate:rate,
-  review:review,
-  custumorId:custumorId
- })
-  console.log( "dd",rating.data)
- res=rating.data
+ const review= await axios.post(`http://192.168.100.12:3000/review/create/${providerId}`,rev
+
+ )
+  console.log( "dd",review.data)
+ res=review.data
 }catch(error){
 
  console.error('An error occurred', error);
@@ -86,7 +108,7 @@ try{
               style={styles.input}
               placeholder="Add a comment"
               value={review}
-              onChangeText={() => setReview()}
+              onChangeText={setReview}
             />
           </ScrollView>
           <View style={styles.imageContainer}>
@@ -123,7 +145,7 @@ try{
               color: "#white"
             }}
           
-            onPress={()=>{handleRating()}}
+            onPress={()=>{handleReview()}}
       
           >
             Sumbit

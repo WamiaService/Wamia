@@ -105,7 +105,7 @@ const Home = ({ providerId, custumorId }) => {
       if (custumorId) {
         try {
           const response = await axios.get(
-            `http://192.168.1.7:3000/custumor/getOne/${custumorId}`
+            `http://192.168.100.12:3000/custumor/getOne/${custumorId}`
           );
          
           

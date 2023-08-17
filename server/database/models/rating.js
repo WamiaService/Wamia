@@ -12,10 +12,7 @@ rate: {
    
   },
 
-  review: {
-    type: DataTypes.STRING, 
-    allowNull: true,
-  },
+
   });
 
 Rating.belongsTo(Provider)
