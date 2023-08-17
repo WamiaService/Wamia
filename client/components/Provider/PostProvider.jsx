@@ -1,4 +1,4 @@
-import {View,Text,Image,TextInput,Button,TouchableOpacity} from "react-native";
+import {View,Text,Image,TextInput,Button,TouchableOpacity, Alert} from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -50,8 +50,9 @@ const navigation=useNavigation()
     })
       .then((res) => res.json())
       .then((data) => {
-        setImg(data.url); // Update imgprof with the secure_url
+        setImg(data.url); 
         console.log(data);
+        Alert.alert('Image Uploaded', 'The image has been successfully uploaded.')
       })
       .catch((err) => {
         Alert.alert('Error While Uploading');

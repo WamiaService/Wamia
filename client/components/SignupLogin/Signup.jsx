@@ -59,6 +59,8 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         setImageUrl(data.url);
+        Alert.alert('Image Uploaded', 'The image has been successfully uploaded.')
+
         console.log(data);
       })
       .catch((err) => {
@@ -129,6 +131,7 @@ const isValidPassword = (password) => {
     const selectedCategory = category[0] || category[1];
 
     axios
+      
       
       
 

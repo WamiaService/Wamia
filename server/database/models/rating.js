@@ -7,7 +7,6 @@ const Custumor = require('./custumor')
 const Rating = sequelize.define('rating', {
 rate: {
     type: DataTypes.INTEGER,
-     
     allowNull: false,
    
   },

@@ -96,7 +96,7 @@ const VerificationProvider = () => {
         <div className="card" key={index}>
         
         <div className="card-body">
-          <h4 className="card-title">UserName : <b>{item.username}</b></h4>
+          <h4 className="card-title">Username : <b>{item.username}</b></h4>
           <h5 className="card-text">Profession : {item.category} </h5>
           <h5 className="card-text">Email : {item.email} </h5>
 
