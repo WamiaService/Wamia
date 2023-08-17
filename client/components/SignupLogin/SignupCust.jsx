@@ -54,6 +54,8 @@ const SignupCust = () => {
         .then((res) => res.json())
         .then((data) => {
           setImageUrl(data.url);
+          Alert.alert('Image Uploaded', 'The image has been successfully uploaded.')
+
           console.log(data);
         })
         .catch((err) => {
