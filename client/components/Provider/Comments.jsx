@@ -1,28 +1,34 @@
 import { TouchableOpacity ,View, Text, TextInput, Image, KeyboardAvoidingView, Platform , ScrollView} from 'react-native';
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
-const Comments = ({custumorId}) => {
-    const [comment, setComment] = useState('');
-    const [commentsList, setCommentsList] = useState([
-      { id: 1, text: 'This is a comment!', userImage: 'https://media.gettyimages.com/id/1314489757/fr/photo/smiling-hispanic-man-against-white-background.jpg?s=612x612&w=gi&k=20&c=bH6LQ1NqBgBkrPJUaiRNSVheODv7cwSWrYb6UvyZbfk=' },]);
-  
+import { Ionicons } from '@expo/vector-icons';
+const Comments = ({custumorId ,providerId} ) => {
 
+     const[reviews,setReviews]=useState([])//all comments
+       const [review,setReview]=useState('')
       const [data,setData]=useState([])
-
+       const[refetch,setRefecth]=useState()
       console.log('c',custumorId)
-
+      console.log('prov' ,providerId )
+    const rev={
+      review:review,
+      custumorId:custumorId,
+      providerId:providerId
+    }
+  console.log("gggg",review)
 useEffect(() => {
-  getOneCustumor()
-}, []);
- console.log(data)
-
+  getOneCustumor(custumorId)
+  getOneReview()
+}, [!refetch]);
+ console.log('cus',data)
+ console.log("reviews",reviews)
 
 const getOneCustumor = async (custumorId)=> {
        
   try {
 
-    const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
-
+    const response = await axios.get(`http://192.168.100.12:3000/custumor/getOne/${custumorId}`);
+    console.log(response.data)
     setData(response.data); 
     
   } catch (error) {
@@ -30,8 +36,42 @@ const getOneCustumor = async (custumorId)=> {
   }
 };
 
+
+// getALLREVIE
+ 
+const getOneReview= async ()=> {
+       
+  try {
+
+    const response = await axios.get(`http://192.168.100.12:3000/review/getAll/${providerId}`);
+ 
+    setReviews(response.data); 
     
-  
+  } catch (error) {
+    console.error('Error :', error);
+  }
+};
+
+
+
+
+    //post Review 
+const handleReview=async(req,res)=>{
+
+
+try{
+ const review= await axios.post(`http://192.168.100.12:3000/review/create/${providerId}`,rev
+
+ )
+  console.log( "dd",review.data)
+ res=review.data
+}catch(error){
+
+ console.error('An error occurred', error);
+ 
+}
+ 
+}
 
 
 
@@ -49,10 +89,10 @@ const getOneCustumor = async (custumorId)=> {
         >
           <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.headerText}>Comments</Text>
-            <ScrollView style={styles.commentsScrollView}>
+            {/* <ScrollView style={styles.commentsScrollView}>
               <View style={styles.commentsContainer}>
-                {commentsList.map((commentItem) => (
-                  <View key={commentItem.id} style={styles.commentBox}>
+                {reviews.map((commentItem) => (
+                  <View key={reviews.id} style={styles.commentBox}>
                     <View style={styles.commentItem}>
                       <Image
                         style={styles.commentUserImage}
@@ -63,22 +103,60 @@ const getOneCustumor = async (custumorId)=> {
                   </View>
                 ))}
               </View>
-            </ScrollView>
+            </ScrollView> */}
             <TextInput
               style={styles.input}
               placeholder="Add a comment"
-              value={comment}
-              onChangeText={(text) => setComment(text)}
+              value={review}
+              onChangeText={setReview}
             />
           </ScrollView>
           <View style={styles.imageContainer}>
             <Image
               style={styles.profileImage}
               source={{
-                uri: 'https://img.freepik.com/premium-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg',
+                uri: data.imgprof
               }}
             />
           </View>
+
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.profileImage}
+              source={{
+                uri: data.imgprof
+              }}
+            />
+
+          </View>
+   
+          <TouchableOpacity
+          style={{
+            backgroundColor:"#FFA500",
+            height: 44,
+            borderRadius: 6,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              
+              color: "#white"
+            }}
+          
+            onPress={()=>{handleReview()}}
+      
+          >
+            Sumbit
+          </Text>
+        </TouchableOpacity>
+
+     
+
+
+
+
         </KeyboardAvoidingView>
     );
   };
@@ -96,6 +174,7 @@ const getOneCustumor = async (custumorId)=> {
           width: 0,
           height: 2,
         },
+    
         elevation: 3,
         paddingHorizontal: 10,
         paddingVertical: 8,
@@ -137,20 +216,18 @@ const getOneCustumor = async (custumorId)=> {
         marginRight: 10,
       },
       input: {
-        width: '100%',
-        height: 40,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        paddingHorizontal: 8,
-        shadowColor: '#000',
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        elevation: 3,
-        marginBottom: 10,
+
+        flexDirection: "column",
+        marginBottom: 6,
+        height: 50,
+        width: "100%",
+        borderColor:"#FFA500" ,
+        borderWidth: 1,
+        borderRadius: 4,
+        marginVertical: 6,
+        justifyContent: "center",
+        paddingLeft: 8,
+    
       },
       imageContainer: {
         position: 'absolute',

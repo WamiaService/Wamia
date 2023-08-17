@@ -8,6 +8,8 @@ const servicesRoutes= require('./routes/services.routes')
 const Adminrouter = require("./routes/admin.routes")
 const rateRouter=require('./routes/rating.routes')
 const payementRouter= require('./routes/payment.routes')
+const reviewRouter=require('./routes/review.routes')
+
 
 
 
@@ -19,6 +21,9 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
+//reviews
+
+app.use('/review',reviewRouter)
 //!services
 app.use('/rate',rateRouter)
 app.use('/service', servicesRoutes)

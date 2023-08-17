@@ -23,7 +23,10 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
   console.log('cus', custumorId);
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
-  const [rate, setRate] = useState();
+
+  const [rate,setRate]=useState()
+  const [review,setReview]=useState('')
+  const [rating,setRating]=useState()
   useEffect(() => {
     fetchData();
   }, []);
@@ -31,6 +34,8 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
   const fetchData = () => {
     axios
       .get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+      
+      .get(`http://192.168.100.12:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -72,6 +77,41 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
         console.log(err);
       });
   };
+console.log('profile for client',providerId);
+
+//handle rating 
+
+
+const handleRating=async()=>{
+   
+try{
+
+  const rating= await axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
+  
+   rating:rating,
+   review:review,
+   custumorId:custumorId
+  
+  })
+
+  consile.log("r",rating)
+  res=setRate(rating.data)
+  
+
+}
+
+ catch(error){
+ 
+  console.error('An error occurred', error);
+  
+ }
+  
+}
+
+
+
+
+
 
   return (
     <View style={styles.container}>
@@ -98,6 +138,7 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
             size={20}
             showRating={false}
             onFinishRating={(rating) => handleReview(rating)}
+            onFinishRating={(rating)=>{handleRating()}}
           />
         </View>
       </View>
@@ -127,6 +168,7 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
       {showComments && (
         <Comments custumorId={custumorId} handleRating={handleRating} />
       )}
+        <Comments  custumorId={custumorId}   providerId={providerId} rate={rating}    />  )}
     </View>
   );
 };
