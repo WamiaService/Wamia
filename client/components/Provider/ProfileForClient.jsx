@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity , Alert} from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -8,22 +15,27 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
 import Comments from './Comments';
 
-const ProfileFOrClient = ({ navigation ,custumorId }) => {
+const ProfileFOrClient = ({ navigation, custumorId }) => {
   const route = useRoute();
-  const providerId = route.params?.providerId; 
+  const providerId = route.params?.providerId;
   const [data, setData] = useState([]);
- console.log("p",providerId);
- console.log("cus",custumorId);
+  console.log('p', providerId);
+  console.log('cus', custumorId);
   const [showPosts, setShowPosts] = useState(true);
   const [showComments, setShowComments] = useState(false);
+
   const [rate,setRate]=useState()
+  const [review,setReview]=useState('')
+  const [rating,setRating]=useState()
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
     axios
-      .get(`http://192.168.1.14:3000/provider/getOne/${providerId}`)
+      .get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+      
+      .get(`http://192.168.100.12:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -39,32 +51,44 @@ const ProfileFOrClient = ({ navigation ,custumorId }) => {
     setShowPosts(false);
     setShowComments(true);
     // navigation.navigate('comment',{providerId,custumorId})
-    
   };
 
   const handleReservationButtonClick = () => {
-    navigation.navigate('calender',{providerId}); // Navigate to Reservation page
+    navigation.navigate('calender', { providerId }); // Navigate to Reservation page
   };
   console.log('');
+  console.log('profile for client', providerId);
+
+  //!handle rating
+
+  const handleReview = (rating) => {
+    console.log(providerId);
+    // console.log("number",num)
+    axios
+      .post(`http://192.168.104.5:3000/rate/create/${providerId}`, {
+        rate: rating,
+        custumorId: custumorId,
+      })
+      .then((res) => {
+        console.log(res);
+        Alert.alert('Success', 'Rated successfully');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 console.log('profile for client',providerId);
 
-//!handle rating 
+//handle rating 
 
 
-const handleRating=(rating)=>{
-  console.log(providerId)
-  // console.log("number",num)
-  axios.post(`http://192.168.1.14:3000/rate/create/${providerId}`,{rate:rating,
-  custumorId:custumorId
-})
-  .then((res)=>{
-    console.log(res)
-    Alert.alert('Success', 'Rated successfully')
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
-}
+
+  
+
+
+
+
+
 
 
   return (
@@ -75,13 +99,15 @@ const handleRating=(rating)=>{
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{data.username}</Text>
-          <Text style={styles.mobile}>phone : +216 {data.mobile ? data.mobile : "98432756"}</Text>
+          <Text style={styles.mobile}>
+            phone : +216 {data.mobile ? data.mobile : '98432756'}
+          </Text>
           {data.is_approvede && (
             <Icon
               name="check-circle"
               size={30}
               color="blue"
-              style={{ position:"absolute", top:-20, left:190 }}
+              style={{ position: 'absolute', top: -20, left: 190 }}
             />
           )}
           <AirbnbRating
@@ -89,9 +115,8 @@ const handleRating=(rating)=>{
             defaultRating={0}
             size={20}
             showRating={false}
-            onFinishRating={(rating) => handleRating(rating)}
+            onFinishRating={(rating) => handleReview(rating)}
           />
-          
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -117,8 +142,8 @@ const handleRating=(rating)=>{
       </View>
 
       {showPosts && <PostForClient providerId={providerId} />}
-      {showComments && (
-        <Comments  custumorId={custumorId}     />  )}
+     
+        <Comments  custumorId={custumorId}   providerId={providerId}    />  
     </View>
   );
 };

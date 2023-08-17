@@ -13,14 +13,14 @@ const PieChart = ({getCategoryCount,DataP }) => {
         ['transporteur', getCategoryCount(DataP,"transporteur") ],
         ['peinture', getCategoryCount(DataP,"peinture") ],
         ['Machine a laver', getCategoryCount(DataP,"machine a laver") ],
-        ['camera de surveillance',getCategoryCount(DataP,"menuisier") ],
-        ['menuiserie',getCategoryCount(DataP,"camera") ]
+        ['menuiserie',getCategoryCount(DataP,"menuisier") ],
+        ['camera de surveillance',getCategoryCount(DataP,"camera") ]
       ];
       
       const pieOptions = {
         title: 'Proportion of Providers by Category',
         titleTextStyle: {
-          fontSize: 24, // Set the font size here
+          fontSize: 24, 
         },
         pieHole: 0.4,
       };
@@ -28,8 +28,8 @@ const PieChart = ({getCategoryCount,DataP }) => {
     <div className="container mt-5">
       
       <Chart
-        width={'700px'}
-        height={'420px'}
+        width={'500px'}
+        height={'350px'}
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
         data={pieData}

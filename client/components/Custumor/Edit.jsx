@@ -131,7 +131,7 @@ import {
   
   
     const update =  () => {
-     axios.put(`http://192.168.1.7:3000/custumor/update/${custumorId}`, infoCus)
+     axios.put(`http://192.168.100.12:3000/custumor/update/${custumorId}`, infoCus)
       .then(res => {
          console.log('Profile updated successfully:', res.data);
              navigation.navigate("one")

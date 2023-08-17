@@ -59,6 +59,8 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         setImageUrl(data.url);
+        Alert.alert('Image Uploaded', 'The image has been successfully uploaded.')
+
         console.log(data);
       })
       .catch((err) => {
@@ -131,8 +133,9 @@ const isValidPassword = (password) => {
     axios
       
       
+      
 
-      .post('http://192.168.1.14:3000/provider/signup', {
+      .post('http://192.168.100.12:3000/provider/signup', {
         username: username,
         email: email,
         password: password,

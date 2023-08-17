@@ -6,6 +6,7 @@ import jwtDecoder from "jwt-decode";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker'
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -25,7 +26,7 @@ console.log("prov id in update",providerId);
     },[!refetch])
 
     const fetchData = () => {
-        axios.get(`http://192.168.1.14:3000/provider/getOne/${providerId}`)
+        axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
           .then((res) => {
             setData(res.data);
             setUsername(res.data.username); 
@@ -48,7 +49,7 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.1.14:3000/provider/update/${providerId}`, info)
+        axios.put(`http://192.168.104.5:3000/provider/update/${providerId}`, info)
                    .then(res => {
             console.log('Profile updated successfully:', res.data)
             navigation.navigate("providerprofile")
@@ -109,6 +110,9 @@ console.log("prov id in update",providerId);
 
 
   return (
+    <ScrollView>
+
+    
     <View style={styles.container}>  
      <TouchableOpacity>
         {imgprof ? (
@@ -200,6 +204,7 @@ console.log("prov id in update",providerId);
       </TouchableOpacity>
 
     </View>
+    </ScrollView>
 
   )
 }
