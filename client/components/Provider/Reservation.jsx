@@ -12,7 +12,7 @@ const Reservation = ({providerId}) => {
 
   
   const fetch = () => {
-    axios.get(`http://192.168.104.5:3000/reservation/ProvReservation/${providerId}`)
+    axios.get(`http://192.168.100.12:3000/reservation/ProvReservation/${providerId}`)
       .then((res) => {
        setData(res.data.filter((e)=>{
         return  e.status==="pending"

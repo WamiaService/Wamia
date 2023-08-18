@@ -33,7 +33,7 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
 
   const fetchData = () => {
     axios
-      .get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+      
       
       .get(`http://192.168.100.12:3000/provider/getOne/${providerId}`)
       .then((res) => {
@@ -138,7 +138,7 @@ try{
             size={20}
             showRating={false}
             onFinishRating={(rating) => handleReview(rating)}
-            onFinishRating={(rating)=>{handleRating()}}
+            // onFinishRating={(rating)=>{handleRating()}}
           />
         </View>
       </View>
@@ -168,7 +168,7 @@ try{
       {showComments && (
         <Comments custumorId={custumorId} handleRating={handleRating} />
       )}
-        <Comments  custumorId={custumorId}   providerId={providerId} rate={rating}    />  )}
+        <Comments  custumorId={custumorId}   providerId={providerId}    />  
     </View>
   );
 };

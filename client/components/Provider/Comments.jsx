@@ -139,7 +139,7 @@ try{
             justifyContent: "center",
           }}
         >
-          <Text
+          {/* <Text
             style={{
               
               color: "#white"
@@ -149,7 +149,7 @@ try{
       
           >
             Sumbit
-          </Text>
+          </Text> */}
         </TouchableOpacity>
 
      
