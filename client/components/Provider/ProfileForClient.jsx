@@ -82,31 +82,9 @@ console.log('profile for client',providerId);
 //handle rating 
 
 
-const handleRating=async()=>{
-   
-try{
 
-  const rating= await axios.post(`http://192.168.100.12:3000/rate/create/${providerId}`,{
-  
-   rating:rating,
-   review:review,
-   custumorId:custumorId
-  
-  })
-
-  consile.log("r",rating)
-  res=setRate(rating.data)
   
 
-}
-
- catch(error){
- 
-  console.error('An error occurred', error);
-  
- }
-  
-}
 
 
 
@@ -138,7 +116,6 @@ try{
             size={20}
             showRating={false}
             onFinishRating={(rating) => handleReview(rating)}
-            // onFinishRating={(rating)=>{handleRating()}}
           />
         </View>
       </View>
@@ -165,9 +142,7 @@ try{
       </View>
 
       {showPosts && <PostForClient providerId={providerId} />}
-      {showComments && (
-        <Comments custumorId={custumorId} handleRating={handleRating} />
-      )}
+     
         <Comments  custumorId={custumorId}   providerId={providerId}    />  
     </View>
   );

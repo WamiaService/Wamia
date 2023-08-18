@@ -102,7 +102,6 @@ useEffect(() => {
           renderItem={({ item }) => (
             <TouchableOpacity onPress={()=> navigation.navigate('profileforclient', { providerId: item.id })}>
             <View style={styles.card}
-            
             >
               <Image source={{ uri: item.imgprof }} style={styles.profileImage} />
               <View style={styles.textContainer}>

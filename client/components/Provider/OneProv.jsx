@@ -14,7 +14,7 @@ const OneProv=({providerId,handleLogoutProvider})=>{
   
   useEffect(() => {
     axios
-      .post("http://192.168.104.5:3000/api/payment/pay", {
+      .post("http://192.168.1.14:3000/api/payment/pay", {
         amount: 1000, 
       })
       .then((response) => {
