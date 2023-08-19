@@ -8,7 +8,7 @@ const sendConfirmationEmail = async (email, activationCode) => {
   try {
     const msg = {
       to: email,
-      from: 'aymensaidany@gmail.com', // Use your verified sender email address
+      from: 'aymensaidany@gmail.com', 
       subject: 'Confirm account',
       html: `<div><h1>Email de Confirmation</h1>
       <a href=http://192.168.43.167:3000/confirmer/${activationCode}> click ici </a>
