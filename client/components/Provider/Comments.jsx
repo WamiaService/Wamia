@@ -44,7 +44,7 @@ const getOneCustumor = async (custumorId)=> {
   
 try {
 
-const response = await axios.get(`http://192.168.100.2:3000/custumor/getOne/${custumorId}`);
+const response = await axios.get(`http://192.168.1.5:3000/custumor/getOne/${custumorId}`);
 console.log(response.data)
 setData(response.data); 
 
@@ -60,7 +60,7 @@ const getOneReview= async ()=> {
   
 try {
 
-const response = await axios.get(`http://192.168.100.2:3000/review/getAll/${providerId}`);
+const response = await axios.get(`http://192.168.1.5:3000/review/getAll/${providerId}`);
 
 setReviews(response.data); 
 
@@ -78,7 +78,7 @@ const handleReview=(req,res)=>{
 
 
   axios
- .post(`http://192.168.100.2:3000/review/create/${providerId}`,rev)
+ .post(`http://192.168.1.5:3000/review/create/${providerId}`,rev)
  .then(()=>{setRefecth(!refetch)})
  .catch((err)=>{console.log(err);})
 
