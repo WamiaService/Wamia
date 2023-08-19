@@ -26,7 +26,7 @@ console.log("prov id in update",providerId);
     },[!refetch])
 
     const fetchData = () => {
-        axios.get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
+        axios.get(`http://192.168.100.2:3000/provider/getOne/${providerId}`)
           .then((res) => {
             setData(res.data);
             setUsername(res.data.username); 
@@ -49,7 +49,7 @@ console.log("prov id in update",providerId);
           imgprof:imgprof
         };
     
-        axios.put(`http://192.168.104.5:3000/provider/update/${providerId}`, info)
+        axios.put(`http://192.168.100.2:3000/provider/update/${providerId}`, info)
                    .then(res => {
             console.log('Profile updated successfully:', res.data)
             navigation.navigate("providerprofile")
