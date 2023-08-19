@@ -107,6 +107,7 @@ useEffect(() => {
               <View style={styles.textContainer}>
                 <Text style={styles.username}>{item.username}</Text>
                 <Text style={styles.category}>{item.category}</Text>
+                <Text style={styles.category}>{item.adresse}</Text>
               </View>
             </View>
             </TouchableOpacity>
