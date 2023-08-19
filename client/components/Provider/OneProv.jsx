@@ -67,7 +67,7 @@ const pay = async () => {
      
       console.log("provid payment",providerId);
       // const providerId = 3; 
-      await axios.post(`http://192.168.100.12:3000/api/payment/success/${providerId}`);
+      await axios.post(`http://192.168.104.5:3000/api/payment/success/${providerId}`);
 
 
       navigation.navigate("providerprofile");
@@ -174,21 +174,8 @@ return (
         justifyContent: "center",
       }}
     >
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{
-          position: "absolute",
-          left: 0,
-        }}
-      >
-        <MaterialIcons
-          name="keyboard-arrow-left"
-          size={24}
-          color={COLORS.black}
-        />
-      </TouchableOpacity>
+      
 
-      <Text style={{ ...FONTS.h3 }}>Provider Profil</Text>
     </View>
 
     <ScrollView style={{ marginHorizontal: 12 }}>

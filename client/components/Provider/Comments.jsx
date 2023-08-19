@@ -27,7 +27,7 @@ const getOneCustumor = async (custumorId)=> {
        
   try {
 
-    const response = await axios.get(`http://192.168.100.12:3000/custumor/getOne/${custumorId}`);
+    const response = await axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`);
     console.log(response.data)
     setData(response.data); 
     
@@ -43,7 +43,7 @@ const getOneReview= async ()=> {
        
   try {
 
-    const response = await axios.get(`http://192.168.100.12:3000/review/getAll/${providerId}`);
+    const response = await axios.get(`http://192.168.104.5:3000/review/getAll/${providerId}`);
  
     setReviews(response.data); 
     
@@ -60,7 +60,7 @@ const handleReview=async(req,res)=>{
 
 
 try{
- const review= await axios.post(`http://192.168.100.12:3000/review/create/${providerId}`,rev
+ const review= await axios.post(`http://192.168.104.5:3000/review/create/${providerId}`,rev
 
  )
   console.log( "dd",review.data)

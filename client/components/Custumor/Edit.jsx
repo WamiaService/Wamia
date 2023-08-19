@@ -49,7 +49,7 @@ import {
     // const token = jwtDecoder(cookie.get("jwt-token"));
     // console.log("token",token);
     
-      axios.get(`http://192.168.100.12:3000/custumor/getOne/${custumorId}`)
+      axios.get(`http://192.168.104.5:3000/custumor/getOne/${custumorId}`)
  
         .then((res) => {
           setData(res.data);
@@ -131,7 +131,7 @@ import {
   
   
     const update =  () => {
-     axios.put(`http://192.168.100.12:3000/custumor/update/${custumorId}`, infoCus)
+     axios.put(`http://192.168.104.5:3000/custumor/update/${custumorId}`, infoCus)
       .then(res => {
          console.log('Profile updated successfully:', res.data);
              navigation.navigate("one")
