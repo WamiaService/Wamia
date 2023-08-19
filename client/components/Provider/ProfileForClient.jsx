@@ -33,8 +33,9 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
 
   const fetchData = () => {
     axios
-      .get(`http://192.168.104.5:3000/provider/getOne/${providerId}`)
       
+      
+      .get(`http://192.168.1.7:3000/provider/getOne/${providerId}`)
       .then((res) => {
         setData(res.data);
       })
@@ -64,7 +65,7 @@ const ProfileFOrClient = ({ navigation, custumorId }) => {
     console.log(providerId);
     // console.log("number",num)
     axios
-      .post(`http://192.168.104.5:3000/rate/create/${providerId}`, {
+      .post(`http://192.168.100.2:3000/rate/create/${providerId}`, {
         rate: rating,
         custumorId: custumorId,
       })
@@ -81,31 +82,9 @@ console.log('profile for client',providerId);
 //handle rating 
 
 
-const handleRating=async()=>{
-   
-try{
 
-  const rating= await axios.post(`http://192.168.104.5:3000/rate/create/${providerId}`,{
-  
-   rating:rating,
-   review:review,
-   custumorId:custumorId
-  
-  })
-
-  consile.log("r",rating)
-  res=setRate(rating.data)
   
 
-}
-
- catch(error){
- 
-  console.error('An error occurred', error);
-  
- }
-  
-}
 
 
 
@@ -163,9 +142,7 @@ try{
       </View>
 
       {showPosts && <PostForClient providerId={providerId} />}
-      {showComments && (
-        <Comments custumorId={custumorId} handleRating={handleRating} />
-      )}
+     
         <Comments  custumorId={custumorId}   providerId={providerId}    />  
     </View>
   );

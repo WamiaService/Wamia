@@ -31,8 +31,8 @@ function AllProviders() {
         const endpoint = category
           
          
-            ? `http://192.168.104.5:3000/provider/search?category=${category}`
-            : `http://192.168.104.5:3000/provider/payprove`;
+            ? `http://192.168.100.2:3000/provider/search?category=${category}`
+            : `http://192.168.100.2::3000/provider/payprove`;
            
            
     
@@ -102,7 +102,6 @@ useEffect(() => {
           renderItem={({ item }) => (
             <TouchableOpacity onPress={()=> navigation.navigate('profileforclient', { providerId: item.id })}>
             <View style={styles.card}
-            
             >
               <Image source={{ uri: item.imgprof }} style={styles.profileImage} />
               <View style={styles.textContainer}>

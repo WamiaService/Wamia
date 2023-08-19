@@ -69,26 +69,21 @@ const Rating=require("../database/models/rating")
 //calcul of the rate 
 const calculateAverage=async(req,res)=>{
   const{providerId}=req.params;
-
   try{
     const rate= await Rating.findAll({ where:{providerId}})
       console.log(rate)
     if(rate===0){
   
         return res.status(404).json({ error: "rate not found for this provider" })
-
     }
     const totalRate=rate.reduce((sum,rate)=>sum+rate.value,0)
     const avrRating=totalRate/rate;
     res.status(200).json({avrRating})
   }
-
   catch(error){
-
     res.status(500).json('Error')
     console.log(error)
   }
-
 }
 
 
