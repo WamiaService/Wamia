@@ -37,14 +37,14 @@ const getAllProvider = async (req, res) => {
   const signupProvider = async (req, res) => {
 
     const characters =
-    "0123";
-  let activationCode = "";
-  for (let i = 0; i < 5; i++) {
-    activationCode += characters[Math.floor(Math.random() * characters.length)];
-  }
-
+      "0123";
+    let activationCode = "";
+    for (let i = 0; i < 5; i++) {
+      activationCode += characters[Math.floor(Math.random() * characters.length)];
+    }
+  
     try {
-      const { username, email, password, imgprof, patente, mobile,role, category, adresse } = req.body;
+      const { username, email, password, imgprof, patente, mobile, role, category, adresse,longitude,latitude } = req.body;
   
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,18 +68,20 @@ const getAllProvider = async (req, res) => {
         mobile,
         role,
         category,
-        activationCode:activationCode,
+        latitude,   
+        longitude,
+        activationCode: activationCode,
         adresse
       });
       // sendConfirmationEmail(email,activationCode)
-      await sendConfirmationEmail(email,activationCode)
+      await sendConfirmationEmail(email, activationCode)
       res.status(200).json({ message: 'Register successful', provider });
     } catch (error) {
       console.error('Register Error:', error);
       res.status(500).json({ error: 'Register failed' });
     }
-
-
+  
+  
   };
   ///y
   const loginProvider = async (req, res) => {
