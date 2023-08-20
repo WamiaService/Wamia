@@ -21,6 +21,7 @@ import ProfileFOrClient from './components/Provider/ProfileForClient.jsx';
 import Infocus from './components/Custumor/InfoCus.jsx';
 import Calender from './components/Calender/Calender.jsx';
 import { StripeProvider } from '@stripe/stripe-react-native';
+import HelpSupport from './components/Custumor/HelpSupport.jsx';
 const STRIPE_KEY =
   'pk_test_51NdUs4K6fT8eoEEp6JPAos9zSkBbl1ag3EbDAbkq4cDPlvmda1JpBFT1uRVs2koxHNlVIzNLeJvYQntDEMaMabih00FNGtROAs';
 
@@ -217,6 +218,16 @@ const App = () => {
           <Stack.Screen name="calender">
             {(props) => (
               <Calender
+                {...props}
+                providerId={providerId}
+                custumorId={custumorId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="helpsupport">
+            {(props) => (
+              <HelpSupport
                 {...props}
                 providerId={providerId}
                 custumorId={custumorId}
