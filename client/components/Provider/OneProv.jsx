@@ -67,7 +67,7 @@ const pay = async () => {
      
       console.log("provid payment",providerId);
       // const providerId = 3; 
-      await axios.post(`http://192.168.1.5:3000/api/payment/success/${providerId}`);
+      await axios.post(`http://192.168.1.7:3000/api/payment/success/${providerId}`);
 
 
       navigation.navigate("providerprofile");
