@@ -33,7 +33,7 @@ const getOneCustumor = async ()=> {
        
   try {
 
-    const response = await axios.get(`http://192.168.100.2:3000/custumor/getOne/${custumorId}`);
+    const response = await axios.get(`http://192.168.1.5:3000/custumor/getOne/${custumorId}`);
 
     setData(response.data); 
     

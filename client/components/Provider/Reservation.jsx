@@ -12,7 +12,7 @@ const Reservation = ({providerId}) => {
 
   
   const fetch = () => {
-    axios.get(`http://192.168.100.2:3000/reservation/ProvReservation/${providerId}`)
+    axios.get(`http://192.168.1.5:3000/reservation/ProvReservation/${providerId}`)
       .then((res) => {
        setData(res.data.filter((e)=>{
         return  e.status==="pending"
@@ -26,7 +26,7 @@ const Reservation = ({providerId}) => {
   };
 
   const handle=(id,str)=>{
-    axios.put(`http://192.168.100.2:3000/reservation/resUpdate/${id}`,{status:str})
+    axios.put(`http://192.168.1.5:3000/reservation/resUpdate/${id}`,{status:str})
     .then((res) => {
       setData(data.filter((ele) => ele.id !== id))
     })

@@ -31,6 +31,14 @@ const Provider = sequelize.define('provider', {
     defaultValue:"provider",
     allowNull:false,
 },
+latitude: {
+  type: DataTypes.DOUBLE,
+  allowNull: true,  
+},
+longitude: {
+  type: DataTypes.DOUBLE,
+  allowNull: true,  
+},
   mobile: DataTypes.INTEGER,
 
   category: {

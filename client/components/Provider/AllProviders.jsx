@@ -31,8 +31,8 @@ function AllProviders() {
         const endpoint = category
           
          
-            ? `http://192.168.100.2:3000/provider/search?category=${category}`
-            : `http://192.168.100.2::3000/provider/payprove`;
+            ? `http://192.168.1.5:3000/provider/search?category=${category}`
+            : `http://192.168.1.5:3000/provider/payprove`;
            
            
     
@@ -107,6 +107,7 @@ useEffect(() => {
               <View style={styles.textContainer}>
                 <Text style={styles.username}>{item.username}</Text>
                 <Text style={styles.category}>{item.category}</Text>
+                <Text style={styles.category}>{item.adresse}</Text>
               </View>
             </View>
             </TouchableOpacity>
