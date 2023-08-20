@@ -172,8 +172,11 @@ return (
                        <Text     
                       style={{
                         flex: 1,
-                       
+                      
+                        justifyContent: 'center',
+                        textAlign: 'center',
                         alignItems: 'center',
+                      
                         height: 52,
                         borderRadius: 26,
                         borderWidth: 1,
@@ -181,8 +184,7 @@ return (
                         marginLeft: 12,
                         paddingLeft: 12,
                         justifyContent: 'center',
-                        textAlign: 'center',
-                        alignItems: 'center'
+                     
                     }}>{review.review}</Text>
                      
                     </View>
