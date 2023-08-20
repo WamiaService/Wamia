@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useRoute } from '@react-navigation/native';
-import {
+import * as Location from 'expo-location';
+import RBSheet from "react-native-raw-bottom-sheet";
+import MapView, { Marker } from "react-native-maps";
+import {Dimensions,
   StyleSheet,
   Image,
   Button,
@@ -12,13 +15,15 @@ import {
   Alert,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign,EvilIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 
 const Signup = () => {
+  const windowHeight = Dimensions.get('window').height;
+  const sheetHeight = windowHeight * 0.7;
   const route = useRoute();
   const role = route.params?.role; 
   console.log("role front:",role);
@@ -28,6 +33,9 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [imgprof,setImgprof] = useState('')
   const [patente,setPatente]=useState('')
+  const [location, setLocation] = useState(null);
+  const refRBSheet = useRef(null);
+  const mapViewRef = useRef(null);
   const [category, setCategory] = useState([
     'electricien',
     'climatisation',
@@ -38,6 +46,16 @@ const Signup = () => {
     'menuisier',
     'camera',
   ]);
+  const askForLocationPermission = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+  };
 
   const _uploadImage = (photo, setImageUrl) => {
     const data = new FormData();
@@ -116,6 +134,11 @@ const Signup = () => {
 const isValidPassword = (password) => {
     return /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/.test(password);
   }
+  const [selectedLat, setSelectedLat] = useState(null);
+const [selectedLng, setSelectedLng] = useState(null);
+const [selectedPlaceName, setSelectedPlaceName] = useState("");
+
+
   const singUppp =  (username,password,email,imgprof,patente,category) => {
 
     if (!isValidEmail(email)) {
@@ -130,15 +153,16 @@ const isValidPassword = (password) => {
 
     axios
       
-      
-
-      .post('http://192.168.104.5:3000/provider/signup', {
+      .post('http://192.168.1.20:3000/provider/signup', {
         username: username,
         email: email,
         password: password,
         imgprof: imgprof,
         patente: patente,
         category: selectedCategory,
+        latitude: selectedLat,  
+        longitude: selectedLng ,
+        adress:selectedPlaceName  
       })
       .then((res) => {
         console.log(res.data);
@@ -221,6 +245,32 @@ console.log("signup role:",role);
           <TouchableOpacity style={styles.photoInput} onPress={photoPatente}>
             <Text>Patente</Text>
           </TouchableOpacity>
+          
+
+        </View>
+        
+
+
+        <View style={styles.inputContainer}>
+        <EvilIcons
+            name="location"
+            size={24}
+            color="black"
+            style={styles.icon}
+          />
+         
+
+          <TouchableOpacity 
+
+          style={styles.photoInput}    onPress={() => {
+            askForLocationPermission();
+            refRBSheet.current.open();
+          }}>
+            <Text>Location</Text>
+            
+          </TouchableOpacity>
+          
+
         </View>
         <View style={styles.inputContainer}>
           <AntDesign
@@ -254,8 +304,90 @@ console.log("signup role:",role);
       <TouchableOpacity onPress={handleLoginPress}>
         <Text style={{ color: '#FFA500' }}>Login</Text>
       </TouchableOpacity>
+      
     </View>
+ {/* Bottom Sheet */}
+ <RBSheet
+        ref={refRBSheet}
+        height={sheetHeight}
+        openDuration={250}
+        customStyles={{
+          container: {
+            justifyContent: "center",
+            alignItems: "center",
+          }
+        }}
+      >
+        {/* Your bottom sheet content here */}
+        <View style={{ padding: 15, borderBottomWidth: 1, borderColor: '#e0e0e0' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+            Maps
+          </Text>
+        </View>
+        <View style={{ flex: 1, width: '100%', height: '100%',padding:16 }}>
+          <MapView
+          ref={mapViewRef}
+           style={{ flex: 1, width: '100%', height: '100%' }}
+           region={{
+            latitude: location?.coords.latitude || 10.78825,
+            longitude: location?.coords.longitude || 9.4324,
+          
+        }}
+        onPress={async (e) => {
+          setSelectedLat(e.nativeEvent.coordinate.latitude);
+          setSelectedLng(e.nativeEvent.coordinate.longitude);
+          const result = await Location.reverseGeocodeAsync({
+            latitude: e.nativeEvent.coordinate.latitude,
+            longitude: e.nativeEvent.coordinate.longitude,
+          });
+          if (result && result.length > 0) {
+            
+            setSelectedPlaceName(`${result[0].city}`);
+          }
+        }}
+    >
+       {selectedLat && selectedLng && (
+    <Marker
+      coordinate={{
+        latitude: selectedLat,
+        longitude: selectedLng,
+      }}
+      title={selectedPlaceName}
+    />
+  )}
+        {/* {location && (
+            <Marker
+                coordinate={{
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                }}
+                title="My Location"
+            />
+        )} */}
+            
+          </MapView>
+        </View>
 
+        {selectedLat && selectedLng &&(
+        <View style={{ padding: 15 }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#2196F3',
+              padding: 12,
+              borderRadius: 5,
+              alignItems: 'center'
+            }}
+            
+            onPress={() => { refRBSheet.current.close()
+              }}
+          >
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>
+              Done
+            </Text>
+          </TouchableOpacity>
+        </View>
+        )}
+      </RBSheet>
         <StatusBar style="auto" />
       </RNScrollView>
     </View>

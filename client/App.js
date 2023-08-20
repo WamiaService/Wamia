@@ -20,8 +20,9 @@ import Reservation from './components/Provider/Reservation.jsx';
 import ProfileFOrClient from './components/Provider/ProfileForClient.jsx';
 import Infocus from './components/Custumor/InfoCus.jsx';
 import Calender from './components/Calender/Calender.jsx';
-import { StripeProvider } from "@stripe/stripe-react-native";
-const STRIPE_KEY="pk_test_51NdUs4K6fT8eoEEp6JPAos9zSkBbl1ag3EbDAbkq4cDPlvmda1JpBFT1uRVs2koxHNlVIzNLeJvYQntDEMaMabih00FNGtROAs"
+import { StripeProvider } from '@stripe/stripe-react-native';
+const STRIPE_KEY =
+  'pk_test_51NdUs4K6fT8eoEEp6JPAos9zSkBbl1ag3EbDAbkq4cDPlvmda1JpBFT1uRVs2koxHNlVIzNLeJvYQntDEMaMabih00FNGtROAs';
 
 const Stack = createStackNavigator();
 
@@ -81,112 +82,160 @@ const App = () => {
     SessionStorage.removeItem('custumorId');
   };
 
-
   console.log('ProviderId in App:', providerId);
   console.log('CustumorId in App:', custumorId);
 
   return (
     <NavigationContainer>
       <StripeProvider publishableKey={STRIPE_KEY}>
-      <Stack.Navigator>
-        {showSignup ? (
-          <Stack.Screen
-            name="choose"
-            component={Choose}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <Stack.Screen
-            name="start"
-            component={Start}
-            options={{ headerShown: false }}
-          />
-        )}
-        <Stack.Screen
-          name="signup"
-          component={Signup}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="signupcust"
-          component={SignupCust}
-          options={{
-            headerShown: false,
-          }}
-        />
-
-        <Stack.Screen name="login">
-          {(props) => <Login {...props} handleLogin={handleLogin} />}
-        </Stack.Screen>
-        <Stack.Screen name="loginc">
-          {(props) => (
-            <LoginC {...props} handleLoginCustumor={handleLoginCustumor} />
+        <Stack.Navigator>
+          {showSignup ? (
+            <Stack.Screen
+              name="choose"
+              component={Choose}
+              options={{ headerShown: false }}
+            />
+          ) : (
+            <Stack.Screen
+              name="start"
+              component={Start}
+              options={{ headerShown: false }}
+            />
           )}
-        </Stack.Screen>
-
-        <Stack.Screen name="bottomTabNav">
-          {(props) => (
-            <BottomTabNavigation {...props} custumorId={custumorId} providerId={providerId} options={{
+          <Stack.Screen
+            name="signup"
+            component={Signup}
+            options={{
               headerShown: false,
-            }} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="edit">
-          {(props) => (
-            <Edit {...props} custumorId={custumorId} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="updateprovider">
-          {(props) => (
-            <UpdateProvider {...props} providerId={providerId} />
-          )}
-        </Stack.Screen>
-       
-        <Stack.Screen name="postprovider">
-          {(props) => (
-            <ProviderPost {...props} providerId={providerId} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="providerprofile">
-          {(props) => (
-            <ProviderProfile {...props} providerId={providerId} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="reservation">
-          {(props) => (
-            <Reservation {...props} custumorId={custumorId} providerId={providerId} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="profileforclient">
-          {(props) => (
-            <ProfileFOrClient {...props} custumorId={custumorId} providerId={providerId} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="custprofile">
-          {(props) => (
-            <Infocus {...props} custumorId={custumorId} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="calender">
-          {(props) => (
-            <Calender {...props}  providerId={providerId} custumorId={custumorId} />
-          )}
-        </Stack.Screen>
-        
+            }}
+          />
+          <Stack.Screen
+            name="signupcust"
+            component={SignupCust}
+            options={{
+              headerShown: false,
+            }}
+          />
 
-
-       
-        
-        
-        <Stack.Screen name="one">
-          {(props) => (
-            <One {...props} handleLogoutCustumor={handleLogoutCustumor} />
+          <Stack.Screen name="login">
+            {(props) => (
+              <Login
+                {...props}
+                handleLogin={handleLogin}
+                options={{ headerShown: false }}
+              />
             )}
-        </Stack.Screen>  
-            </Stack.Navigator>
-            </StripeProvider>
+          </Stack.Screen>
+          <Stack.Screen name="loginc">
+            {(props) => (
+              <LoginC
+                {...props}
+                handleLoginCustumor={handleLoginCustumor}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="bottomTabNav">
+            {(props) => (
+              <BottomTabNavigation
+                {...props}
+                custumorId={custumorId}
+                providerId={providerId}
+                options={{
+                  headerShown: false,
+                }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="edit">
+            {(props) => (
+              <Edit
+                {...props}
+                custumorId={custumorId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="updateprovider">
+            {(props) => (
+              <UpdateProvider
+                {...props}
+                providerId={providerId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="postprovider">
+            {(props) => (
+              <ProviderPost
+                {...props}
+                providerId={providerId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="providerprofile">
+            {(props) => (
+              <ProviderProfile
+                {...props}
+                providerId={providerId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="reservation">
+            {(props) => (
+              <Reservation
+                {...props}
+                custumorId={custumorId}
+                providerId={providerId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="profileforclient">
+            {(props) => (
+              <ProfileFOrClient
+                {...props}
+                custumorId={custumorId}
+                providerId={providerId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="custprofile">
+            {(props) => (
+              <Infocus
+                {...props}
+                custumorId={custumorId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="calender">
+            {(props) => (
+              <Calender
+                {...props}
+                providerId={providerId}
+                custumorId={custumorId}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="one">
+            {(props) => (
+              <One
+                {...props}
+                handleLogoutCustumor={handleLogoutCustumor}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </StripeProvider>
     </NavigationContainer>
   );
 };
