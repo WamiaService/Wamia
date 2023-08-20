@@ -77,6 +77,7 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         setImageUrl(data.url);
+        Alert.alert('Image Uploaded', 'The image has been successfully uploaded.')
         console.log(data);
       })
       .catch((err) => {
@@ -153,7 +154,7 @@ const [selectedPlaceName, setSelectedPlaceName] = useState("");
 
     axios
       
-      .post('http://192.168.1.20:3000/provider/signup', {
+      .post('http://192.168.1.5:3000/provider/signup', {
         username: username,
         email: email,
         password: password,
@@ -162,7 +163,7 @@ const [selectedPlaceName, setSelectedPlaceName] = useState("");
         category: selectedCategory,
         latitude: selectedLat,  
         longitude: selectedLng ,
-        adress:selectedPlaceName  
+        adresse:selectedPlaceName  
       })
       .then((res) => {
         console.log(res.data);

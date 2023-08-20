@@ -25,7 +25,7 @@ const navigateToNotifications = () => {
 
 
 const navigateToSupport = () => {
-  console.log("Support function");
+  navigation.navigate("helpsupport")
 };
 
 

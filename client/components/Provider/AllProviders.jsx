@@ -32,7 +32,7 @@ function AllProviders() {
           
          
             ? `http://192.168.1.5:3000/provider/search?category=${category}`
-            : `http://192.168.1.5::3000/provider/payprove`;
+            : `http://192.168.1.5:3000/provider/payprove`;
            
            
     
