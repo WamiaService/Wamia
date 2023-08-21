@@ -12,7 +12,7 @@ const ProviderProfile = ({providerId}) => {
 
   const fetchData = () => {
   
-    axios.get(`http://192.168.1.5:3000/provider/getOne/${providerId}`)
+    axios.get(`http://192.168.1.7:3000/provider/getOne/${providerId}`)
    
       .then((res) => {
         setData(res.data);
